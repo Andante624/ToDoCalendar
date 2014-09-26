@@ -8,7 +8,7 @@
     android:gravity="center">
 
     <TextView
-        android:text="fragment_calender\ntest1"
+        android:text="todolist\ntest1\ntest1\ntest1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
