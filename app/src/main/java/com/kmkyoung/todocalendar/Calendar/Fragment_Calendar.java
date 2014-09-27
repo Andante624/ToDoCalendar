@@ -27,7 +27,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  *
  */
-public class Fragment_Calendar extends Fragment {
+public class Fragment_Calendar extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,6 +43,7 @@ public class Fragment_Calendar extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private int selected_year, selected_month, selected_day;
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,19 +91,20 @@ public class Fragment_Calendar extends Fragment {
         calendar_gridView.setAdapter(calendar_gridViewAdapter);
 
         getToday();
-
+        setListener();
         return view;
     }
 
     public void getToday()
     {
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        selected_year = calendar.get(Calendar.YEAR);
+        selected_month = calendar.get(Calendar.MONTH);
+        selected_day= calendar.get(Calendar.DAY_OF_MONTH);
 
-       calendar_month.setText(month+1+"월");
-       drawCalendar(year,month,day);
+
+        calendar_month.setText(selected_year+"년"+(selected_month+1)+"월");
+       drawCalendar(selected_year, selected_month, selected_day);
     }
 
     public void drawCalendar(int year, int month, int day)
@@ -115,12 +117,18 @@ public class Fragment_Calendar extends Fragment {
 
     }
 
+    public void setListener()
+    {
+        calendar_next_button.setOnClickListener(this);
+        calendar_pre_button.setOnClickListener(this);
+    }
+
     public void setLayout(View view)
     {
         calendar_gridView = (GridView)view.findViewById(R.id.calender_gridview);
         calendar_month = (TextView)view.findViewById(R.id.calender_month);
-        calendar_pre_button = (Button)view.findViewById(R.id.calender_pre_botton);
-        calendar_next_button = (Button)view.findViewById(R.id.calender_next_botton);
+        calendar_pre_button = (Button)view.findViewById(R.id.calender_pre_button);
+        calendar_next_button = (Button)view.findViewById(R.id.calender_next_button);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -145,6 +153,38 @@ public class Fragment_Calendar extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.calender_next_button:
+                updateMonthCalender(true);
+                break;
+            case R.id.calender_pre_button:
+                updateMonthCalender(false);
+                break;
+        }
+    }
+
+    public void updateMonthCalender(boolean nextMonth)
+    {
+        calendar_gridViewAdapter.removeAllItems();
+        if(nextMonth)
+        {
+            selected_month = (selected_month == 11) ? 0 : selected_month + 1;
+            if(selected_month == 0) selected_year++;
+        }
+        else
+        {
+            selected_month = (selected_month == 0) ? 11 : selected_month - 1;
+            if(selected_month == 11) selected_year--;
+        }
+
+        drawCalendar(selected_year,selected_month,selected_day);
+        calendar_month.setText(selected_year+"년"+(selected_month+1)+"월");
+        calendar_gridView.invalidateViews();
     }
 
     /**

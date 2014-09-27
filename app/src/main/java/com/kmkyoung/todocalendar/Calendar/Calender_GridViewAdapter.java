@@ -52,4 +52,9 @@ public class Calender_GridViewAdapter extends BaseAdapter {
         textView.setText(canlendar_items.get(position).getDay()+"");
         return convertView;
     }
+
+    public void removeAllItems()
+    {
+        canlendar_items.clear();
+    }
 }
