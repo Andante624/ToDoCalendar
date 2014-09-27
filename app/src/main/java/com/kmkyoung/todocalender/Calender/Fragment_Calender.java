@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalender;
+package com.kmkyoung.todocalender.Calender;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,23 +7,29 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
+import com.kmkyoung.todocalender.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_Visualization.OnFragmentInteractionListener} interface
+ * {@link Fragment_Calender.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_Visualization#newInstance} factory method to
+ * Use the {@link Fragment_Calender#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
-public class Fragment_Visualization extends Fragment {
+public class Fragment_Calender extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    Calender_GridViewAdapter calender_gridViewAdapter;
+    GridView calender_gridView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -37,18 +43,18 @@ public class Fragment_Visualization extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Visualization.
+     * @return A new instance of fragment Fragment_Calender.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Visualization newInstance(String param1, String param2) {
-        Fragment_Visualization fragment = new Fragment_Visualization();
+    public static Fragment_Calender newInstance(String param1, String param2) {
+        Fragment_Calender fragment = new Fragment_Calender();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-    public Fragment_Visualization() {
+    public Fragment_Calender() {
         // Required empty public constructor
     }
 
@@ -59,13 +65,23 @@ public class Fragment_Visualization extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        calender_gridViewAdapter = new Calender_GridViewAdapter();
+
+        calender_gridViewAdapter.setContext(getActivity().getApplicationContext());
+        for(int i = 0; i<30 ; i++)
+            calender_gridViewAdapter.add(new Canlender_Item("test"+i,i+"",i+"",i));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_visualization, container, false);
+        View view = inflater.inflate(R.layout.fragment_calender, container, false);
+
+        calender_gridView = (GridView)view.findViewById(R.id.calender_gridview);
+        calender_gridView.setAdapter(calender_gridViewAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

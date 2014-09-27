@@ -3,17 +3,16 @@ package com.kmkyoung.todocalender;
 import android.app.Activity;
 
 import android.app.ActionBar;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+
+import com.kmkyoung.todocalender.Calender.Fragment_Calender;
+import com.kmkyoung.todocalender.ToDoList.Fragment_ToDoList;
+import com.kmkyoung.todocalender.Visualization.Fragment_Visualization;
 
 
 public class MainActivity extends Activity
@@ -24,7 +23,7 @@ public class MainActivity extends Activity
     private Fragment_Calender fragment_calender;
     private Fragment_ToDoList fragment_todolist;
     private Fragment_Visualization fragment_visualization;
-    int pre_frgment_count = 0;
+    private int pre_frgment_count = 0;
 
 
     /**
