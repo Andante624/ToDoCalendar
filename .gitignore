@@ -35,5 +35,4 @@ app/build/
 *.ipr
 *~
 *.swp
-gradle/*
 build/*
