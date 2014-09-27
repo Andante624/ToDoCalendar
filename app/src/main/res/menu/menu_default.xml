@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CalenderActivity" >
+    <item android:id="@+id/action_addtodo"
+        android:title="action_addtodo"
+        android:orderInCategory="0"
+        android:icon="@drawable/action_content_new"
+        android:showAsAction="ifRoom" />
+</menu>
