@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,13 +20,12 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calender.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener, Fragment_Visualization.OnFragmentInteractionListener
 {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Fragment_Calender fragment_calender;
-    private Fragment_ToDoList fragment_toDolist;
+    private Fragment_ToDoList fragment_todolist;
     private Fragment_Visualization fragment_visualization;
+    int pre_frgment_count = 0;
+
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -36,7 +36,7 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragment_calender = new Fragment_Calender();
-        fragment_toDolist = new Fragment_ToDoList();
+        fragment_todolist = new Fragment_ToDoList();
         fragment_visualization = new Fragment_Visualization();
 
 
@@ -50,31 +50,37 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment_calender)
+                .commit();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        switch (position)
-        {
-            case 0:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment_calender)
-                        .commit();
-                break;
-            case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment_toDolist)
-                        .commit();
-                break;
-            case 2:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment_visualization)
-                        .commit();
-                break;
+        if(pre_frgment_count != position) {
+            switch (position) {
+                case 0:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment_calender)
+                            .commit();
+                    break;
+                case 1:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment_todolist)
+                            .commit();
+                    break;
+                case 2:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment_visualization)
+                            .commit();
+                    break;
 
+            }
         }
+        pre_frgment_count = position;
 
     }
 
