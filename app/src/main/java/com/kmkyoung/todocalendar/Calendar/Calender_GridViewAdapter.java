@@ -49,7 +49,7 @@ public class Calender_GridViewAdapter extends BaseAdapter {
             convertView = View.inflate(context,R.layout.gridview_item,null);
 
         TextView textView = (TextView)convertView.findViewById(R.id.calender_item_date);
-        textView.setText(position+"");
+        textView.setText(canlendar_items.get(position).getDay()+"");
         return convertView;
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,10 +76,8 @@ public class Fragment_Calendar extends Fragment {
         }
 
         calendar_gridViewAdapter = new Calender_GridViewAdapter();
-
         calendar_gridViewAdapter.setContext(getActivity().getApplicationContext());
-        for(int i = 0; i<30 ; i++)
-            calendar_gridViewAdapter.add(new Canlendar_Item("test"+i,i+"",i+"",i));
+
     }
 
     @Override
@@ -90,6 +89,7 @@ public class Fragment_Calendar extends Fragment {
         setLayout(view);
         calendar_gridView.setAdapter(calendar_gridViewAdapter);
 
+        getToday();
 
         return view;
     }
@@ -100,6 +100,19 @@ public class Fragment_Calendar extends Fragment {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+       calendar_month.setText(month+1+"월");
+       drawCalendar(year,month,day);
+    }
+
+    public void drawCalendar(int year, int month, int day)
+    {
+
+        for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
+            calendar_gridViewAdapter.add(new Canlendar_Item(" ","-1"," ",-1));
+        for(int i = 1; i<=Calendar_Utils.getLastWeek(year,month,day) ; i++)
+            calendar_gridViewAdapter.add(new Canlendar_Item("test"+i,i+"",i+"",5));
+
     }
 
     public void setLayout(View view)
