@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalender;
+package com.kmkyoung.todocalendar;
 
 import android.app.Activity;
 
@@ -10,17 +10,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
-import com.kmkyoung.todocalender.Calender.Fragment_Calender;
-import com.kmkyoung.todocalender.ToDoList.Fragment_ToDoList;
-import com.kmkyoung.todocalender.Visualization.Fragment_Visualization;
+import com.kmkyoung.todocalendar.Calendar.Fragment_Calendar;
+import com.kmkyoung.todocalendar.ToDoList.Fragment_ToDoList;
+import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calender.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener, Fragment_Visualization.OnFragmentInteractionListener
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calendar.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener, Fragment_Visualization.OnFragmentInteractionListener
 {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Fragment_Calender fragment_calender;
+    private Fragment_Calendar fragment_calendar;
     private Fragment_ToDoList fragment_todolist;
     private Fragment_Visualization fragment_visualization;
     private int pre_frgment_count = 0;
@@ -34,7 +34,7 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragment_calender = new Fragment_Calender();
+        fragment_calendar = new Fragment_Calendar();
         fragment_todolist = new Fragment_ToDoList();
         fragment_visualization = new Fragment_Visualization();
 
@@ -51,7 +51,7 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment_calender)
+                .replace(R.id.container, fragment_calendar)
                 .commit();
     }
 
@@ -63,7 +63,7 @@ public class MainActivity extends Activity
             switch (position) {
                 case 0:
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment_calender)
+                            .replace(R.id.container, fragment_calendar)
                             .commit();
                     break;
                 case 1:

@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalender.Calender;
+package com.kmkyoung.todocalendar.Visualization;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -7,37 +7,24 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.kmkyoung.todocalender.R;
-
-import org.w3c.dom.Text;
+import com.kmkyoung.todocalendar.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_Calender.OnFragmentInteractionListener} interface
+ * {@link Fragment_Visualization.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_Calender#newInstance} factory method to
+ * Use the {@link Fragment_Visualization#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
-public class Fragment_Calender extends Fragment {
+public class Fragment_Visualization extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-
-    private Calender_GridViewAdapter calender_gridViewAdapter;
-    private GridView calender_gridView;
-    private TextView calender_month;
-    private Button calender_pre_button, calender_next_button;
-    private ListView calender_checklist;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -51,18 +38,18 @@ public class Fragment_Calender extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Calender.
+     * @return A new instance of fragment Fragment_Visualization.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Calender newInstance(String param1, String param2) {
-        Fragment_Calender fragment = new Fragment_Calender();
+    public static Fragment_Visualization newInstance(String param1, String param2) {
+        Fragment_Visualization fragment = new Fragment_Visualization();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-    public Fragment_Calender() {
+    public Fragment_Visualization() {
         // Required empty public constructor
     }
 
@@ -73,33 +60,13 @@ public class Fragment_Calender extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        calender_gridViewAdapter = new Calender_GridViewAdapter();
-
-        calender_gridViewAdapter.setContext(getActivity().getApplicationContext());
-        for(int i = 0; i<30 ; i++)
-            calender_gridViewAdapter.add(new Canlender_Item("test"+i,i+"",i+"",i));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_calender, container, false);
-
-        setLayout(view);
-        calender_gridView.setAdapter(calender_gridViewAdapter);
-
-
-        return view;
-    }
-
-    public void setLayout(View view)
-    {
-        calender_gridView = (GridView)view.findViewById(R.id.calender_gridview);
-        calender_month = (TextView)view.findViewById(R.id.calender_month);
-        calender_pre_button = (Button)view.findViewById(R.id.calender_pre_botton);
-        calender_next_button = (Button)view.findViewById(R.id.calender_next_botton);
+        return inflater.inflate(R.layout.fragment_visualization, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

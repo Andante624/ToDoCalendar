@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalender.Calender;
+package com.kmkyoung.todocalendar.Calendar;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.kmkyoung.todocalender.R;
+import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,26 +16,26 @@ import java.util.List;
  */
 public class Calender_GridViewAdapter extends BaseAdapter {
     Context context;
-    List<Canlender_Item> canlender_items = new ArrayList<Canlender_Item>();
+    List<Canlendar_Item> canlendar_items = new ArrayList<Canlendar_Item>();
 
     public void setContext(Context input_context)
     {
         context = input_context;
     }
 
-    public void add(Canlender_Item newItem)
+    public void add(Canlendar_Item newItem)
     {
-        canlender_items.add(newItem);
+        canlendar_items.add(newItem);
     }
 
     @Override
     public int getCount() {
-        return canlender_items.size();
+        return canlendar_items.size();
     }
 
     @Override
-    public Canlender_Item getItem(int position) {
-        return canlender_items.get(position);
+    public Canlendar_Item getItem(int position) {
+        return canlendar_items.get(position);
     }
 
     @Override

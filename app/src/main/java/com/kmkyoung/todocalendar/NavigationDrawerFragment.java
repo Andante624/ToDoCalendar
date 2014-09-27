@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalender;
+package com.kmkyoung.todocalendar;
 
 
 import android.app.Activity;
@@ -21,8 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.kmkyoung.todocalender.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

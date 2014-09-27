@@ -1,15 +1,15 @@
-package com.kmkyoung.todocalender.Calender;
+package com.kmkyoung.todocalendar.Calendar;
 
 /**
  * Created by kmkyoung on 2014. 9. 27..
  */
-public class Canlender_Item {
+public class Canlendar_Item {
     private String Title;
     private String Date;
     private String Category;
     private int Inportance;
 
-    Canlender_Item(String title, String date, String category, int inportance)
+    Canlendar_Item(String title, String date, String category, int inportance)
     {
         Title = title;
         Date = date;
