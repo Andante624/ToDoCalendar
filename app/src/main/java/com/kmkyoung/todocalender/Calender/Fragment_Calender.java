@@ -7,9 +7,14 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.kmkyoung.todocalender.R;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -28,8 +33,11 @@ public class Fragment_Calender extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-    Calender_GridViewAdapter calender_gridViewAdapter;
-    GridView calender_gridView;
+    private Calender_GridViewAdapter calender_gridViewAdapter;
+    private GridView calender_gridView;
+    private TextView calender_month;
+    private Button calender_pre_button, calender_next_button;
+    private ListView calender_checklist;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -79,9 +87,19 @@ public class Fragment_Calender extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calender, container, false);
 
-        calender_gridView = (GridView)view.findViewById(R.id.calender_gridview);
+        setLayout(view);
         calender_gridView.setAdapter(calender_gridViewAdapter);
+
+
         return view;
+    }
+
+    public void setLayout(View view)
+    {
+        calender_gridView = (GridView)view.findViewById(R.id.calender_gridview);
+        calender_month = (TextView)view.findViewById(R.id.calender_month);
+        calender_pre_button = (Button)view.findViewById(R.id.calender_pre_botton);
+        calender_next_button = (Button)view.findViewById(R.id.calender_next_botton);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
