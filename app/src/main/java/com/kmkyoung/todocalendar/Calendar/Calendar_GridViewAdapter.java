@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by kmkyoung on 2014. 9. 27..
  */
-public class Calender_GridViewAdapter extends BaseAdapter {
+public class Calendar_GridViewAdapter extends BaseAdapter {
     Context context;
     List<Canlendar_Item> canlendar_items = new ArrayList<Canlendar_Item>();
 

@@ -27,7 +27,7 @@ import java.util.Calendar;
  *
  */
 public class Fragment_Calendar extends Fragment implements View.OnClickListener{
-    private Calender_GridViewAdapter calendar_gridViewAdapter;
+    private Calendar_GridViewAdapter calendar_gridViewAdapter;
     private GridView calendar_gridView;
     private TextView calendar_month;
     private Button calendar_pre_button, calendar_next_button;
@@ -46,7 +46,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        calendar_gridViewAdapter = new Calender_GridViewAdapter();
+        calendar_gridViewAdapter = new Calendar_GridViewAdapter();
         calendar_gridViewAdapter.setContext(getActivity().getApplicationContext());
 
     }
