@@ -20,14 +20,12 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calendar.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener,
         Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener
 {
-
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager fragmentManager;
     private Fragment_Calendar fragment_calendar;
     private Fragment_ToDoList fragment_todolist;
     private Fragment_AddToDoItem fragment_addtodoitem;
     private Fragment_Visualization fragment_visualization;
-    private int pre_frgment_count = 0;
 
 
     /**
@@ -54,7 +52,6 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
@@ -64,29 +61,28 @@ public class MainActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
-        if(pre_frgment_count != position) {
+        fragmentManager = getFragmentManager();
             switch (position) {
                 case 0:
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, fragment_calendar)
+                            .addToBackStack(null)
                             .commit();
                     break;
                 case 1:
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, fragment_todolist)
+                            .addToBackStack(null)
                             .commit();
                     break;
                 case 2:
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, fragment_visualization)
+                            .addToBackStack(null)
                             .commit();
                     break;
 
             }
-        }
-        pre_frgment_count = position;
-
     }
 
     public void restoreActionBar() {
@@ -117,7 +113,7 @@ public class MainActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_addtodo) {
-            fragmentManager.beginTransaction().replace(R.id.container, fragment_addtodoitem).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container, fragment_addtodoitem).commit();
             return true;
         }
         return super.onOptionsItemSelected(item);

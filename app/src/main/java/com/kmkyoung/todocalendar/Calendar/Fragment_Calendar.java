@@ -46,7 +46,6 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         calendar_gridViewAdapter = new Calender_GridViewAdapter();
         calendar_gridViewAdapter.setContext(getActivity().getApplicationContext());
 
@@ -55,14 +54,12 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calender, container, false);
-
         setLayout(view);
         calendar_gridView.setAdapter(calendar_gridViewAdapter);
-
         getToday();
         setListener();
+
         return view;
     }
 
@@ -73,13 +70,13 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         selected_month = calendar.get(Calendar.MONTH);
         selected_day= calendar.get(Calendar.DAY_OF_MONTH);
 
-
         calendar_month.setText(selected_year+"년"+(selected_month+1)+"월");
-       drawCalendar(selected_year, selected_month, selected_day);
+        drawCalendar(selected_year, selected_month, selected_day);
     }
 
     public void drawCalendar(int year, int month, int day)
     {
+        calendar_gridViewAdapter.removeAllItems();
 
         for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
             calendar_gridViewAdapter.add(new Canlendar_Item(" ","-1"," ",-1));
@@ -134,7 +131,6 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
 
     public void updateMonthCalender(boolean nextMonth)
     {
-        calendar_gridViewAdapter.removeAllItems();
         if(nextMonth)
         {
             selected_month = (selected_month == 11) ? 0 : selected_month + 1;

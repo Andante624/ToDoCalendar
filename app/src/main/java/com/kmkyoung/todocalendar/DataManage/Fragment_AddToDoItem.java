@@ -42,9 +42,6 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private String get_title, get_category;
     private float get_importance;
 
-
-
-
     public static Fragment_AddToDoItem newInstance(String param1, String param2) {
         Fragment_AddToDoItem fragment = new Fragment_AddToDoItem();
         return fragment;
@@ -138,9 +135,12 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                 else
                 {
                     //Dialog 로 안내
+
                 }
+                getFragmentManager().popBackStack();
                 break;
             case R.id.add_todo_cancel:
+                getFragmentManager().popBackStack();
                 break;
         }
     }
