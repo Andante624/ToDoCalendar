@@ -65,6 +65,11 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         setLayout(view);
         setListener();
 
+        Calendar calendar = Calendar.getInstance();
+        get_year = calendar.get(Calendar.YEAR);
+        get_month = calendar.get(Calendar.MONTH);
+        get_day = calendar.get(Calendar.DAY_OF_MONTH);
+        date_textview.setText(get_year+"-"+(get_month+1)+"-"+get_day);
 
         return view;
     }
@@ -122,6 +127,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                         get_year = year;
                         get_month = monthOfYear;
                         get_day = dayOfMonth;
+                        date_textview.setText(get_year+"-"+(get_month+1)+"-"+get_day);
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 
