@@ -79,9 +79,9 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         calendar_gridViewAdapter.removeAllItems();
 
         for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
-            calendar_gridViewAdapter.add(new Canlendar_Item(" ","-1"," ",-1));
+            calendar_gridViewAdapter.add(new Calendar_Item(" ","-1"," ",-1," "));
         for(int i = 1; i<=Calendar_Utils.getLastWeek(year,month,day) ; i++)
-            calendar_gridViewAdapter.add(new Canlendar_Item("test"+i,i+"",i+"",5));
+            calendar_gridViewAdapter.add(new Calendar_Item("test"+i,i+"",i+"",5," "));
 
     }
 

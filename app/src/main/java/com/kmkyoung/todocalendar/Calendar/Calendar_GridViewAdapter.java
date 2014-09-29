@@ -16,14 +16,14 @@ import java.util.List;
  */
 public class Calendar_GridViewAdapter extends BaseAdapter {
     Context context;
-    List<Canlendar_Item> canlendar_items = new ArrayList<Canlendar_Item>();
+    List<Calendar_Item> canlendar_items = new ArrayList<Calendar_Item>();
 
     public void setContext(Context input_context)
     {
         context = input_context;
     }
 
-    public void add(Canlendar_Item newItem)
+    public void add(Calendar_Item newItem)
     {
         canlendar_items.add(newItem);
     }
@@ -34,7 +34,7 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Canlendar_Item getItem(int position) {
+    public Calendar_Item getItem(int position) {
         return canlendar_items.get(position);
     }
 

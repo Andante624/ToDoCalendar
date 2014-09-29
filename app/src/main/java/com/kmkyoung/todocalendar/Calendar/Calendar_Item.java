@@ -3,7 +3,7 @@ package com.kmkyoung.todocalendar.Calendar;
 /**
  * Created by kmkyoung on 2014. 9. 27..
  */
-public class Canlendar_Item {
+public class Calendar_Item {
     //insert DB
     private String Title;
     private String Date;
@@ -13,7 +13,7 @@ public class Canlendar_Item {
     //not insert DB
     private int Day;
 
-    Canlendar_Item(String title, String date, String category, int inportance, String created)
+    Calendar_Item(String title, String date, String category, int inportance, String created)
     {
         Title = title;
         Date = date;

@@ -13,12 +13,16 @@ public class ToDoDBHelper extends SQLiteOpenHelper{
         super(context, name, factory, version);
     }
 
-    public ToDoDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-        super(context, name, factory, version, errorHandler);
-    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String sql = "create table ToDoList ( " +
+                " _id integer primary key autoincrement , " +
+                " title text , " +
+                " date text , " +
+                " datecreated text , "+
+                " category text , " +
+                " inportance float)";
+        db.execSQL(sql);
 
     }
 

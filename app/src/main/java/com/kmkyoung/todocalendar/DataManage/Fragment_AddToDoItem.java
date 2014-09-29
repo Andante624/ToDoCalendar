@@ -2,6 +2,7 @@ package com.kmkyoung.todocalendar.DataManage;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.Calendar;
@@ -39,7 +41,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private Button ok_button, cancel_button;
 
     private int get_year=0, get_month=0, get_day=0;
-    private String get_title, get_category;
+    private String get_title, get_category, get_date;
     private float get_importance;
 
     public static Fragment_AddToDoItem newInstance(String param1, String param2) {
@@ -127,35 +129,50 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                 break;
             case R.id.add_todo_ok:
                 if(getAllData())
-                {
-                    Log.d("kmkyoung","title "+get_title + "\ndate "+get_year+"년 "+get_month+"월 "+get_day);
-                    Log.d("kmkyoung","category"+get_category+"\nstarts :"+get_importance);
-                    //DB 에 저장
-                }
-                else
-                {
-                    //Dialog 로 안내
-
-                }
-                getFragmentManager().popBackStack();
+                    getFragmentManager().popBackStack();
                 break;
             case R.id.add_todo_cancel:
-                getFragmentManager().popBackStack();
+                    getDB_data();
+                //getFragmentManager().popBackStack();
                 break;
         }
+    }
+
+    public void getDB_data()
+    {
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        Cursor cursor = toDoDBManager.search();
+        getActivity().startManagingCursor(cursor);
+        while(cursor.moveToNext())
+        {
+            String title = cursor.getString(cursor.getColumnIndex("title"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            String createdate = cursor.getString(cursor.getColumnIndex("datecreated"));
+            String category = cursor.getString(cursor.getColumnIndex("category"));
+            float importance = cursor.getFloat(cursor.getColumnIndex("inportance"));
+            String temp = title+" "+date+" "+createdate+" "+category+" "+importance;
+            Log.d("kmky",temp);
+        }
+        toDoDBManager.close();
     }
 
     public boolean getAllData()
     {
         get_title = title_editview.getText().toString();
+        get_date = date_textview.getText().toString();
+        String get_createddate = Calendar.getInstance().getTimeInMillis()+"";
         get_category = category_spinner.getSelectedItem().toString();
         get_importance = importance_ratingbar.getRating();
+
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        toDoDBManager.insertDB(get_title,get_date,get_createddate,get_category,get_importance);
+        toDoDBManager.close();
         return true;
     }
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: Update argument type an d name
         public void onFragmentInteraction(Uri uri);
     }
 
