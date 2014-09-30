@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TodoCalender</string>
+    <string name="app_name">TodoCalendar</string>
     <string name="title_section1">Calendar</string>
     <string name="title_section2">ToDoList</string>
     <string name="title_section3">Visualization</string>
