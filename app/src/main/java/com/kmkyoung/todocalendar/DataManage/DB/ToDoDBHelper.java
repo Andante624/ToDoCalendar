@@ -16,10 +16,11 @@ public class ToDoDBHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table ToDoList ( " +
-                " _id integer primary key autoincrement , " +
+                " todo_id integer primary key autoincrement , " +
                 " title text , " +
-                " date text , " +
-                " datecreated text , "+
+                " createddate text , " +
+                " deadlinedate text , " +
+                " completeddate text , " +
                 " category text , " +
                 " inportance float)";
         db.execSQL(sql);

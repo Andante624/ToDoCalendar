@@ -17,21 +17,13 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_AddToDoItem.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_AddToDoItem#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class Fragment_AddToDoItem extends Fragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
     private EditText title_editview;
@@ -40,8 +32,8 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private RatingBar importance_ratingbar;
     private Button ok_button, cancel_button;
 
-    private int get_year=0, get_month=0, get_day=0;
-    private String get_title, get_category, get_date;
+    private int get_deadline_year=0, get_deadline_month=0, get_deadline_day=0;
+    private String get_title, get_category, get_deadline_date;
     private float get_importance;
 
     public static Fragment_AddToDoItem newInstance(String param1, String param2) {
@@ -66,10 +58,10 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         setListener();
 
         Calendar calendar = Calendar.getInstance();
-        get_year = calendar.get(Calendar.YEAR);
-        get_month = calendar.get(Calendar.MONTH);
-        get_day = calendar.get(Calendar.DAY_OF_MONTH);
-        date_textview.setText(get_year+"-"+(get_month+1)+"-"+get_day);
+        get_deadline_year = calendar.get(Calendar.YEAR);
+        get_deadline_month = calendar.get(Calendar.MONTH);
+        get_deadline_day = calendar.get(Calendar.DAY_OF_MONTH);
+        date_textview.setText(get_deadline_year+"-"+(get_deadline_month+1)+"-"+get_deadline_day);
 
         return view;
     }
@@ -124,21 +116,21 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        get_year = year;
-                        get_month = monthOfYear;
-                        get_day = dayOfMonth;
-                        date_textview.setText(get_year+"-"+(get_month+1)+"-"+get_day);
+                        get_deadline_year = year;
+                        get_deadline_month = monthOfYear;
+                        get_deadline_day = dayOfMonth;
+                        date_textview.setText(get_deadline_year+"-"+(get_deadline_month+1)+"-"+get_deadline_day);
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 
                 datePickerDialog.show();
                 break;
             case R.id.add_todo_ok:
-                if(getAllData())
+                if(saveToDoItem())
                     getFragmentManager().popBackStack();
                 break;
             case R.id.add_todo_cancel:
-                    getDB_data();
+                getDB_data();
                 //getFragmentManager().popBackStack();
                 break;
         }
@@ -152,28 +144,34 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         while(cursor.moveToNext())
         {
             String title = cursor.getString(cursor.getColumnIndex("title"));
-            String date = cursor.getString(cursor.getColumnIndex("date"));
-            String createdate = cursor.getString(cursor.getColumnIndex("datecreated"));
+            String createddate = cursor.getString(cursor.getColumnIndex("createddate"));
+            String deadlinedate = cursor.getString(cursor.getColumnIndex("deadlinedate"));
+            String completeddate = cursor.getString(cursor.getColumnIndex("completeddate"));
             String category = cursor.getString(cursor.getColumnIndex("category"));
             float importance = cursor.getFloat(cursor.getColumnIndex("inportance"));
-            String temp = title+" "+date+" "+createdate+" "+category+" "+importance;
-            Log.d("kmky",temp);
+            Log.d("getDB_data",title+" "+createddate+" "+deadlinedate+" "+completeddate+" "+category+" "+importance);
         }
         toDoDBManager.close();
     }
 
-    public boolean getAllData()
+    public boolean saveToDoItem()
     {
         get_title = title_editview.getText().toString();
-        get_date = date_textview.getText().toString();
-        String get_createddate = Calendar.getInstance().getTimeInMillis()+"";
-        get_category = category_spinner.getSelectedItem().toString();
-        get_importance = importance_ratingbar.getRating();
 
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        toDoDBManager.insertDB(get_title,get_date,get_createddate,get_category,get_importance);
-        toDoDBManager.close();
-        return true;
+        if(get_title.length() != 0)
+        {
+            get_deadline_date = get_deadline_year + "-" + get_deadline_month + "-" + get_deadline_day;
+            get_category = category_spinner.getSelectedItem().toString();
+            get_importance = importance_ratingbar.getRating();
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+            toDoDBManager.insertDB(get_title, get_deadline_date, null, get_category, get_importance);
+            Log.d("saveToDoItem",get_title+" "+get_deadline_date+" "+get_category+" "+get_importance);
+            toDoDBManager.close();
+            return true;
+        }
+        else
+            Toast.makeText(getActivity().getApplicationContext(),"Title 을 입력해 주세요",Toast.LENGTH_SHORT).show();
+        return false;
     }
 
 
