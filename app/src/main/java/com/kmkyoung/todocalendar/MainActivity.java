@@ -24,7 +24,6 @@ public class MainActivity extends Activity
     private FragmentManager fragmentManager;
     private Fragment_Calendar fragment_calendar;
     private Fragment_ToDoList fragment_todolist;
-    private Fragment_AddToDoItem fragment_addtodoitem;
     private Fragment_Visualization fragment_visualization;
 
 
@@ -39,7 +38,6 @@ public class MainActivity extends Activity
         fragment_calendar = new Fragment_Calendar();
         fragment_todolist = new Fragment_ToDoList();
         fragment_visualization = new Fragment_Visualization();
-        fragment_addtodoitem = new Fragment_AddToDoItem();
 
         setContentView(R.layout.activity_main);
 
@@ -55,7 +53,6 @@ public class MainActivity extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
-
 
     }
 
@@ -113,7 +110,7 @@ public class MainActivity extends Activity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_addtodo) {
-            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container, fragment_addtodoitem).commit();
+            fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.container, new Fragment_AddToDoItem()).commit();
             return true;
         }
         return super.onOptionsItemSelected(item);

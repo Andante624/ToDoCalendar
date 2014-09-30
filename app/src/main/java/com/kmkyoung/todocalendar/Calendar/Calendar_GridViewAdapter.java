@@ -48,11 +48,11 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
         if(convertView == null)
             convertView = View.inflate(context,R.layout.gridview_item,null);
 
+        TextView textView = (TextView) convertView.findViewById(R.id.calender_item_date);
         if(!canlendar_items.get(position).isBlank())
-        {
-            TextView textView = (TextView) convertView.findViewById(R.id.calender_item_date);
             textView.setText(canlendar_items.get(position).getDay() + "");
-        }
+        else
+            textView.setText(" ");
         return convertView;
     }
 
