@@ -26,15 +26,12 @@ public class MainActivity extends Activity
     private Fragment_ToDoList fragment_todolist;
     private Fragment_Visualization fragment_visualization;
 
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         fragment_calendar = new Fragment_Calendar();
         fragment_todolist = new Fragment_ToDoList();
         fragment_visualization = new Fragment_Visualization();
@@ -44,16 +41,13 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
-
     }
 
     @Override
