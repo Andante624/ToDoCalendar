@@ -5,13 +5,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kmkyoung.todocalendar.R;
 import com.kmkyoung.todocalendar.ToDoList.ToDoList_ListViewAdapter;
@@ -28,7 +31,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  *
  */
-public class Fragment_Calendar extends Fragment implements View.OnClickListener{
+public class Fragment_Calendar extends Fragment implements View.OnClickListener, GridView.OnItemClickListener{
 
     //calendar
     private GridView calendar_gridView;
@@ -84,7 +87,6 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         selected_month = calendar.get(Calendar.MONTH);
         selected_day= calendar.get(Calendar.DAY_OF_MONTH);
 
-        calendar_month.setText(selected_year+"년"+(selected_month+1)+"월");
         drawCalendar(selected_year, selected_month, selected_day);
     }
 
@@ -95,14 +97,16 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
             calendar_gridViewAdapter.add(new Calendar_Item(true));
         for(int i = 1; i<=Calendar_Utils.getLastWeek(year,month,day) ; i++)
-            calendar_gridViewAdapter.add(new Calendar_Item(i));
-
+            calendar_gridViewAdapter.add(new Calendar_Item(i,selected_year+"-"+selected_month+"-"+i));
+        calendar_month.setText(selected_year + "년" + (selected_month + 1) + "월");
+        calendar_gridView.invalidateViews();
     }
 
     public void setListener()
     {
         calendar_next_button.setOnClickListener(this);
         calendar_pre_button.setOnClickListener(this);
+        calendar_gridView.setOnItemClickListener(this);
     }
 
     public void setLayout(View view)
@@ -147,22 +151,22 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         }
     }
 
-    public void updateMonthCalender(boolean nextMonth)
-    {
-        if(nextMonth)
-        {
+    public void updateMonthCalender(boolean nextMonth) {
+        if (nextMonth) {
             selected_month = (selected_month == 11) ? 0 : selected_month + 1;
-            if(selected_month == 0) selected_year++;
-        }
-        else
-        {
+            if (selected_month == 0) selected_year++;
+        } else {
             selected_month = (selected_month == 0) ? 11 : selected_month - 1;
-            if(selected_month == 11) selected_year--;
+            if (selected_month == 11) selected_year--;
         }
 
-        drawCalendar(selected_year,selected_month,selected_day);
-        calendar_month.setText(selected_year+"년"+(selected_month+1)+"월");
-        calendar_gridView.invalidateViews();
+        drawCalendar(selected_year, selected_month, selected_day);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("kmkyoung", "posistion : "+calendar_gridViewAdapter.getItem(position).getDate() );
     }
 
 
