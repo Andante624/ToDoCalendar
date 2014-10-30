@@ -1,6 +1,7 @@
 package com.kmkyoung.todocalendar.Calendar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.R;
+import com.kmkyoung.todocalendar.ToDoList.ToDoList_ListViewAdapter;
 
 import java.util.Calendar;
 
@@ -27,13 +29,18 @@ import java.util.Calendar;
  *
  */
 public class Fragment_Calendar extends Fragment implements View.OnClickListener{
-    private Calendar_GridViewAdapter calendar_gridViewAdapter;
+
+    //calendar
     private GridView calendar_gridView;
+    private Calendar_GridViewAdapter calendar_gridViewAdapter;
     private TextView calendar_month;
     private Button calendar_pre_button, calendar_next_button;
-    private ListView calendar_checklist;
     private int selected_year, selected_month, selected_day;
     private OnFragmentInteractionListener mListener;
+
+    //todolist
+    private ListView calender_todolist;
+    private ToDoList_ListViewAdapter todolist_listViewAdapter;
 
     public static Fragment_Calendar newInstance() {
         Fragment_Calendar fragment = new Fragment_Calendar();
@@ -46,8 +53,14 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Context context = getActivity().getApplicationContext();
         calendar_gridViewAdapter = new Calendar_GridViewAdapter();
-        calendar_gridViewAdapter.setContext(getActivity().getApplicationContext());
+        calendar_gridViewAdapter.setContext(context);
+        todolist_listViewAdapter = new ToDoList_ListViewAdapter();
+        todolist_listViewAdapter.setContext(context);
+
+        for(int i=0 ; i<10 ; i++)
+        todolist_listViewAdapter.add();
 
     }
 
@@ -57,6 +70,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_calender, container, false);
         setLayout(view);
         calendar_gridView.setAdapter(calendar_gridViewAdapter);
+        calender_todolist.setAdapter(todolist_listViewAdapter);
         getToday();
         setListener();
 
@@ -93,10 +107,14 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener{
 
     public void setLayout(View view)
     {
+        //calendar layout
         calendar_gridView = (GridView)view.findViewById(R.id.calender_gridview);
         calendar_month = (TextView)view.findViewById(R.id.calender_month);
         calendar_pre_button = (Button)view.findViewById(R.id.calender_pre_button);
         calendar_next_button = (Button)view.findViewById(R.id.calender_next_button);
+
+        //todolist layout
+        calender_todolist = (ListView)view.findViewById(R.id.calender_todolist);
     }
 
     @Override
