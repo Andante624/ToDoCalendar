@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 import com.kmkyoung.todocalendar.ToDoList.ToDoList_ListViewAdapter;
 
@@ -164,9 +165,15 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
 
     }
 
+    public void drawToDoList(String date)
+    {
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        toDoDBManager.selectDeadLineDate(date);
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("kmkyoung", "posistion : "+calendar_gridViewAdapter.getItem(position).getDate() );
+        drawToDoList(calendar_gridViewAdapter.getItem(position).getDate());
     }
 
 

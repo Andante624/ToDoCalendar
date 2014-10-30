@@ -130,29 +130,29 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                     getFragmentManager().popBackStack();
                 break;
             case R.id.add_todo_cancel:
-                getDB_data();
-                //getFragmentManager().popBackStack();
+//                getDB_data();
+                getFragmentManager().popBackStack();
                 break;
         }
     }
 
-    public void getDB_data()
-    {
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        Cursor cursor = toDoDBManager.search();
-        getActivity().startManagingCursor(cursor);
-        while(cursor.moveToNext())
-        {
-            String title = cursor.getString(cursor.getColumnIndex("title"));
-            String createddate = cursor.getString(cursor.getColumnIndex("createddate"));
-            String deadlinedate = cursor.getString(cursor.getColumnIndex("deadlinedate"));
-            String completeddate = cursor.getString(cursor.getColumnIndex("completeddate"));
-            String category = cursor.getString(cursor.getColumnIndex("category"));
-            float importance = cursor.getFloat(cursor.getColumnIndex("inportance"));
-            Log.d("getDB_data",title+" "+createddate+" "+deadlinedate+" "+completeddate+" "+category+" "+importance);
-        }
-        toDoDBManager.close();
-    }
+//    public void getDB_data()
+//    {
+//        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+//        Cursor cursor = toDoDBManager.search();
+//        getActivity().startManagingCursor(cursor);
+//        while(cursor.moveToNext())
+//        {
+//            String title = cursor.getString(cursor.getColumnIndex("title"));
+//            String createddate = cursor.getString(cursor.getColumnIndex("createddate"));
+//            String deadlinedate = cursor.getString(cursor.getColumnIndex("deadlinedate"));
+//            String completeddate = cursor.getString(cursor.getColumnIndex("completeddate"));
+//            String category = cursor.getString(cursor.getColumnIndex("category"));
+//            float importance = cursor.getFloat(cursor.getColumnIndex("inportance"));
+//            Log.d("getDB_data",title+" "+createddate+" "+deadlinedate+" "+completeddate+" "+category+" "+importance);
+//        }
+//        toDoDBManager.close();
+//    }
 
     public boolean saveToDoItem()
     {

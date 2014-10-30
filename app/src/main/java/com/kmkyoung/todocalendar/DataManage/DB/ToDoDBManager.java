@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.kmkyoung.todocalendar.Calendar.Calendar_Item;
 
@@ -44,11 +45,26 @@ public class ToDoDBManager {
         db.insert("ToDoList",null,values);
     }
 
-    public Cursor search()
+    public void selectDeadLineDate(String deadline)
     {
+        String sql = "select * from 'ToDoList' where deadlinedate = '"+deadline+"';";
         db = todo_db_helper.getReadableDatabase();
-        Cursor cursor = db.query("ToDoList",null,null,null,null,null,null);
-        return cursor;
+        Cursor result = db.rawQuery(sql,null);
+        result.moveToFirst();
+        while(!result.isAfterLast())
+        {
+            String title = result.getString(result.getColumnIndex("title"));
+            String createddate = result.getString(result.getColumnIndex("createddate"));
+            String deadlinedate = result.getString(result.getColumnIndex("deadlinedate"));
+            String completeddate = result.getString(result.getColumnIndex("completeddate"));
+            String category = result.getString(result.getColumnIndex("category"));
+            float importance = result.getFloat(result.getColumnIndex("inportance"));
+
+            Log.d("kmky",title+" = "+deadlinedate);
+            result.moveToNext();
+        }
+
+        result.close();
     }
 
     public void close()
