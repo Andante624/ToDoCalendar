@@ -10,7 +10,8 @@
         android:text="example"
         android:id="@+id/calender_item_date"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"/>
 
 
 </LinearLayout>

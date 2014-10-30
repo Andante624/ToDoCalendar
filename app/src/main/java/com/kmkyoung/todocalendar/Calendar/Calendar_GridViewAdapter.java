@@ -1,9 +1,11 @@
 package com.kmkyoung.todocalendar.Calendar;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.R;
@@ -54,6 +56,7 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
         else
             textView.setText(" ");
 
+        convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
         return convertView;
     }
 
