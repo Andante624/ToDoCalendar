@@ -4,11 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.kmkyoung.todocalendar.Calendar.Calendar_Item;
-
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by kmkyoung on 2014. 9. 29..
@@ -45,12 +44,15 @@ public class ToDoDBManager {
         db.insert("ToDoList",null,values);
     }
 
-    public void selectDeadLineDate(String deadline)
+    public List<ToDo_Item> selectDeadLineDate(String deadline)
     {
         String sql = "select * from 'ToDoList' where deadlinedate = '"+deadline+"';";
+
         db = todo_db_helper.getReadableDatabase();
         Cursor result = db.rawQuery(sql,null);
         result.moveToFirst();
+
+        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
         while(!result.isAfterLast())
         {
             String title = result.getString(result.getColumnIndex("title"));
@@ -60,11 +62,11 @@ public class ToDoDBManager {
             String category = result.getString(result.getColumnIndex("category"));
             float importance = result.getFloat(result.getColumnIndex("inportance"));
 
-            Log.d("kmky",title+" = "+deadlinedate);
+            items.add(new ToDo_Item(title,createddate,deadlinedate,completeddate,category,importance));
             result.moveToNext();
         }
 
-        result.close();
+        return items;
     }
 
     public void close()

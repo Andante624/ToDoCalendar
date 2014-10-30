@@ -12,6 +12,7 @@ public class Calendar_Item {
     private int Day;
     private String Date;
     private boolean Blank = false;
+    private List<ToDo_Item> Items;
 
     Calendar_Item(int day, String date)
     {
@@ -27,6 +28,15 @@ public class Calendar_Item {
     public void setDay(int day) { Day = day; }
     public int getDay() { return Day; }
     public String getDate() { return Date; }
+    public void setToDo_ItemList(List<ToDo_Item> items)
+    {
+        Items = items;
+    }
+
+    public List<ToDo_Item> getToDo_ItemList()
+    {
+        return Items;
+    }
 
     public boolean isBlank(){ return Blank; }
 

@@ -53,6 +53,7 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
             textView.setText(canlendar_items.get(position).getDay() + "");
         else
             textView.setText(" ");
+
         return convertView;
     }
 
