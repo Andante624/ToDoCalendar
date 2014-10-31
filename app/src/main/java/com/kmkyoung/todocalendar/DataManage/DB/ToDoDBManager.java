@@ -15,14 +15,13 @@ import java.util.List;
  * Created by kmkyoung on 2014. 9. 29..
  */
 public class ToDoDBManager {
+    static HashMap category_map = new HashMap();
     private ToDoDBHelper todo_db_helper;
     private SQLiteDatabase db;
-    private HashMap category_map = new HashMap();
 
     //init
     public ToDoDBManager(Context context)
     {
-        Log.d("kmky","ToDoDBManager");
         todo_db_helper = new ToDoDBHelper(context,"ToDo_Calendar.sqlite",null, 1);
     }
 
@@ -32,9 +31,8 @@ public class ToDoDBManager {
     }
 
     //save
-    public void insertDB(String title, String deadlinedate, String completeddate, String category, float inportance)
+    public void insertDB(String title, String deadlinedate, String completeddate, int category, float inportance)
     {
-        Log.d("kmky","insertDB");
         Calendar calendar = Calendar.getInstance();
         String createddate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -49,15 +47,38 @@ public class ToDoDBManager {
         db.insert("ToDo_Table",null,values);
     }
 
-    public static void selectAllCategory()
+    //return keyvalue = Category_ID
+    public int insertCategory(String name)
     {
+        db = todo_db_helper.getWritableDatabase();
+        String sql = "insert into Category_Table values("+name+");";
+        db.rawQuery(sql,null);
+        db.close();
+        db = todo_db_helper.getReadableDatabase();
+        sql = "select * from Category_Table where Category_Name='"+name+";";
+        Cursor result = db.rawQuery(sql,null);
+        result.moveToFirst();
+        int category_id = result.getColumnIndex("Category_ID");
+        db.close();
+        return category_id;
+    }
 
-        Log.d("kmky","selectAllCategory");
+    public HashMap selectAllCategory()
+    {
+        String sql = "select * from 'Category_Table';";
+        db = todo_db_helper.getReadableDatabase();
+        Cursor categorys = db.rawQuery(sql,null);
+        categorys.moveToFirst();
+        while(!categorys.isAfterLast())
+        {
+            category_map.put(categorys.getColumnIndex("Category_ID"),categorys.getColumnIndex("Category_Title"));
+        }
+        db.close();
+        return category_map;
     }
 
     public List<ToDo_Item> selectDeadLineDate(String deadline)
     {
-        Log.d("kmky","selectDeadLineDate");
         List<ToDo_Item> items = new ArrayList<ToDo_Item>();
 
         String sql = "select * from 'ToDo_Table' where ToDo_Deadline_date = '"+deadline+"';";
