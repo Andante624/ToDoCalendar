@@ -12,19 +12,21 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.kmkyoung.todocalendar.Calendar.Fragment_Calendar;
 import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
+import com.kmkyoung.todocalendar.Setting.Fragment_Setting;
 import com.kmkyoung.todocalendar.ToDoList.Fragment_ToDoList;
 import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calendar.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener,
-        Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener
+        Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener,Fragment_Setting.OnFragmentInteractionListener
 {
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager fragmentManager;
     private Fragment_Calendar fragment_calendar;
     private Fragment_ToDoList fragment_todolist;
     private Fragment_Visualization fragment_visualization;
+    private Fragment_Setting fragment_setting;
 
     private CharSequence mTitle;
 
@@ -35,6 +37,7 @@ public class MainActivity extends Activity
         fragment_calendar = new Fragment_Calendar();
         fragment_todolist = new Fragment_ToDoList();
         fragment_visualization = new Fragment_Visualization();
+        fragment_setting = new Fragment_Setting();
 
         setContentView(R.layout.activity_main);
 
@@ -69,6 +72,12 @@ public class MainActivity extends Activity
                 case 2:
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, fragment_visualization)
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                case 3:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment_setting)
                             .addToBackStack(null)
                             .commit();
                     break;
