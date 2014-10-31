@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Setting.Activity_Setting_Category"
+            android:label="@string/title_activity_activity__setting__category" >
+        </activity>
+        <activity
+            android:name=".Setting.Activity_Setting_Information"
+            android:label="@string/title_activity_activity__setting__information" >
+        </activity>
+        <activity
+            android:name=".Setting.Activity_Setting_ColorPicker"
+            android:label="@string/title_activity_activity__setting__color_picker" >
+        </activity>
     </application>
 
 </manifest>
