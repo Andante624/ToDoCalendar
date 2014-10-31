@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,8 +22,8 @@ public class ToDoDBManager {
     //init
     public ToDoDBManager(Context context)
     {
-        todo_db_helper = new ToDoDBHelper(context,"todo.sqlite",null, 1);
-        selectAllCategory();
+        Log.d("kmky","ToDoDBManager");
+        todo_db_helper = new ToDoDBHelper(context,"ToDo_Calendar.sqlite",null, 1);
     }
 
     public static ToDoDBManager open(Context context)
@@ -33,6 +34,7 @@ public class ToDoDBManager {
     //save
     public void insertDB(String title, String deadlinedate, String completeddate, String category, float inportance)
     {
+        Log.d("kmky","insertDB");
         Calendar calendar = Calendar.getInstance();
         String createddate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -47,22 +49,25 @@ public class ToDoDBManager {
         db.insert("ToDo_Table",null,values);
     }
 
-    public void selectAllCategory()
+    public static void selectAllCategory()
     {
 
+        Log.d("kmky","selectAllCategory");
     }
 
     public List<ToDo_Item> selectDeadLineDate(String deadline)
     {
+        Log.d("kmky","selectDeadLineDate");
+        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
+
         String sql = "select * from 'ToDo_Table' where ToDo_Deadline_date = '"+deadline+"';";
 
         db = todo_db_helper.getReadableDatabase();
-        Cursor result = db.rawQuery(sql,null);
+        Cursor result = db.rawQuery(sql, null);
         result.moveToFirst();
 
-        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
-        while(!result.isAfterLast())
-        {
+
+        while (!result.isAfterLast()) {
             int id = result.getInt(result.getColumnIndex("ToDo_ID"));
             String title = result.getString(result.getColumnIndex("ToDo_Title"));
             String createddate = result.getString(result.getColumnIndex("ToDo_Created_date"));
@@ -71,7 +76,7 @@ public class ToDoDBManager {
             int category = result.getInt(result.getColumnIndex("Category_ID"));
             float importance = result.getFloat(result.getColumnIndex("ToDo_Inportance"));
 
-            items.add(new ToDo_Item(id,title,createddate,deadlinedate,completeddate,category,importance));
+            items.add(new ToDo_Item(id, title, createddate, deadlinedate, completeddate, category, importance));
             result.moveToNext();
         }
 
