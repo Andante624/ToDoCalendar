@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.kmkyoung.todocalendar.Setting.Fragment_Setting">
 
-    <Button
-        android:id="@+id/test_button"
+    <ListView
+        android:id="@+id/setting_listview"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="테스트"/>
+        android:layout_height="match_parent"/>
+
 </FrameLayout>
