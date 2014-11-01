@@ -7,7 +7,7 @@ public class Category_Item {
     int Category_ID;
     String Category_Name;
 
-    Category_Item(int category_ID, String category_Name)
+    public Category_Item(int category_ID, String category_Name)
     {
         Category_ID = category_ID;
         Category_Name = category_Name;

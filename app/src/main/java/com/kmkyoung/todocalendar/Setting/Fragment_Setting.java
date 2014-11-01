@@ -113,19 +113,37 @@ public class Fragment_Setting extends Fragment {
             return 0;
         }
 
-        public void newItem(Category_Item newItem)
-        {
-
-        }
-
-
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             if(convertView == null)
                 convertView = View.inflate(getActivity().getApplicationContext(),R.layout.setting_listview_item,null);
 
             TextView textview = (TextView)convertView.findViewById(R.id.setting_listview_menu);
             textview.setText(setting_strings.get(position));
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent;
+                    switch (position)
+                    {
+                        case 0:
+                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_Category.class);
+                            startActivity(intent);
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_ColorPicker.class);
+                            startActivity(intent);
+                            break;
+                        case 3:
+                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_Information.class);
+                            startActivity(intent);
+                            break;
+                    }
+                }
+            });
 
             return convertView;
         }

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by kmkyoung on 2014. 9. 29..
  */
 public class ToDoDBManager {
-    static HashMap category_map = new HashMap();
+    private static List<Category_Item> category_items = new ArrayList<Category_Item>();
     private ToDoDBHelper todo_db_helper;
     private SQLiteDatabase db;
 
@@ -63,7 +63,7 @@ public class ToDoDBManager {
         return category_id;
     }
 
-    public HashMap selectAllCategory()
+    public List<Category_Item> selectAllCategory()
     {
         String sql = "select * from 'Category_Table';";
         db = todo_db_helper.getReadableDatabase();
@@ -71,10 +71,11 @@ public class ToDoDBManager {
         categorys.moveToFirst();
         while(!categorys.isAfterLast())
         {
-            category_map.put(categorys.getColumnIndex("Category_ID"),categorys.getColumnIndex("Category_Title"));
+            category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
+            categorys.moveToNext();
         }
         db.close();
-        return category_map;
+        return category_items;
     }
 
     public List<ToDo_Item> selectDeadLineDate(String deadline)
@@ -102,6 +103,16 @@ public class ToDoDBManager {
         }
 
         return items;
+    }
+
+    public static String getCategoryName(int Category_ID)
+    {
+        for(int i=0; i<category_items.size() ; i++)
+        {
+            if(category_items.get(i).getCategory_ID() == Category_ID)
+                return category_items.get(i).getCategory_Name();
+        }
+        return "";
     }
 
     public void close()
