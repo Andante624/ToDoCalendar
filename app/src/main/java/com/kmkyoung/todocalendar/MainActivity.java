@@ -1,25 +1,28 @@
 package com.kmkyoung.todocalendar;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
 
 import com.kmkyoung.todocalendar.Calendar.Fragment_Calendar;
 import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting;
+import com.kmkyoung.todocalendar.Setting.Fragment_Setting_Category;
+import com.kmkyoung.todocalendar.Setting.Fragment_Setting_ColorPicker;
+import com.kmkyoung.todocalendar.Setting.Fragment_Setting_Information;
 import com.kmkyoung.todocalendar.ToDoList.Fragment_ToDoList;
 import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calendar.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener,
-        Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener,Fragment_Setting.OnFragmentInteractionListener
+        Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener,Fragment_Setting.OnFragmentInteractionListener,
+        Fragment_Setting_Category.OnFragmentInteractionListener, Fragment_Setting_ColorPicker.OnFragmentInteractionListener, Fragment_Setting_Information.OnFragmentInteractionListener
 {
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager fragmentManager;
@@ -56,33 +59,33 @@ public class MainActivity extends Activity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         fragmentManager = getFragmentManager();
-            switch (position) {
-                case 0:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment_calendar)
-                            .addToBackStack(null)
-                            .commit();
-                    break;
-                case 1:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment_todolist)
-                            .addToBackStack(null)
-                            .commit();
-                    break;
-                case 2:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment_visualization)
-                            .addToBackStack(null)
-                            .commit();
-                    break;
-                case 3:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment_setting)
-                            .addToBackStack(null)
-                            .commit();
-                    break;
+        switch (position) {
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment_calendar)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment_todolist)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment_visualization)
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment_setting)
+                        .addToBackStack(null)
+                        .commit();
+                break;
 
-            }
+        }
     }
 
     public void restoreActionBar() {

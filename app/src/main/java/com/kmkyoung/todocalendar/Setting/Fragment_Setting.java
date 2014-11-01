@@ -1,6 +1,7 @@
 package com.kmkyoung.todocalendar.Setting;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,9 @@ public class Fragment_Setting extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView setting_listview;
+    private Fragment_Setting_Category fragment_setting_category;
+    private Fragment_Setting_ColorPicker fragment_setting_colorPicker;
+    private Fragment_Setting_Information fragment_setting_information;
 
     public static Fragment_Setting newInstance(String param1, String param2) {
         Fragment_Setting fragment = new Fragment_Setting();
@@ -44,7 +48,9 @@ public class Fragment_Setting extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fragment_setting_category = new Fragment_Setting_Category();
+        fragment_setting_colorPicker = new Fragment_Setting_ColorPicker();
+        fragment_setting_information = new Fragment_Setting_Information();
     }
 
     @Override
@@ -124,22 +130,27 @@ public class Fragment_Setting extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent;
-                    switch (position)
-                    {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    switch (position) {
                         case 0:
-                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_Category.class);
-                            startActivity(intent);
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.container, fragment_setting_category)
+                                    .addToBackStack(null)
+                                    .commit();
                             break;
                         case 1:
                             break;
                         case 2:
-                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_ColorPicker.class);
-                            startActivity(intent);
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.container, fragment_setting_colorPicker)
+                                    .addToBackStack(null)
+                                    .commit();
                             break;
                         case 3:
-                            intent = new Intent(getActivity().getApplicationContext(),Activity_Setting_Information.class);
-                            startActivity(intent);
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.container, fragment_setting_information)
+                                    .addToBackStack(null)
+                                    .commit();
                             break;
                     }
                 }
