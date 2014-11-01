@@ -1,5 +1,6 @@
 package com.kmkyoung.todocalendar.Setting;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -33,7 +35,6 @@ public class Fragment_Setting extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView setting_listview;
-    private Fragment_Setting_Category fragment_setting_category;
     private Fragment_Setting_ColorPicker fragment_setting_colorPicker;
     private Fragment_Setting_Information fragment_setting_information;
 
@@ -48,7 +49,6 @@ public class Fragment_Setting extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragment_setting_category = new Fragment_Setting_Category();
         fragment_setting_colorPicker = new Fragment_Setting_ColorPicker();
         fragment_setting_information = new Fragment_Setting_Information();
     }
@@ -133,10 +133,11 @@ public class Fragment_Setting extends Fragment {
                     FragmentManager fragmentManager = getFragmentManager();
                     switch (position) {
                         case 0:
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.container, fragment_setting_category)
-                                    .addToBackStack(null)
-                                    .commit();
+                            Dialog_Setting_Category dialog_setting_category = new Dialog_Setting_Category(getActivity());
+                            WindowManager.LayoutParams params = dialog_setting_category.getWindow().getAttributes();
+                            params.height =600;
+                            dialog_setting_category.getWindow().setAttributes(params);
+                            dialog_setting_category.show();
                             break;
                         case 1:
                             break;
