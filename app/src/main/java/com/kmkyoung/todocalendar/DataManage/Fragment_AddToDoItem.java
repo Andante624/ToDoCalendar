@@ -169,35 +169,36 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                 datePickerDialog.show();
                 break;
             case R.id.add_todo_ok:
-                if(saveToDoItem())
-                    getFragmentManager().popBackStack();
+                if(editmode) {
+                    if (editToDoItem())
+                        getFragmentManager().popBackStack();
+                }
+                else {
+                    if (saveToDoItem())
+                        getFragmentManager().popBackStack();
+                }
                 break;
             case R.id.add_todo_cancel:
-//                getDB_data();
                 getFragmentManager().popBackStack();
                 break;
         }
     }
 
-//    public void getDB_data()
-//    {
-//        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-//        Cursor cursor = toDoDBManager.search();
-//        getActivity().startManagingCursor(cursor);
-//        while(cursor.moveToNext())
-//        {
-//            String title = cursor.getString(cursor.getColumnIndex("title"));
-//            String createddate = cursor.getString(cursor.getColumnIndex("createddate"));
-//            String deadlinedate = cursor.getString(cursor.getColumnIndex("deadlinedate"));
-//            String completeddate = cursor.getString(cursor.getColumnIndex("completeddate"));
-//            String category = cursor.getString(cursor.getColumnIndex("category"));
-//            float importance = cursor.getFloat(cursor.getColumnIndex("inportance"));
-//            Log.d("getDB_data",title+" "+createddate+" "+deadlinedate+" "+completeddate+" "+category+" "+importance);
-//        }
-//        toDoDBManager.close();
-//    }
 
     public boolean saveToDoItem()
+    {
+        if(getInputData())
+        {
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+            toDoDBManager.insertToDo(get_title, get_deadline_date, get_category, get_importance);
+            toDoDBManager.close();
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean getInputData()
     {
         get_title = title_editview.getText().toString();
 
@@ -206,13 +207,27 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             get_deadline_date = get_deadline_year + "-" + get_deadline_month + "-" + get_deadline_day;
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            toDoDBManager.insertToDo(get_title, get_deadline_date, get_category, get_importance);
-            toDoDBManager.close();
             return true;
         }
         else
             Toast.makeText(getActivity().getApplicationContext(),"Title 을 입력해 주세요",Toast.LENGTH_SHORT).show();
+
+        return false;
+    }
+
+    public boolean editToDoItem()
+    {
+        if(getInputData())
+        {
+            editItem.setTitle(get_title);
+            editItem.setDeadlineDate(get_deadline_date);
+            editItem.setInportance(get_importance);
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+            editItem.setCategory(toDoDBManager.getCategoryID(get_category));
+            toDoDBManager.editToDoItem(editItem);
+            toDoDBManager.close();
+            return true;
+        }
         return false;
     }
 

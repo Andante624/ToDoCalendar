@@ -117,6 +117,17 @@ public class ToDoDBManager {
         return new ToDo_Item(id,title,createddate,deadlinedate,completeddate,category,importance);
     }
 
+    public void editToDoItem(ToDo_Item editItem)
+    {
+        db = todo_db_helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ToDo_Title", editItem.getTitle());
+        values.put("ToDo_Deadline_date",editItem.getDeadlineDate());
+        values.put("Category_ID",editItem.getCategory());
+        values.put("ToDo_Inportance",editItem.getInportance());
+        db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
+    }
+
 
     /* Category_Table 관련 class */
 
