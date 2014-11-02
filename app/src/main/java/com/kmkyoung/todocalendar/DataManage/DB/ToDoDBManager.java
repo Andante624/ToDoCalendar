@@ -34,6 +34,11 @@ public class ToDoDBManager {
         db.close();
     }
 
+    public static int getCategoryCount()
+    {
+        return category_items.size();
+    }
+
     public void deleteAllData()
     {
         String sql = "delete from ToDo_Table;";
@@ -127,8 +132,12 @@ public class ToDoDBManager {
             return true;
     }
 
-    public List<Category_Item> selectAllCategory()
+    //return count
+    public int selectAllCategory(List<Category_Item> items, List<String> strings)
     {
+        strings.clear();
+        items.clear();
+
         category_items.clear();
         String sql = "select * from 'Category_Table';";
         db = todo_db_helper.getReadableDatabase();
@@ -137,9 +146,13 @@ public class ToDoDBManager {
         while(!categorys.isAfterLast())
         {
             category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
+            strings.add(categorys.getString(categorys.getColumnIndex("Category_Title")));
             categorys.moveToNext();
         }
-        return category_items;
+
+        items = category_items;
+
+        return category_items.size();
     }
 
     public static String getCategoryName(int Category_ID)

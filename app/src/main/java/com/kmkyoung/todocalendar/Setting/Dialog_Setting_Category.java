@@ -70,17 +70,10 @@ public class Dialog_Setting_Category extends Dialog {
 
     public void loadCategory()
     {
-        strings.clear();
-        category_items.clear();
         ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
-        category_items = toDoDBManager.selectAllCategory();
-        for(int i=0 ; i<category_items.size() ; i++)
-        {
-            strings.add(category_items.get(i).getCategory_Name());
-            Log.d("kmky", "loadCategory : Category_ID = " +i+" "+ category_items.get(i).getCategory_ID() + " " + category_items.get(i).getCategory_Name());
-        }
-        strings.add("추가하기");
+        toDoDBManager.selectAllCategory(category_items,strings);
         toDoDBManager.close();
+        strings.add("추가하기");
     }
 
     public void insertCategory(String new_category_name)

@@ -63,11 +63,10 @@ public class MainActivity extends Activity
 
     public void init()
     {
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(this);
-        List<Category_Item> category_itemList = toDoDBManager.selectAllCategory();
-        toDoDBManager.close();
-        if(category_itemList.isEmpty())
+        int category_count = ToDoDBManager.getCategoryCount();
+        if(category_count == 0)
         {
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getApplicationContext());
             toDoDBManager.insertCategory("없음");
             toDoDBManager.close();
         }

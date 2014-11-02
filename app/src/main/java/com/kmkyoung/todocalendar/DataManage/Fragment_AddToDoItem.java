@@ -18,10 +18,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Fragment_AddToDoItem extends Fragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
@@ -34,6 +37,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private int get_deadline_year=0, get_deadline_month=0, get_deadline_day=0;
     private String get_title, get_category, get_deadline_date;
     private float get_importance;
+
+    private List<Category_Item> category_items = new ArrayList<Category_Item>();
+    private List<String> strings = new ArrayList<String>();
 
     public static Fragment_AddToDoItem newInstance(String param1, String param2) {
         Fragment_AddToDoItem fragment = new Fragment_AddToDoItem();
@@ -74,9 +80,12 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         ok_button = (Button)view.findViewById(R.id.add_todo_ok);
         cancel_button = (Button)view.findViewById(R.id.add_todo_cancel);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.categorys_array, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        toDoDBManager.selectAllCategory(category_items,strings);
+        toDoDBManager.close();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,strings);
+
         category_spinner.setAdapter(adapter);
 
     }
