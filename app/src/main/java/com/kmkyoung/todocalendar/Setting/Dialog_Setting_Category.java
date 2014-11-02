@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,7 +52,7 @@ public class Dialog_Setting_Category extends Dialog {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             insertCategory(input_category.getText().toString());
-                            invalidateOptionsMenu();
+                            adapter.notifyDataSetChanged();
                         }
                     });
                     ab.setNegativeButton("취소",new OnClickListener() {
@@ -80,6 +79,7 @@ public class Dialog_Setting_Category extends Dialog {
 
     public void insertCategory(String new_category_name)
     {
+        strings.remove(new String("추가하기"));
         ToDoDBManager toDoDBManager = ToDoDBManager.open(context);
         int newId = toDoDBManager.insertCategory(new_category_name);
         if(newId != -1)
@@ -89,7 +89,7 @@ public class Dialog_Setting_Category extends Dialog {
             strings.add(new_category_name);
         }
         toDoDBManager.close();
-
+        strings.add("추가하기");
     }
 
 }
