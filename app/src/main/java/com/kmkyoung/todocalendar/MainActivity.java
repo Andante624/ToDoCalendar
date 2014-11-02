@@ -65,6 +65,7 @@ public class MainActivity extends Activity
     {
         ToDoDBManager toDoDBManager = ToDoDBManager.open(this);
         List<Category_Item> category_itemList = toDoDBManager.selectAllCategory();
+        toDoDBManager.close();
         if(category_itemList.isEmpty())
         {
             toDoDBManager.insertCategory("없음");

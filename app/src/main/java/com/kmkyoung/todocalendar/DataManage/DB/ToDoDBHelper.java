@@ -44,4 +44,5 @@ public class ToDoDBHelper extends SQLiteOpenHelper{
         sql_droptable = "DROP TABLE IF EXISTS " + "ToDo_Table;";
         db.execSQL(sql_droptable);
     }
+
 }

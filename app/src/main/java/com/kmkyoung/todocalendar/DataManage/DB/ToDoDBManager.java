@@ -38,9 +38,9 @@ public class ToDoDBManager {
     {
         String sql = "delete from ToDo_Table;";
         db = todo_db_helper.getWritableDatabase();
-        db.rawQuery(sql,null);
-        sql = "delete from Category_Table;";
-        db.rawQuery(sql,null);
+        db.execSQL(sql);
+        String sql2 = "delete from Category_Table;";
+        db.execSQL(sql2);
 
     }
 
@@ -129,6 +129,7 @@ public class ToDoDBManager {
 
     public List<Category_Item> selectAllCategory()
     {
+        category_items.clear();
         String sql = "select * from 'Category_Table';";
         db = todo_db_helper.getReadableDatabase();
         Cursor categorys = db.rawQuery(sql,null);
