@@ -19,7 +19,6 @@ public class ToDoDBManager {
     private ToDoDBHelper todo_db_helper;
     private SQLiteDatabase db;
 
-    //init
     public ToDoDBManager(Context context)
     {
         todo_db_helper = new ToDoDBHelper(context,"ToDo_Calendar.sqlite",null, 1);
@@ -29,9 +28,13 @@ public class ToDoDBManager {
     {
         return new ToDoDBManager(context);
     }
+    public void close()
+    {
+        db.close();
+    }
 
-    //save
-    public void insertDB(String title, String deadlinedate, String completeddate, int category, float inportance)
+    /* ToDo_Table 관련 class */
+    public void insertToDo(String title, String deadlinedate, String completeddate, int category, float inportance)
     {
         Calendar calendar = Calendar.getInstance();
         String createddate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
@@ -45,37 +48,6 @@ public class ToDoDBManager {
         values.put("Category_ID",category);
         values.put("ToDo_Inportance",inportance);
         db.insert("ToDo_Table",null,values);
-    }
-
-    //return keyvalue = Category_ID
-    public int insertCategory(String name)
-    {
-        db = todo_db_helper.getWritableDatabase();
-        String sql = "insert into Category_Table values("+name+");";
-        db.rawQuery(sql,null);
-        db.close();
-        db = todo_db_helper.getReadableDatabase();
-        sql = "select * from Category_Table where Category_Name='"+name+";";
-        Cursor result = db.rawQuery(sql,null);
-        result.moveToFirst();
-        int category_id = result.getColumnIndex("Category_ID");
-        db.close();
-        return category_id;
-    }
-
-    public List<Category_Item> selectAllCategory()
-    {
-        String sql = "select * from 'Category_Table';";
-        db = todo_db_helper.getReadableDatabase();
-        Cursor categorys = db.rawQuery(sql,null);
-        categorys.moveToFirst();
-        while(!categorys.isAfterLast())
-        {
-            category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
-            categorys.moveToNext();
-        }
-        db.close();
-        return category_items;
     }
 
     public List<ToDo_Item> selectDeadLineDate(String deadline)
@@ -105,6 +77,59 @@ public class ToDoDBManager {
         return items;
     }
 
+
+
+
+    /* Category_Table 관련 class */
+
+    //return keyvalue = Category_ID
+    public int insertCategory(String name)
+    {
+        if(!checkExistCategory(name))
+        {
+            db = todo_db_helper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("Category_Title", name);
+            db.insert("Category_Table", null, values);
+            db.close();
+        }
+
+        db = todo_db_helper.getReadableDatabase();
+        String sql = "select * from 'Category_Table' where Category_Title='" + name + "';";
+        Cursor result = db.rawQuery(sql, null);
+        result.moveToFirst();
+        int category_id = result.getColumnIndex("Category_ID");
+        db.close();
+
+        return category_id;
+    }
+
+    public boolean checkExistCategory(String name)
+    {
+        db = todo_db_helper.getReadableDatabase();
+        String sql = "select * from 'Category_Table' where Category_Title='"+name+"';";
+        Cursor result = db.rawQuery(sql,null);
+        if(result.getCount() == 0)
+            return false;
+        else
+            return true;
+    }
+
+    public List<Category_Item> selectAllCategory()
+    {
+        String sql = "select * from 'Category_Table';";
+        db = todo_db_helper.getReadableDatabase();
+        Cursor categorys = db.rawQuery(sql,null);
+        categorys.moveToFirst();
+        while(!categorys.isAfterLast())
+        {
+            category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
+            categorys.moveToNext();
+        }
+        db.close();
+        return category_items;
+    }
+
     public static String getCategoryName(int Category_ID)
     {
         for(int i=0; i<category_items.size() ; i++)
@@ -113,11 +138,6 @@ public class ToDoDBManager {
                 return category_items.get(i).getCategory_Name();
         }
         return "";
-    }
-
-    public void close()
-    {
-        db.close();
     }
 
 }

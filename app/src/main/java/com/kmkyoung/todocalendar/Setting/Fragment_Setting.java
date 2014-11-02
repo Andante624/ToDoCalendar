@@ -98,7 +98,7 @@ public class Fragment_Setting extends Fragment {
         List<String> setting_strings = new ArrayList<String>(){
             {
                 add("카테고리 관리");
-                add("To Do 삭제");
+                add("데이터 삭제");
                 add("테마 관리");
                 add("버전 정보");
             }

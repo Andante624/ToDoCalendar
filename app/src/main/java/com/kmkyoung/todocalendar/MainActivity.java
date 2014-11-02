@@ -10,12 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kmkyoung.todocalendar.Calendar.Fragment_Calendar;
+import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
+import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting_ColorPicker;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting_Information;
 import com.kmkyoung.todocalendar.ToDoList.Fragment_ToDoList;
 import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
+
+import java.util.List;
 
 
 public class MainActivity extends Activity
@@ -43,6 +47,8 @@ public class MainActivity extends Activity
 
         setContentView(R.layout.activity_main);
 
+        init();
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -53,6 +59,16 @@ public class MainActivity extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
+    }
+
+    public void init()
+    {
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(this);
+        List<Category_Item> category_itemList = toDoDBManager.selectAllCategory();
+        if(category_itemList.isEmpty())
+        {
+            toDoDBManager.insertCategory("없음");
+        }
     }
 
     @Override

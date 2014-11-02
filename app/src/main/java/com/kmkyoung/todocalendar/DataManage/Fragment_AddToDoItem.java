@@ -2,7 +2,6 @@ package com.kmkyoung.todocalendar.DataManage;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -164,7 +163,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
             ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            toDoDBManager.insertDB(get_title, get_deadline_date, null, 1, get_importance);
+            toDoDBManager.insertToDo(get_title, get_deadline_date, null, 1, get_importance);
             Log.d("saveToDoItem",get_title+" "+get_deadline_date+" "+get_category+" "+get_importance);
             toDoDBManager.close();
             return true;

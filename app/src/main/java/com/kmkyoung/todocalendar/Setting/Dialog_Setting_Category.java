@@ -1,20 +1,12 @@
 package com.kmkyoung.todocalendar.Setting;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
@@ -31,7 +23,7 @@ public class Dialog_Setting_Category extends Dialog {
     private ListView category_listview;
     private List<Category_Item> category_items;
     private ArrayAdapter<String> adapter;
-    final String[] strings = new String[]{"test1","test2","test3","추가","test1","test2","test3","추가"};
+    private List<String> strings = new ArrayList<String>();
 
     public Dialog_Setting_Category(final Context context) {
         super(context);
@@ -39,10 +31,10 @@ public class Dialog_Setting_Category extends Dialog {
         setTitle("카테고리 목록");
         setContentView(R.layout.dialog_setting_category);
 
+        category_items = new ArrayList<Category_Item>();
         loadCategory();
 
         adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,strings);
-        category_items = new ArrayList<Category_Item>();
         category_listview = (ListView)findViewById(R.id.setting_category_dialoglist);
         category_listview.setAdapter(adapter);
         category_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,11 +56,14 @@ public class Dialog_Setting_Category extends Dialog {
 
     public void loadCategory()
     {
+        strings.clear();
         ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
         category_items = toDoDBManager.selectAllCategory();
-        if(category_items.isEmpty())
-            category_items.add(new Category_Item(0,"없음"));
-
+        for(int i=0 ; i<category_items.size() ; i++)
+        {
+            strings.add(category_items.get(i).getCategory_Name());
+            Log.d("kmky", "loadCategory : Category_ID = " + category_items.get(i).getCategory_ID() + " " + category_items.get(i).getCategory_Name());
+        }
     }
 
 }
