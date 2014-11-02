@@ -47,8 +47,6 @@ public class MainActivity extends Activity
 
         setContentView(R.layout.activity_main);
 
-        init();
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -59,17 +57,6 @@ public class MainActivity extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
-    }
-
-    public void init()
-    {
-        int category_count = ToDoDBManager.getCategoryCount();
-        if(category_count == 0)
-        {
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getApplicationContext());
-            toDoDBManager.insertCategory("없음");
-            toDoDBManager.close();
-        }
     }
 
     @Override

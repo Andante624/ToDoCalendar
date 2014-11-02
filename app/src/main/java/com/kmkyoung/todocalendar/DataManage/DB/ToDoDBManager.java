@@ -22,6 +22,7 @@ public class ToDoDBManager {
     public ToDoDBManager(Context context)
     {
         todo_db_helper = new ToDoDBHelper(context,"ToDo_Calendar.sqlite",null, 1);
+        init();
     }
 
     public static ToDoDBManager open(Context context)
@@ -46,11 +47,20 @@ public class ToDoDBManager {
         db.execSQL(sql);
         String sql2 = "delete from Category_Table;";
         db.execSQL(sql2);
+        init();
+    }
 
+    public void init()
+    {
+        if(ToDoDBManager.getCategoryCount() == 0)
+        {
+            insertCategory("없음");
+            close();
+        }
     }
 
     /* ToDo_Table 관련 class */
-    public void insertToDo(String title, String deadlinedate, String completeddate, int category, float inportance)
+    public void insertToDo(String title, String deadlinedate, String category, float inportance)
     {
         Calendar calendar = Calendar.getInstance();
         String createddate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
@@ -60,8 +70,8 @@ public class ToDoDBManager {
         values.put("ToDo_Title", title);
         values.put("ToDo_Created_date",createddate);
         values.put("ToDo_Deadline_date",deadlinedate);
-        values.put("ToDo_Completed_date", completeddate);
-        values.put("Category_ID",category);
+        values.put("ToDo_Completed_date", "");
+        values.put("Category_ID",getCategoryID(category));
         values.put("ToDo_Inportance",inportance);
         db.insert("ToDo_Table",null,values);
     }
@@ -155,14 +165,29 @@ public class ToDoDBManager {
         return category_items.size();
     }
 
-    public static String getCategoryName(int Category_ID)
+    public void getUpdateCategory()
     {
+        category_items.clear();
+        String sql = "select * from 'Category_Table';";
+        Cursor categorys = db.rawQuery(sql,null);
+        categorys.moveToFirst();
+        while(!categorys.isAfterLast())
+        {
+            category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
+            categorys.moveToNext();
+        }
+    }
+
+    public int getCategoryID(String Category_Title)
+    {
+        getUpdateCategory();
+
         for(int i=0; i<category_items.size() ; i++)
         {
-            if(category_items.get(i).getCategory_ID() == Category_ID)
-                return category_items.get(i).getCategory_Name();
+            if(Category_Title.equals(category_items.get(i).getCategory_Name()))
+                return category_items.get(i).getCategory_ID();
         }
-        return "";
+        return -1;
     }
 
 }

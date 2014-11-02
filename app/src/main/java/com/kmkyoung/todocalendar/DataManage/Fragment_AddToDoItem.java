@@ -172,8 +172,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
             ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            toDoDBManager.insertToDo(get_title, get_deadline_date, null, 1, get_importance);
-            Log.d("saveToDoItem",get_title+" "+get_deadline_date+" "+get_category+" "+get_importance);
+            toDoDBManager.insertToDo(get_title, get_deadline_date, get_category, get_importance);
             toDoDBManager.close();
             return true;
         }

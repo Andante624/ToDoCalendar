@@ -73,6 +73,8 @@ public class Dialog_Setting_Category extends Dialog {
         ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
         toDoDBManager.selectAllCategory(category_items,strings);
         toDoDBManager.close();
+
+        strings.remove(new String("없음"));
         strings.add("추가하기");
     }
 
