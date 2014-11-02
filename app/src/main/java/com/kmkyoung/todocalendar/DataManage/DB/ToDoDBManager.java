@@ -148,17 +148,10 @@ public class ToDoDBManager {
         strings.clear();
         items.clear();
 
-        category_items.clear();
-        String sql = "select * from 'Category_Table';";
-        db = todo_db_helper.getReadableDatabase();
-        Cursor categorys = db.rawQuery(sql,null);
-        categorys.moveToFirst();
-        while(!categorys.isAfterLast())
-        {
-            category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
-            strings.add(categorys.getString(categorys.getColumnIndex("Category_Title")));
-            categorys.moveToNext();
-        }
+        getUpdateCategory();
+
+        for(int i=0 ;i <category_items.size() ; i++)
+            strings.add(category_items.get(i).getCategory_Name());
 
         items = category_items;
 
@@ -169,6 +162,7 @@ public class ToDoDBManager {
     {
         category_items.clear();
         String sql = "select * from 'Category_Table';";
+        db = todo_db_helper.getReadableDatabase();
         Cursor categorys = db.rawQuery(sql,null);
         categorys.moveToFirst();
         while(!categorys.isAfterLast())
