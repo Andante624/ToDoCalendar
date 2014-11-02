@@ -68,6 +68,7 @@ public class MainActivity extends Activity
         if(category_itemList.isEmpty())
         {
             toDoDBManager.insertCategory("없음");
+            toDoDBManager.close();
         }
     }
 

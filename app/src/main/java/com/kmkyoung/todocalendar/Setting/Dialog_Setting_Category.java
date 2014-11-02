@@ -64,6 +64,7 @@ public class Dialog_Setting_Category extends Dialog {
             strings.add(category_items.get(i).getCategory_Name());
             Log.d("kmky", "loadCategory : Category_ID = " + category_items.get(i).getCategory_ID() + " " + category_items.get(i).getCategory_Name());
         }
+        toDoDBManager.close();
     }
 
 }

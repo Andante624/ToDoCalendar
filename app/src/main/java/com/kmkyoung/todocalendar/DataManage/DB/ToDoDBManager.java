@@ -28,9 +28,20 @@ public class ToDoDBManager {
     {
         return new ToDoDBManager(context);
     }
+
     public void close()
     {
         db.close();
+    }
+
+    public void deleteAllData()
+    {
+        String sql = "delete from ToDo_Table;";
+        db = todo_db_helper.getWritableDatabase();
+        db.rawQuery(sql,null);
+        sql = "delete from Category_Table;";
+        db.rawQuery(sql,null);
+
     }
 
     /* ToDo_Table 관련 class */
@@ -99,7 +110,6 @@ public class ToDoDBManager {
         Cursor result = db.rawQuery(sql, null);
         result.moveToFirst();
         int category_id = result.getColumnIndex("Category_ID");
-        db.close();
 
         return category_id;
     }
@@ -109,7 +119,9 @@ public class ToDoDBManager {
         db = todo_db_helper.getReadableDatabase();
         String sql = "select * from 'Category_Table' where Category_Title='"+name+"';";
         Cursor result = db.rawQuery(sql,null);
-        if(result.getCount() == 0)
+        int count = result.getCount();
+        db.close();
+        if(count == 0)
             return false;
         else
             return true;
@@ -126,7 +138,6 @@ public class ToDoDBManager {
             category_items.add(new Category_Item(categorys.getInt(categorys.getColumnIndex("Category_ID")), categorys.getString(categorys.getColumnIndex("Category_Title"))));
             categorys.moveToNext();
         }
-        db.close();
         return category_items;
     }
 

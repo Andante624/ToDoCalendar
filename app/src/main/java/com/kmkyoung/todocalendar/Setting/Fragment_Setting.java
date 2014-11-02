@@ -2,7 +2,10 @@ package com.kmkyoung.todocalendar.Setting;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
+import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
@@ -133,13 +137,10 @@ public class Fragment_Setting extends Fragment {
                     FragmentManager fragmentManager = getFragmentManager();
                     switch (position) {
                         case 0:
-                            Dialog_Setting_Category dialog_setting_category = new Dialog_Setting_Category(getActivity());
-                            WindowManager.LayoutParams params = dialog_setting_category.getWindow().getAttributes();
-                            params.height =600;
-                            dialog_setting_category.getWindow().setAttributes(params);
-                            dialog_setting_category.show();
+                            showDialog_Category();
                             break;
                         case 1:
+                            showDialog_DeleteDB();
                             break;
                         case 2:
                             fragmentManager.beginTransaction()
@@ -159,6 +160,39 @@ public class Fragment_Setting extends Fragment {
 
             return convertView;
         }
+    }
+
+    public void showDialog_Category()
+    {
+        Dialog_Setting_Category dialog_setting_category = new Dialog_Setting_Category(getActivity());
+        WindowManager.LayoutParams params = dialog_setting_category.getWindow().getAttributes();
+        params.height = 600;
+        dialog_setting_category.getWindow().setAttributes(params);
+        dialog_setting_category.show();
+    }
+
+    public void showDialog_DeleteDB()
+    {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("주의!");
+        alertDialog.setMessage("ToDo 아이템과 카테고리를 모두 삭제하시겠습니까?");
+        alertDialog.setPositiveButton("승인",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+                toDoDBManager.deleteAllData();
+                toDoDBManager.close();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
     }
 
 }
