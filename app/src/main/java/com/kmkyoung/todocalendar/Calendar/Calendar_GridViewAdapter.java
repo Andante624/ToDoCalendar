@@ -56,7 +56,7 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
         else
             textView.setText(" ");
 
-        convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
+        convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75));
         return convertView;
     }
 

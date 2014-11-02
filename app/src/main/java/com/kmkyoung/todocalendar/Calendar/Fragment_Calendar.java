@@ -62,6 +62,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
         calendar_gridViewAdapter.setContext(context);
         todo_listViewAdapter = new ToDo_ListViewAdapter();
         todo_listViewAdapter.setContext(context);
+        todo_listViewAdapter.setFragment(this);
 
         for(int i=0 ; i<10 ; i++)
             todo_listViewAdapter.add();

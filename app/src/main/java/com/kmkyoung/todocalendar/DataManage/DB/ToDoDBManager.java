@@ -88,22 +88,34 @@ public class ToDoDBManager {
 
 
         while (!result.isAfterLast()) {
-            int id = result.getInt(result.getColumnIndex("ToDo_ID"));
-            String title = result.getString(result.getColumnIndex("ToDo_Title"));
-            String createddate = result.getString(result.getColumnIndex("ToDo_Created_date"));
-            String deadlinedate = result.getString(result.getColumnIndex("ToDo_Deadline_date"));
-            String completeddate = result.getString(result.getColumnIndex("ToDo_Completed_date"));
-            int category = result.getInt(result.getColumnIndex("Category_ID"));
-            float importance = result.getFloat(result.getColumnIndex("ToDo_Inportance"));
-
-            items.add(new ToDo_Item(id, title, createddate, deadlinedate, completeddate, category, importance));
+            items.add(selectToDoItems(result));
             result.moveToNext();
         }
 
         return items;
     }
 
+    public ToDo_Item selectToDoItem(int todo_id)
+    {
+        String sql = "select * from 'ToDo_Table' where ToDo_ID = "+todo_id+";";
+        db = todo_db_helper.getReadableDatabase();
+        Cursor item = db.rawQuery(sql, null);
+        item.moveToFirst();
 
+        return selectToDoItems(item);
+    }
+
+    public ToDo_Item selectToDoItems(Cursor cursor)
+    {
+        int id = cursor.getInt(cursor.getColumnIndex("ToDo_ID"));
+        String title = cursor.getString(cursor.getColumnIndex("ToDo_Title"));
+        String createddate = cursor.getString(cursor.getColumnIndex("ToDo_Created_date"));
+        String deadlinedate = cursor.getString(cursor.getColumnIndex("ToDo_Deadline_date"));
+        String completeddate = cursor.getString(cursor.getColumnIndex("ToDo_Completed_date"));
+        int category = cursor.getInt(cursor.getColumnIndex("Category_ID"));
+        float importance = cursor.getFloat(cursor.getColumnIndex("ToDo_Inportance"));
+        return new ToDo_Item(id,title,createddate,deadlinedate,completeddate,category,importance);
+    }
 
 
     /* Category_Table 관련 class */
@@ -151,9 +163,10 @@ public class ToDoDBManager {
         getUpdateCategory();
 
         for(int i=0 ;i <category_items.size() ; i++)
+        {
             strings.add(category_items.get(i).getCategory_Name());
-
-        items = category_items;
+            items.add(category_items.get(i));
+        }
 
         return category_items.size();
     }
@@ -183,5 +196,4 @@ public class ToDoDBManager {
         }
         return -1;
     }
-
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private RatingBar importance_ratingbar;
     private Button ok_button, cancel_button;
 
+    private Boolean editmode = false;
+    private int todo_id = -1;
+    private ToDo_Item editItem;
+
     private int get_deadline_year=0, get_deadline_month=0, get_deadline_day=0;
     private String get_title, get_category, get_deadline_date;
     private float get_importance;
@@ -41,32 +46,62 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private List<Category_Item> category_items = new ArrayList<Category_Item>();
     private List<String> strings = new ArrayList<String>();
 
-    public static Fragment_AddToDoItem newInstance(String param1, String param2) {
-        Fragment_AddToDoItem fragment = new Fragment_AddToDoItem();
-        return fragment;
+    public static Fragment_AddToDoItem newInstance(int todo_id) {
+        Fragment_AddToDoItem fragment_addToDoItem = new Fragment_AddToDoItem();
+        Bundle bundle = new Bundle();
+        bundle.putInt("ToDo_ID", todo_id);
+        fragment_addToDoItem.setArguments(bundle);
+        return fragment_addToDoItem;
     }
+
     public Fragment_AddToDoItem() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null)
+        {
+            editmode = true;
+            todo_id = getToDoID();
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+            editItem = toDoDBManager.selectToDoItem(todo_id);
+            toDoDBManager.close();
+        }
+    }
+
+    public int getToDoID()
+    {
+        return getArguments().getInt("ToDo_ID",-1);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_add_to_do_item, container, false);
         setLayout(view);
         setListener();
 
-        Calendar calendar = Calendar.getInstance();
-        get_deadline_year = calendar.get(Calendar.YEAR);
-        get_deadline_month = calendar.get(Calendar.MONTH);
-        get_deadline_day = calendar.get(Calendar.DAY_OF_MONTH);
-        date_textview.setText(get_deadline_year+"-"+(get_deadline_month+1)+"-"+get_deadline_day);
+        if(editmode)
+        {
+            title_editview.setText(editItem.getTitle());
+            date_textview.setText(editItem.getDeadlineDate());
+            for(int i= 0 ; i<category_items.size() ; i++)
+            {
+                if(editItem.getCategory() == category_items.get(i).getCategory_ID())
+                    category_spinner.setSelection(i);
+            }
+            importance_ratingbar.setRating(editItem.getInportance());
+        }
+        else
+        {
+            Calendar calendar = Calendar.getInstance();
+            get_deadline_year = calendar.get(Calendar.YEAR);
+            get_deadline_month = calendar.get(Calendar.MONTH);
+            get_deadline_day = calendar.get(Calendar.DAY_OF_MONTH);
+            date_textview.setText(get_deadline_year + "-" + (get_deadline_month + 1) + "-" + get_deadline_day);
+        }
 
         return view;
     }
@@ -81,10 +116,10 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         cancel_button = (Button)view.findViewById(R.id.add_todo_cancel);
 
         ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        toDoDBManager.selectAllCategory(category_items,strings);
+        toDoDBManager.selectAllCategory(category_items, strings);
         toDoDBManager.close();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,strings);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,strings);
 
         category_spinner.setAdapter(adapter);
 
