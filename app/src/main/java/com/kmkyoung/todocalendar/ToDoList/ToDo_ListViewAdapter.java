@@ -22,6 +22,7 @@ import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -114,9 +115,26 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
             }
         });
 
-        CheckBox checkBox = (CheckBox)convertView.findViewById(R.id.todoitem_checkbox);
+        final CheckBox checkBox = (CheckBox)convertView.findViewById(R.id.todoitem_checkbox);
         TextView dateview = (TextView)convertView.findViewById(R.id.todoitem_date);
         TextView titleview = (TextView)convertView.findViewById(R.id.todoitem_title);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked())
+                {
+                    Calendar calendar = Calendar.getInstance();
+                    todo_items.get(position).setCompletedDate(calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+                }
+                else
+                    todo_items.get(position).setCompletedDate("");
+
+                ToDoDBManager toDoDBManager = ToDoDBManager.open(activity);
+                toDoDBManager.editToDoItem(todo_items.get(position));
+                toDoDBManager.close();
+            }
+        });
 
         String[] split_data = todo_items.get(position).getDeadlineDate().split("-");
         String viewString = split_data[0]+"-"+(Integer.valueOf(split_data[1])+1)+"-"+split_data[2];

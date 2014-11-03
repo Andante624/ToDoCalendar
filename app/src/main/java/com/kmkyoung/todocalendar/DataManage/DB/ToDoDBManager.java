@@ -123,10 +123,12 @@ public class ToDoDBManager {
         ContentValues values = new ContentValues();
         values.put("ToDo_Title", editItem.getTitle());
         values.put("ToDo_Deadline_date",editItem.getDeadlineDate());
+        values.put("ToDo_Completed_date",editItem.getCompletedDate());
         values.put("Category_ID",editItem.getCategory());
         values.put("ToDo_Inportance",editItem.getInportance());
         db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
     }
+
 
     public void deleteToDoItem(int deleteitem_id)
     {
