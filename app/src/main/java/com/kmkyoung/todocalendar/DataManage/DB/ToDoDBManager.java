@@ -202,9 +202,22 @@ public class ToDoDBManager {
 
     public void deleteCategoryItem(int category_id)
     {
+        int default_id = 0;
+        for(int i=0; i<category_items.size() ; i++) {
+            if(category_items.get(i).getCategory_Name().equals("없음")) {
+                default_id = category_items.get(i).getCategory_ID();
+                break;
+            }
+        }
+
         String sql = "delete from Category_Table where Category_ID ="+category_id+";";
         db = todo_db_helper.getWritableDatabase();
         db.execSQL(sql);
+
+        db = todo_db_helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Category_ID",default_id);
+        db.update("ToDo_Table",values,"Category_ID = ?",new String[]{String.valueOf(category_id)});
     }
 
     public int getCategoryID(String Category_Title)
