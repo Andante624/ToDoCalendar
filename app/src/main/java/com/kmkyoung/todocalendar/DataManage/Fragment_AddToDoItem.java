@@ -43,7 +43,6 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private String get_title, get_category, get_deadline_date;
     private float get_importance;
 
-    private List<Category_Item> category_items = new ArrayList<Category_Item>();
     private List<String> strings = new ArrayList<String>();
 
     public static Fragment_AddToDoItem newInstance(int todo_id) {
@@ -68,6 +67,10 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             editItem = toDoDBManager.selectToDoItem(todo_id);
             toDoDBManager.close();
         }
+
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        strings = toDoDBManager.selectAllCategoryStrings();
+        toDoDBManager.close();
     }
 
     public int getToDoID()
@@ -87,9 +90,12 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         {
             title_editview.setText(editItem.getTitle());
             date_textview.setText(editItem.getDeadlineDate());
-            for(int i= 0 ; i<category_items.size() ; i++)
+            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+            String title = toDoDBManager.getCategoryTitle(editItem.getCategory());
+            toDoDBManager.close();
+            for(int i= 0 ; i<strings.size() ; i++)
             {
-                if(editItem.getCategory() == category_items.get(i).getCategory_ID())
+                if(strings.get(i).equals(title))
                     category_spinner.setSelection(i);
             }
             importance_ratingbar.setRating(editItem.getInportance());
@@ -114,10 +120,6 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         importance_ratingbar = (RatingBar)view.findViewById(R.id.add_todo_ratingbar);
         ok_button = (Button)view.findViewById(R.id.add_todo_ok);
         cancel_button = (Button)view.findViewById(R.id.add_todo_cancel);
-
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        toDoDBManager.selectAllCategory(category_items, strings);
-        toDoDBManager.close();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,strings);
 

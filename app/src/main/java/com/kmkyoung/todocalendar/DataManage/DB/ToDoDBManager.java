@@ -165,21 +165,19 @@ public class ToDoDBManager {
             return true;
     }
 
-    //return count
-    public int selectAllCategory(List<Category_Item> items, List<String> strings)
+    public List<Category_Item> selectAllCategory()
     {
-        strings.clear();
-        items.clear();
-
         getUpdateCategory();
+        return category_items;
+    }
 
-        for(int i=0 ;i <category_items.size() ; i++)
-        {
+    public List<String> selectAllCategoryStrings()
+    {
+        getUpdateCategory();
+        List<String> strings = new ArrayList<String>();
+        for(int i=0 ; i< category_items.size() ; i++)
             strings.add(category_items.get(i).getCategory_Name());
-            items.add(category_items.get(i));
-        }
-
-        return category_items.size();
+        return strings;
     }
 
     public void getUpdateCategory()
@@ -206,5 +204,17 @@ public class ToDoDBManager {
                 return category_items.get(i).getCategory_ID();
         }
         return -1;
+    }
+
+    public String getCategoryTitle(int Category_id)
+    {
+        getUpdateCategory();
+
+        for(int i=0; i<category_items.size() ; i++)
+        {
+            if(Category_id == category_items.get(i).getCategory_ID())
+                return category_items.get(i).getCategory_Name();
+        }
+        return "";
     }
 }
