@@ -88,6 +88,35 @@ public class Adapter_Setting_Category extends BaseAdapter {
                 }
             }
         });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
+                alertdialog.setTitle("Category 삭제");
+                alertdialog.setMessage("Category 를 삭제하시겠습니까?");
+                alertdialog.setPositiveButton("승인",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
+                        toDoDBManager.deleteCategoryItem(category_items.get(position).getCategory_ID());
+                        toDoDBManager.close();
+                        category_items.remove(position);
+                        dialog.dismiss();
+                        listView.invalidateViews();
+                    }
+                });
+                alertdialog.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertdialog.show();
+                return false;
+            }
+        });
+
         return convertView;
     }
 

@@ -200,6 +200,13 @@ public class ToDoDBManager {
         }
     }
 
+    public void deleteCategoryItem(int category_id)
+    {
+        String sql = "delete from Category_Table where Category_ID ="+category_id+";";
+        db = todo_db_helper.getWritableDatabase();
+        db.execSQL(sql);
+    }
+
     public int getCategoryID(String Category_Title)
     {
         getUpdateCategory();
