@@ -118,7 +118,9 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
         TextView dateview = (TextView)convertView.findViewById(R.id.todoitem_date);
         TextView titleview = (TextView)convertView.findViewById(R.id.todoitem_title);
 
-        dateview.setText(todo_items.get(position).getDeadlineDate());
+        String[] split_data = todo_items.get(position).getDeadlineDate().split("-");
+        String viewString = split_data[0]+"-"+(Integer.valueOf(split_data[1])+1)+"-"+split_data[2];
+        dateview.setText(viewString);
         titleview.setText(todo_items.get(position).getTitle());
 
         return convertView;
