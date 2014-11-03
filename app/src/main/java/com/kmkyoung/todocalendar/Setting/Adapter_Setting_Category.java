@@ -57,16 +57,16 @@ public class Adapter_Setting_Category extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if(convertView == null)
-            convertView = View.inflate(context, R.layout.setting_listview_item_category,null);
+        if (convertView == null)
+            convertView = View.inflate(context, R.layout.setting_listview_item_category, null);
 
-        TextView textView = (TextView)convertView.findViewById(R.id.setting_listview_item_title);
+        TextView textView = (TextView) convertView.findViewById(R.id.setting_listview_item_title);
         textView.setText(category_items.get(position).getCategory_Name());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(category_items.size()-1 == position) {
+                if (category_items.size() - 1 == position) {
                     AlertDialog.Builder ab = new AlertDialog.Builder(context);
                     ab.setTitle("카테고리 추가");
                     ab.setMessage("추가할 카테고리를 입력해주세요.");
@@ -78,7 +78,7 @@ public class Adapter_Setting_Category extends BaseAdapter {
                             insertCategory(input_category.getText().toString());
                         }
                     });
-                    ab.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+                    ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -89,41 +89,47 @@ public class Adapter_Setting_Category extends BaseAdapter {
             }
         });
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
-                alertdialog.setTitle("Category 삭제");
-                alertdialog.setMessage("Category 를 삭제하시겠습니까?");
-                alertdialog.setPositiveButton("승인",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
-                        toDoDBManager.deleteCategoryItem(category_items.get(position).getCategory_ID());
-                        toDoDBManager.close();
-                        category_items.remove(position);
-                        dialog.dismiss();
-                        listView.invalidateViews();
-                    }
-                });
-                alertdialog.setNegativeButton("취소",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alertdialog.show();
-                return false;
-            }
-        });
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
+                    alertdialog.setTitle("Category 삭제");
+                    alertdialog.setMessage("Category 를 삭제하시겠습니까?");
+                    alertdialog.setPositiveButton("승인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
+                            toDoDBManager.deleteCategoryItem(category_items.get(position).getCategory_ID());
+                            toDoDBManager.close();
+                            category_items.remove(position);
+                            dialog.dismiss();
+                            listView.invalidateViews();
+                        }
+                    });
+                    alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertdialog.show();
+                    return true;
+                }
+            });
 
-        return convertView;
+        if (category_items.get(position).getCategory_Name().equals("추가하기"))
+            convertView.setLongClickable(false);
+
+            return convertView;
     }
 
     public void setCategorys(List<Category_Item> items)
     {
         category_items.clear();
         category_items = items;
+        for(int i = 0; i<category_items.size() ; i++)
+            if(category_items.get(i).getCategory_Name().equals("없음")) category_items.remove(i);
+
         category_items.add(new Category_Item(0,"추가하기"));
     }
 
