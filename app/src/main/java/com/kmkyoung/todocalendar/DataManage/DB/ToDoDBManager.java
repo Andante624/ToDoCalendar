@@ -128,6 +128,12 @@ public class ToDoDBManager {
         db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
     }
 
+    public void deleteToDoItem(int deleteitem_id)
+    {
+        String sql = "delete from ToDo_Table where ToDo_ID ="+deleteitem_id+";";
+        db = todo_db_helper.getWritableDatabase();
+        db.execSQL(sql);
+    }
 
     /* Category_Table 관련 class */
 
