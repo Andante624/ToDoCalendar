@@ -17,4 +17,17 @@
     <string name="title_activity_activity__setting__information">Activity_Setting_Information</string>
     <string name="title_activity_activity__setting__color_picker">Activity_Setting_ColorPicker</string>
 
+    <string-array name="todolist_parents_strings">
+        <item name="todolist_parents_string1">7일 이내 종료 일정</item>
+        <item name="todolist_parents_string2">7일 이내 등록 일정</item>
+        <item name="todolist_parents_string3">카테고리 별 일정</item>
+        <item name="todolist_parents_string4">중요도 별 일정</item>
+        <item name="todolist_parents_string5">미완료 일정</item>
+        <item name="todolist_parents_string6">7완료 일정</item>
+    </string-array>
+
+    <string-array name="todolist_child_strings">
+        <item name="todolist_child_string1">중요도 순으로 보기</item>
+        <item name="todolist_child_string1">카테고리 순으로 보기</item>
+    </string-array>
 </resources>
