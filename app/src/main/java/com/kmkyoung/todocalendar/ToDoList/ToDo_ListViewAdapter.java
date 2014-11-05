@@ -125,7 +125,10 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
                 if(checkBox.isChecked())
                 {
                     Calendar calendar = Calendar.getInstance();
-                    todo_items.get(position).setCompletedDate(calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+                    String completed_date = ""+ calendar.get(Calendar.YEAR)+"-";
+                    completed_date += (calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH)+"-";
+                    completed_date += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
+                    todo_items.get(position).setCompletedDate(completed_date);
                 }
                 else
                     todo_items.get(position).setCompletedDate("");

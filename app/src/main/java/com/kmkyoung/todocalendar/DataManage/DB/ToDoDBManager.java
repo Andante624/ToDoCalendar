@@ -15,6 +15,11 @@ import java.util.List;
  * Created by kmkyoung on 2014. 9. 29..
  */
 public class ToDoDBManager {
+    private final static int SELECT_WHERE_ID =0;
+    private final static int SELECT_WHERE_CREATE_DATE = 1;
+    private final static int SELECT_WHERE__DATE = 1;
+
+
     private static List<Category_Item> category_items = new ArrayList<Category_Item>();
     private ToDoDBHelper todo_db_helper;
     private SQLiteDatabase db;
@@ -63,7 +68,11 @@ public class ToDoDBManager {
     public void insertToDo(String title, String deadlinedate, String category, float inportance)
     {
         Calendar calendar = Calendar.getInstance();
-        String createddate = calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+
+        String createddate = ""+calendar.get(Calendar.YEAR)+ "-";
+        createddate += (calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH)+"-";
+        createddate += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
+
 
         db = todo_db_helper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -105,7 +114,7 @@ public class ToDoDBManager {
         return selectToDoItems(item);
     }
 
-    public List<ToDo_Item> selectToDoItems(int parents, int child)
+    public List<ToDo_Item> selectToDoItems(int where, int condition)
     {
         List<ToDo_Item> items = new ArrayList<ToDo_Item>();
 

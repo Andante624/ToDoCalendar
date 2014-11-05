@@ -206,7 +206,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
 
         if(get_title.length() != 0)
         {
-            get_deadline_date = get_deadline_year + "-" + get_deadline_month + "-" + get_deadline_day;
+            get_deadline_date = ""+get_deadline_year+"-";
+            get_deadline_date += (get_deadline_month>=10)? get_deadline_month+"-" : "0"+get_deadline_month+"-";
+            get_deadline_date += (get_deadline_day>=10)? get_deadline_day : "0"+get_deadline_day;
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
             return true;
