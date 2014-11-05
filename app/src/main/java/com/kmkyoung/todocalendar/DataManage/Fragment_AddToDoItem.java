@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.R;
 
@@ -63,14 +61,14 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         {
             editmode = true;
             todo_id = getToDoID();
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            editItem = toDoDBManager.selectToDoItem(todo_id);
-            toDoDBManager.close();
+            DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+            editItem = dbManager.select_ToDoItem(todo_id);
+            dbManager.close();
         }
 
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        strings = toDoDBManager.selectAllCategoryStrings();
-        toDoDBManager.close();
+        DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+        strings = dbManager.select_AllCategoryItem_Strings();
+        dbManager.close();
     }
 
     public int getToDoID()
@@ -90,9 +88,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         {
             title_editview.setText(editItem.getTitle());
             date_textview.setText(editItem.getDeadlineDate());
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            String title = toDoDBManager.getCategoryTitle(editItem.getCategory());
-            toDoDBManager.close();
+            DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+            String title = dbManager.get_CategoryTitle(editItem.getCategory());
+            dbManager.close();
             for(int i= 0 ; i<strings.size() ; i++)
             {
                 if(strings.get(i).equals(title))
@@ -191,9 +189,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     {
         if(getInputData())
         {
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            toDoDBManager.insertToDo(get_title, get_deadline_date, get_category, get_importance);
-            toDoDBManager.close();
+            DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+            dbManager.insert_ToDoItem(get_title, get_deadline_date, get_category, get_importance);
+            dbManager.close();
             return true;
         }
         return false;
@@ -226,10 +224,10 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             editItem.setTitle(get_title);
             editItem.setDeadlineDate(get_deadline_date);
             editItem.setInportance(get_importance);
-            ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-            editItem.setCategory(toDoDBManager.getCategoryID(get_category));
-            toDoDBManager.editToDoItem(editItem);
-            toDoDBManager.close();
+            DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+            editItem.setCategory(dbManager.get_CategoryID(get_category));
+            dbManager.update_ToDoItem(editItem);
+            dbManager.close();
             return true;
         }
         return false;

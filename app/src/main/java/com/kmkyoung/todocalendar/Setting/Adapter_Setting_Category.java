@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
@@ -98,9 +98,9 @@ public class Adapter_Setting_Category extends BaseAdapter {
                     alertdialog.setPositiveButton("승인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
-                            toDoDBManager.deleteCategoryItem(category_items.get(position).getCategory_ID());
-                            toDoDBManager.close();
+                            DBManager dbManager = DBManager.open(context.getApplicationContext());
+                            dbManager.delete_CategoryItem(category_items.get(position).getCategory_ID());
+                            dbManager.close();
                             category_items.remove(position);
                             dialog.dismiss();
                             listView.invalidateViews();
@@ -136,13 +136,13 @@ public class Adapter_Setting_Category extends BaseAdapter {
     public void insertCategory(String new_category_name)
     {
         category_items.remove(category_items.size()-1);
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(context);
-        int newId = toDoDBManager.insertCategory(new_category_name);
+        DBManager dbManager = DBManager.open(context);
+        int newId = dbManager.insert_CategoryItem(new_category_name);
         if(newId != -1)
         {
             add(new Category_Item(newId,new_category_name));
         }
-        toDoDBManager.close();
+        dbManager.close();
 
         category_items.add(new Category_Item(0,"추가하기"));
         listView.invalidateViews();

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.widget.ListView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.List;
@@ -34,10 +34,10 @@ public class Dialog_Setting_Category extends Dialog {
 
     public void loadCategory()
     {
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(context.getApplicationContext());
-        List<Category_Item> items = toDoDBManager.selectAllCategory();
+        DBManager dbManager = DBManager.open(context.getApplicationContext());
+        List<Category_Item> items = dbManager.select_AllCategoryItem();
         adapter_setting_category.setCategorys(items);
-        toDoDBManager.close();
+        dbManager.close();
     }
 
 }

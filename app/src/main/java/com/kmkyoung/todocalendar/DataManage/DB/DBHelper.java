@@ -9,8 +9,8 @@ import android.util.Log;
 /**
  * Created by kmkyoung on 2014. 9. 28..
  */
-public class ToDoDBHelper extends SQLiteOpenHelper{
-    public ToDoDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+public class DBHelper extends SQLiteOpenHelper{
+    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 

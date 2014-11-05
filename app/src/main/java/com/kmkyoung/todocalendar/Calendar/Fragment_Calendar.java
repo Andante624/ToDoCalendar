@@ -14,7 +14,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.R;
 import com.kmkyoung.todocalendar.ToDoList.ToDo_ListViewAdapter;
@@ -178,9 +178,9 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
 
     public void drawToDoList(String date)
     {
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        List<ToDo_Item> items = toDoDBManager.select_ToDoItems(ToDoDBManager.WHERE_MATCH_DEADLINE_DATE, date);
-        toDoDBManager.close();
+        DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+        List<ToDo_Item> items = dbManager.select_ToDoItems(dbManager.WHERE_MATCH_DEADLINE_DATE, date);
+        dbManager.close();
 
         todo_listViewAdapter.setTodolist_items(items);
         todo_listview.invalidateViews();

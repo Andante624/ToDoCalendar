@@ -1,12 +1,9 @@
 package com.kmkyoung.todocalendar.Setting;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kmkyoung.todocalendar.DataManage.DB.Category_Item;
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.ArrayList;
@@ -179,9 +174,9 @@ public class Fragment_Setting extends Fragment {
         alertDialog.setPositiveButton("승인",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-                toDoDBManager.deleteAllData();
-                toDoDBManager.close();
+                DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+                dbManager.delete_AllData();
+                dbManager.close();
                 dialog.dismiss();
             }
         });

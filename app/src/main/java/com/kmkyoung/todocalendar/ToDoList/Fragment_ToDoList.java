@@ -10,12 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
-import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
-
-import java.util.List;
 
 
 public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -137,9 +134,9 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
 
     public void requestToDoItems(int where, String condition)
     {
-        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        toDo_listViewAdapter.setTodolist_items(toDoDBManager.select_ToDoItems(where,condition));
-        toDoDBManager.close();
+        DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+        toDo_listViewAdapter.setTodolist_items(dbManager.select_ToDoItems(where, condition));
+        dbManager.close();
     }
 
     @Override

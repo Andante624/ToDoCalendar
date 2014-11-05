@@ -4,17 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by kmkyoung on 2014. 9. 29..
  */
-public class ToDoDBManager {
+public class DBManager {
     public final static int WHERE_MATCH_TODO_ID =0;
     public final static int WHERE_MATCH_DEADLINE_DATE = 1;
     public final static int WHERE_MATCH_CATEGORY = 2;
@@ -26,31 +24,34 @@ public class ToDoDBManager {
 
 
     private static List<Category_Item> category_items = new ArrayList<Category_Item>();
-    private ToDoDBHelper todo_db_helper;
+    private DBHelper todo_db_helper;
     private SQLiteDatabase db;
 
-    public ToDoDBManager(Context context)
+    public DBManager(Context context)
     {
-        todo_db_helper = new ToDoDBHelper(context,"ToDo_Calendar.sqlite",null, 1);
+        todo_db_helper = new DBHelper(context,"ToDo_Calendar.sqlite",null, 1);
         init();
     }
 
-    public static ToDoDBManager open(Context context)
+    public void init()
     {
-        return new ToDoDBManager(context);
+        if(DBManager.get_CategoryCount() == 0)
+        {
+            insert_CategoryItem("없음");
+            close();
+        }
     }
 
+    public static DBManager open(Context context)
+    {
+        return new DBManager(context);
+    }
     public void close()
     {
         db.close();
     }
 
-    public static int getCategoryCount()
-    {
-        return category_items.size();
-    }
-
-    public void deleteAllData()
+    public void delete_AllData()
     {
         String sql = "delete from ToDo_Table;";
         db = todo_db_helper.getWritableDatabase();
@@ -60,17 +61,8 @@ public class ToDoDBManager {
         init();
     }
 
-    public void init()
-    {
-        if(ToDoDBManager.getCategoryCount() == 0)
-        {
-            insertCategory("없음");
-            close();
-        }
-    }
-
     /* ToDo_Table 관련 class */
-    public void insertToDo(String title, String deadlinedate, String category, float inportance)
+    public void insert_ToDoItem(String title, String deadlinedate, String category, float inportance)
     {
         Calendar calendar = Calendar.getInstance();
 
@@ -85,38 +77,31 @@ public class ToDoDBManager {
         values.put("ToDo_Created_date",createddate);
         values.put("ToDo_Deadline_date",deadlinedate);
         values.put("ToDo_Completed_date", "");
-        values.put("Category_ID",getCategoryID(category));
+        values.put("Category_ID",get_CategoryID(category));
         values.put("ToDo_Inportance",inportance);
         db.insert("ToDo_Table",null,values);
     }
 
-//    public List<ToDo_Item> selectDeadLineDate(String deadline)
-//    {
-//        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
-//
-//        String sql = "select * from 'ToDo_Table' where ToDo_Deadline_date = '"+deadline+"';";
-//
-//        db = todo_db_helper.getReadableDatabase();
-//        Cursor result = db.rawQuery(sql, null);
-//        result.moveToFirst();
-//
-//
-//        while (!result.isAfterLast()) {
-//            items.add(getToDoItems(result));
-//            result.moveToNext();
-//        }
-//
-//        return items;
-//    }
+    public void update_ToDoItem(ToDo_Item editItem)
+    {
+        db = todo_db_helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ToDo_Title", editItem.getTitle());
+        values.put("ToDo_Deadline_date",editItem.getDeadlineDate());
+        values.put("ToDo_Completed_date",editItem.getCompletedDate());
+        values.put("Category_ID",editItem.getCategory());
+        values.put("ToDo_Inportance",editItem.getInportance());
+        db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
+    }
 
-    public ToDo_Item selectToDoItem(int todo_id)
+    public ToDo_Item select_ToDoItem(int todo_id)
     {
         String sql = "select * from 'ToDo_Table' where ToDo_ID = "+todo_id+";";
         db = todo_db_helper.getReadableDatabase();
         Cursor item = db.rawQuery(sql, null);
         item.moveToFirst();
 
-        return getToDoItems(item);
+        return get_ToDoItems(item);
     }
 
     public List<ToDo_Item> select_ToDoItems(int where, String condition)
@@ -136,14 +121,14 @@ public class ToDoDBManager {
 
 
         while (!result.isAfterLast()) {
-            items.add(getToDoItems(result));
+            items.add(get_ToDoItems(result));
             result.moveToNext();
         }
 
         return items;
     }
 
-    public ToDo_Item getToDoItems(Cursor cursor)
+    public ToDo_Item get_ToDoItems(Cursor cursor)
     {
         int id = cursor.getInt(cursor.getColumnIndex("ToDo_ID"));
         String title = cursor.getString(cursor.getColumnIndex("ToDo_Title"));
@@ -155,20 +140,7 @@ public class ToDoDBManager {
         return new ToDo_Item(id,title,createddate,deadlinedate,completeddate,category,importance);
     }
 
-    public void editToDoItem(ToDo_Item editItem)
-    {
-        db = todo_db_helper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("ToDo_Title", editItem.getTitle());
-        values.put("ToDo_Deadline_date",editItem.getDeadlineDate());
-        values.put("ToDo_Completed_date",editItem.getCompletedDate());
-        values.put("Category_ID",editItem.getCategory());
-        values.put("ToDo_Inportance",editItem.getInportance());
-        db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
-    }
-
-
-    public void deleteToDoItem(int deleteitem_id)
+    public void delete_ToDoItem(int deleteitem_id)
     {
         String sql = "delete from ToDo_Table where ToDo_ID ="+deleteitem_id+";";
         db = todo_db_helper.getWritableDatabase();
@@ -178,9 +150,9 @@ public class ToDoDBManager {
     /* Category_Table 관련 class */
 
     //return keyvalue = Category_ID
-    public int insertCategory(String name)
+    public int insert_CategoryItem(String name)
     {
-        if(!checkExistCategory(name))
+        if(!checkExist_CategoryItem(name))
         {
             db = todo_db_helper.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -198,7 +170,9 @@ public class ToDoDBManager {
         return category_id;
     }
 
-    public boolean checkExistCategory(String name)
+
+
+    public boolean checkExist_CategoryItem(String name)
     {
         db = todo_db_helper.getReadableDatabase();
         String sql = "select * from 'Category_Table' where Category_Title='"+name+"';";
@@ -211,22 +185,22 @@ public class ToDoDBManager {
             return true;
     }
 
-    public List<Category_Item> selectAllCategory()
+    public List<Category_Item> select_AllCategoryItem()
     {
-        getUpdateCategory();
+        update_CategoryItems();
         return category_items;
     }
 
-    public List<String> selectAllCategoryStrings()
+    public List<String> select_AllCategoryItem_Strings()
     {
-        getUpdateCategory();
+        update_CategoryItems();
         List<String> strings = new ArrayList<String>();
         for(int i=0 ; i< category_items.size() ; i++)
             strings.add(category_items.get(i).getCategory_Name());
         return strings;
     }
 
-    public void getUpdateCategory()
+    public void update_CategoryItems()
     {
         category_items.clear();
         String sql = "select * from 'Category_Table';";
@@ -240,7 +214,7 @@ public class ToDoDBManager {
         }
     }
 
-    public void deleteCategoryItem(int category_id)
+    public void delete_CategoryItem(int category_id)
     {
         int default_id = 0;
         for(int i=0; i<category_items.size() ; i++) {
@@ -260,9 +234,9 @@ public class ToDoDBManager {
         db.update("ToDo_Table",values,"Category_ID = ?",new String[]{String.valueOf(category_id)});
     }
 
-    public int getCategoryID(String Category_Title)
+    public int get_CategoryID(String Category_Title)
     {
-        getUpdateCategory();
+        update_CategoryItems();
 
         for(int i=0; i<category_items.size() ; i++)
         {
@@ -272,9 +246,9 @@ public class ToDoDBManager {
         return -1;
     }
 
-    public String getCategoryTitle(int Category_id)
+    public String get_CategoryTitle(int Category_id)
     {
-        getUpdateCategory();
+        update_CategoryItems();
 
         for(int i=0; i<category_items.size() ; i++)
         {
@@ -282,5 +256,10 @@ public class ToDoDBManager {
                 return category_items.get(i).getCategory_Name();
         }
         return "";
+    }
+
+    public static int get_CategoryCount()
+    {
+        return category_items.size();
     }
 }
