@@ -60,6 +60,7 @@ public class Fragment_ToDoList extends Fragment {
         todo_listview = (ListView)view.findViewById(R.id.todolist_todolist);
         spinner_parents = (Spinner)view.findViewById(R.id.todolist_parents_spinner);
         spinner_child = (Spinner)view.findViewById(R.id.todolist_child_spinner);
+        todo_listview.setAdapter(toDo_listViewAdapter);
         toDo_listViewAdapter.setListview(todo_listview);
 
         spinner_parents.setAdapter(spinnerAdapter_todo_parents);
