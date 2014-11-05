@@ -92,7 +92,9 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
 
         drawCalendar(selected_year, selected_month, selected_day);
 
-        drawToDoList(selected_year+"-"+selected_month+"-"+selected_day);
+        drawToDoList(selected_year+"-"
+                +((calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH))+"-"
+                +((calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH)));
     }
 
     public void drawCalendar(int year, int month, int day)
@@ -102,7 +104,12 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
         for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
             calendar_gridViewAdapter.add(new Calendar_Item(true));
         for(int i = 1; i<=Calendar_Utils.getLastWeek(year,month,day) ; i++)
-            calendar_gridViewAdapter.add(new Calendar_Item(i,selected_year+"-"+selected_month+"-"+i));
+        {
+            String date = selected_year+"-";
+            date += (selected_month>=10)? selected_month+"-" : "0"+selected_month+"-";
+            date += (i>=10)? i : "0"+i;
+            calendar_gridViewAdapter.add(new Calendar_Item(i, date));
+        }
         calendar_month.setText(selected_year + "년" + (selected_month + 1) + "월");
         calendar_gridView.invalidateViews();
     }
@@ -172,7 +179,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
     public void drawToDoList(String date)
     {
         ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        List<ToDo_Item> items = toDoDBManager.selectDeadLineDate(date);
+        List<ToDo_Item> items = toDoDBManager.select_ToDoItems(ToDoDBManager.WHERE_MATCH_DEADLINE_DATE, date);
         toDoDBManager.close();
 
         todo_listViewAdapter.setTodolist_items(items);

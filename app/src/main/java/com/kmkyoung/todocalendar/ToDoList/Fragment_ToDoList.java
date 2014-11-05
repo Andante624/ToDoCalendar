@@ -112,7 +112,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        requestToDoItems(2,0);
+//                        requestToDoItems(2,0);
                         spinner_child.setVisibility(View.INVISIBLE);
                         todo_listview.invalidateViews();
                         break;
@@ -121,11 +121,11 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 4:
-                        requestToDoItems(4,0);
+//                        requestToDoItems(4,0);
                         spinner_child.setVisibility(View.INVISIBLE);
                         break;
                     case 5:
-                        requestToDoItems(5,0);
+//                        requestToDoItems(5,0);
                         spinner_child.setVisibility(View.INVISIBLE);
                         break;
                 }
@@ -135,10 +135,10 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
         }
     }
 
-    public void requestToDoItems(int parents, int child)
+    public void requestToDoItems(int where, String condition)
     {
         ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
-        toDo_listViewAdapter.setTodolist_items(toDoDBManager.selectToDoItems(parents,child));
+        toDo_listViewAdapter.setTodolist_items(toDoDBManager.select_ToDoItems(where,condition));
         toDoDBManager.close();
     }
 

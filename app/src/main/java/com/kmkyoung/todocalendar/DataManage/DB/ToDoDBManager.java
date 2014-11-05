@@ -15,9 +15,14 @@ import java.util.List;
  * Created by kmkyoung on 2014. 9. 29..
  */
 public class ToDoDBManager {
-    private final static int SELECT_WHERE_ID =0;
-    private final static int SELECT_WHERE_CREATE_DATE = 1;
-    private final static int SELECT_WHERE__DATE = 1;
+    public final static int WHERE_MATCH_TODO_ID =0;
+    public final static int WHERE_MATCH_DEADLINE_DATE = 1;
+    public final static int WHERE_MATCH_CATEGORY = 2;
+    public final static int WHERE_MATCH_IMPORTANCE = 3;
+
+    public final static int WHERE_COMPARISON_CREATE_DATE = 1;
+    public final static int WHERE_COMPARISON_DEADLINE_DATE = 2;
+    public final static int WHERE_COMPARISON_COMPLETE_DATE = 3;
 
 
     private static List<Category_Item> category_items = new ArrayList<Category_Item>();
@@ -85,24 +90,24 @@ public class ToDoDBManager {
         db.insert("ToDo_Table",null,values);
     }
 
-    public List<ToDo_Item> selectDeadLineDate(String deadline)
-    {
-        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
-
-        String sql = "select * from 'ToDo_Table' where ToDo_Deadline_date = '"+deadline+"';";
-
-        db = todo_db_helper.getReadableDatabase();
-        Cursor result = db.rawQuery(sql, null);
-        result.moveToFirst();
-
-
-        while (!result.isAfterLast()) {
-            items.add(selectToDoItems(result));
-            result.moveToNext();
-        }
-
-        return items;
-    }
+//    public List<ToDo_Item> selectDeadLineDate(String deadline)
+//    {
+//        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
+//
+//        String sql = "select * from 'ToDo_Table' where ToDo_Deadline_date = '"+deadline+"';";
+//
+//        db = todo_db_helper.getReadableDatabase();
+//        Cursor result = db.rawQuery(sql, null);
+//        result.moveToFirst();
+//
+//
+//        while (!result.isAfterLast()) {
+//            items.add(getToDoItems(result));
+//            result.moveToNext();
+//        }
+//
+//        return items;
+//    }
 
     public ToDo_Item selectToDoItem(int todo_id)
     {
@@ -111,17 +116,34 @@ public class ToDoDBManager {
         Cursor item = db.rawQuery(sql, null);
         item.moveToFirst();
 
-        return selectToDoItems(item);
+        return getToDoItems(item);
     }
 
-    public List<ToDo_Item> selectToDoItems(int where, int condition)
+    public List<ToDo_Item> select_ToDoItems(int where, String condition)
     {
         List<ToDo_Item> items = new ArrayList<ToDo_Item>();
+        String sql = "select * from 'ToDo_Table' where ";
+        switch (where)
+        {
+            case WHERE_MATCH_DEADLINE_DATE:
+                sql += "ToDo_Deadline_date = '"+condition+"';";
+                break;
+        }
+
+        db = todo_db_helper.getReadableDatabase();
+        Cursor result = db.rawQuery(sql, null);
+        result.moveToFirst();
+
+
+        while (!result.isAfterLast()) {
+            items.add(getToDoItems(result));
+            result.moveToNext();
+        }
 
         return items;
     }
 
-    public ToDo_Item selectToDoItems(Cursor cursor)
+    public ToDo_Item getToDoItems(Cursor cursor)
     {
         int id = cursor.getInt(cursor.getColumnIndex("ToDo_ID"));
         String title = cursor.getString(cursor.getColumnIndex("ToDo_Title"));
