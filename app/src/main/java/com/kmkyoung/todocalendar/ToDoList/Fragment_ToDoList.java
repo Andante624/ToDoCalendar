@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import com.kmkyoung.todocalendar.DataManage.DB.ToDoDBManager;
 import com.kmkyoung.todocalendar.R;
 
 import java.util.List;
@@ -111,16 +112,20 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 2:
+                        requestToDoItems(2,0);
                         spinner_child.setVisibility(View.INVISIBLE);
+                        todo_listview.invalidateViews();
                         break;
                     case 3:
                         spinnerAdapter_todo_child.setSelect(false);
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 4:
+                        requestToDoItems(4,0);
                         spinner_child.setVisibility(View.INVISIBLE);
                         break;
                     case 5:
+                        requestToDoItems(5,0);
                         spinner_child.setVisibility(View.INVISIBLE);
                         break;
                 }
@@ -128,6 +133,13 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
             case R.id.todolist_child_spinner:
                 break;
         }
+    }
+
+    public void requestToDoItems(int parents, int child)
+    {
+        ToDoDBManager toDoDBManager = ToDoDBManager.open(getActivity().getApplicationContext());
+        toDo_listViewAdapter.setTodolist_items(toDoDBManager.selectToDoItems(parents,child));
+        toDoDBManager.close();
     }
 
     @Override

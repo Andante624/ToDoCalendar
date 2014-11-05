@@ -105,6 +105,13 @@ public class ToDoDBManager {
         return selectToDoItems(item);
     }
 
+    public List<ToDo_Item> selectToDoItems(int parents, int child)
+    {
+        List<ToDo_Item> items = new ArrayList<ToDo_Item>();
+
+        return items;
+    }
+
     public ToDo_Item selectToDoItems(Cursor cursor)
     {
         int id = cursor.getInt(cursor.getColumnIndex("ToDo_ID"));
