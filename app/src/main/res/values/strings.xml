@@ -23,11 +23,20 @@
         <item name="todolist_parents_string3">카테고리 별 일정</item>
         <item name="todolist_parents_string4">중요도 별 일정</item>
         <item name="todolist_parents_string5">미완료 일정</item>
-        <item name="todolist_parents_string6">7완료 일정</item>
+        <item name="todolist_parents_string6">완료 일정</item>
     </string-array>
 
-    <string-array name="todolist_child_strings">
-        <item name="todolist_child_string1">중요도 순으로 보기</item>
-        <item name="todolist_child_string1">카테고리 순으로 보기</item>
+    <string-array name="todolist_child_strings1">
+        <item name="todolist_child_string1_1">중요도 순으로 보기</item>
+        <item name="todolist_child_string1_2">카테고리 순으로 보기</item>
     </string-array>
+    <string-array name="todolist_child_strings2">
+        <item name="todolist_child_string2_1">0 ~ 0.5</item>
+        <item name="todolist_child_string2_2">1 ~ 1.5</item>
+        <item name="todolist_child_string2_3">2 ~ 2.5</item>
+        <item name="todolist_child_string2_4">3 ~ 3.5</item>
+        <item name="todolist_child_string2_5">4 ~ 4.5</item>
+        <item name="todolist_child_string2_6">5</item>
+    </string-array>
+
 </resources>
