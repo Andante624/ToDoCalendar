@@ -18,6 +18,7 @@ import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.R;
 import com.kmkyoung.todocalendar.ToDoList.ToDo_ListViewAdapter;
+import com.kmkyoung.todocalendar.Utils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -92,22 +93,18 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
 
         drawCalendar(selected_year, selected_month, selected_day);
 
-        drawToDoList(selected_year+"-"
-                +((calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH))+"-"
-                +((calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH)));
+        drawToDoList(Utils.getStringToday());
     }
 
     public void drawCalendar(int year, int month, int day)
     {
         calendar_gridViewAdapter.removeAllItems();
 
-        for(int i = 1; i < Calendar_Utils.getFirstWeek(year,month); i++)
+        for(int i = 1; i < Utils.getFirstWeek(year, month); i++)
             calendar_gridViewAdapter.add(new Calendar_Item(true));
-        for(int i = 1; i<=Calendar_Utils.getLastWeek(year,month,day) ; i++)
+        for(int i = 1; i<= Utils.getLastWeek(year, month, day) ; i++)
         {
-            String date = selected_year+"-";
-            date += (selected_month>=10)? selected_month+"-" : "0"+selected_month+"-";
-            date += (i>=10)? i : "0"+i;
+            String date = Utils.getStringDate(selected_year,selected_month,i);
             calendar_gridViewAdapter.add(new Calendar_Item(i, date));
         }
         calendar_month.setText(selected_year + "년" + (selected_month + 1) + "월");

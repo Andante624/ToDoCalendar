@@ -16,6 +16,7 @@ import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
 import com.kmkyoung.todocalendar.R;
+import com.kmkyoung.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -119,13 +120,7 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked())
-                {
-                    Calendar calendar = Calendar.getInstance();
-                    String completed_date = ""+ calendar.get(Calendar.YEAR)+"-";
-                    completed_date += (calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH)+"-";
-                    completed_date += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
-                    todo_items.get(position).setCompletedDate(completed_date);
-                }
+                    todo_items.get(position).setCompletedDate(Utils.getStringToday());
                 else
                     todo_items.get(position).setCompletedDate("");
 

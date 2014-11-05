@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.kmkyoung.todocalendar.Utils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -64,17 +66,10 @@ public class DBManager {
     /* ToDo_Table 관련 class */
     public void insert_ToDoItem(String title, String deadlinedate, String category, float inportance)
     {
-        Calendar calendar = Calendar.getInstance();
-
-        String createddate = ""+calendar.get(Calendar.YEAR)+ "-";
-        createddate += (calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH)+"-";
-        createddate += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
-
-
         db = todo_db_helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("ToDo_Title", title);
-        values.put("ToDo_Created_date",createddate);
+        values.put("ToDo_Created_date", Utils.getStringToday());
         values.put("ToDo_Deadline_date",deadlinedate);
         values.put("ToDo_Completed_date", "");
         values.put("Category_ID",get_CategoryID(category));

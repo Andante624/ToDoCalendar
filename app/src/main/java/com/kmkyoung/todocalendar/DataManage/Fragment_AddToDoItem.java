@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.DataManage.DB.ToDo_Item;
 import com.kmkyoung.todocalendar.R;
+import com.kmkyoung.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -204,9 +205,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
 
         if(get_title.length() != 0)
         {
-            get_deadline_date = ""+get_deadline_year+"-";
-            get_deadline_date += (get_deadline_month>=10)? get_deadline_month+"-" : "0"+get_deadline_month+"-";
-            get_deadline_date += (get_deadline_day>=10)? get_deadline_day : "0"+get_deadline_day;
+            get_deadline_date = Utils.getStringDate(get_deadline_year,get_deadline_month,get_deadline_day);
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
             return true;
