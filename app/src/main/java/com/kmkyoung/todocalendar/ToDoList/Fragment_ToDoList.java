@@ -51,6 +51,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
         spinnerAdapter_todo_child = new SpinnerAdapter_ToDo_child();
         spinnerAdapter_todo_child.setContext(getActivity().getApplicationContext());
         spinnerAdapter_todo_child.setItems();
+
     }
 
     @Override
@@ -58,6 +59,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_to_do_list, container, false);
         setLayout(view);
+        spinnerAdapter_todo_child.updateCategory();
 
         return view;
     }
@@ -76,6 +78,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
         spinner_child = (Spinner)view.findViewById(R.id.todolist_child_spinner);
         spinner_child.setAdapter(spinnerAdapter_todo_child);
         spinner_child.setOnItemSelectedListener(this);
+
     }
 
     @Override
@@ -109,13 +112,16 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         requestToDoItems(DBManager.WHERE_COMPARISON_7CREATE_DATE,null);
                         break;
                     case 2:
-//                        동적으로 list 생성 필요
+                        spinnerAdapter_todo_child.setSelect(1);
                         spinner_child.setVisibility(View.VISIBLE);
-                        todo_listview.invalidateViews();
+                        spinner_child.setSelection(0);
+                        spinnerAdapter_todo_child.notifyDataSetChanged();
                         break;
                     case 3:
-                        spinnerAdapter_todo_child.setSelect(false);
+                        spinnerAdapter_todo_child.setSelect(0);
                         spinner_child.setVisibility(View.VISIBLE);
+                        spinner_child.setSelection(0);
+                        spinnerAdapter_todo_child.notifyDataSetChanged();
                         break;
                     case 4:
                         spinner_child.setVisibility(View.INVISIBLE);
@@ -129,14 +135,15 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                 }
                 break;
             case R.id.todolist_child_spinner:
-                switch (spinner_parents.getSelectedItemPosition())
+                if(spinnerAdapter_todo_child.getSelect()==1) //category
                 {
-                    case 2:
-                        break;
-                    case 3:
-                        break;
+                    String category_title = spinnerAdapter_todo_child.getItem(position);
+                    requestToDoItems(DBManager.WHERE_MATCH_CATEGORY,category_title);
                 }
-                break;
+                else
+                {
+                    requestToDoItems(DBManager.WHERE_MATCH_IMPORTANCE,position+"");
+                }
         }
     }
 

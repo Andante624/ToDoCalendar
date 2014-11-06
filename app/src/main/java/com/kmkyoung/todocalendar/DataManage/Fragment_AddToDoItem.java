@@ -87,8 +87,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
 
         if(editmode)
         {
+            get_deadline_date = editItem.getDeadlineDate();
             title_editview.setText(editItem.getTitle());
-            date_textview.setText(editItem.getDeadlineDate());
+            date_textview.setText(get_deadline_date);
             DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
             String title = dbManager.get_CategoryTitle(editItem.getCategory());
             dbManager.close();
@@ -163,7 +164,8 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                         get_deadline_year = year;
                         get_deadline_month = monthOfYear+1;
                         get_deadline_day = dayOfMonth;
-                        date_textview.setText(get_deadline_year+"-"+get_deadline_month+"-"+get_deadline_day);
+                        get_deadline_date = Utils.getStringDate(get_deadline_year,get_deadline_month,get_deadline_day);
+                        date_textview.setText(get_deadline_date);
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -205,7 +207,6 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
 
         if(get_title.length() != 0)
         {
-            get_deadline_date = Utils.getStringDate(get_deadline_year,get_deadline_month,get_deadline_day);
             get_category = category_spinner.getSelectedItem().toString();
             get_importance = importance_ratingbar.getRating();
             return true;

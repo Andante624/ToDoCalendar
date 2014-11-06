@@ -115,11 +115,21 @@ public class DBManager {
             case WHERE_COMPARISON_COMPLETE_DATE:
                 sql += "date(ToDo_Completed_date) <= date('now') order by date(ToDo_Completed_date) DESC;";
                 break;
+            case WHERE_MATCH_CATEGORY:
+                int category_id = get_CategoryID(condition);
+                sql += "Category_ID = "+category_id+" and  ToDo_Completed_date='' and date(ToDo_Deadline_date) >= date('now') order by date(ToDo_Deadline_date);";
+                break;
+            case WHERE_MATCH_IMPORTANCE:
+                int minvalue = Integer.valueOf(condition);
+                int maxvalue = minvalue+1;
+                sql +="ToDo_Inportance >= "+minvalue+" and ToDo_Inportance < "+maxvalue+" and  ToDo_Completed_date='' and date(ToDo_Deadline_date) >= date('now') order by date(ToDo_Deadline_date);";
+                break;
             case WHERE_COMPARISON_7DEADLINE_DATE:
                 sql += "date(ToDo_Deadline_date) between date('now') and date('now','+6 day') order by date(ToDo_Deadline_date);";
                 break;
             case WHERE_COMPARISON_7CREATE_DATE:
                 sql += "date(ToDo_Created_date) between date('now','-6 day') and date('now') order by date(ToDo_Created_date) DESC;";
+                break;
         }
 
         db = todo_db_helper.getReadableDatabase();
