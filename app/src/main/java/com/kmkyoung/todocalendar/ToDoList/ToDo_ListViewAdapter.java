@@ -60,6 +60,7 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
     public void setTodolist_items(List<ToDo_Item> items)
     {
         todo_items = items;
+        listview.invalidateViews();
     }
 
     public void add(){
@@ -113,6 +114,11 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
         });
 
         final CheckBox checkBox = (CheckBox)convertView.findViewById(R.id.todoitem_checkbox);
+        if(!todo_items.get(position).getCompletedDate().equals(""))
+            checkBox.setChecked(true);
+        else
+            checkBox.setChecked(false);
+
         TextView dateview = (TextView)convertView.findViewById(R.id.todoitem_date);
         TextView titleview = (TextView)convertView.findViewById(R.id.todoitem_title);
 
@@ -127,12 +133,11 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
                 DBManager dbManager = DBManager.open(activity);
                 dbManager.update_ToDoItem(todo_items.get(position));
                 dbManager.close();
+
             }
         });
 
-        String[] split_data = todo_items.get(position).getDeadlineDate().split("-");
-        String viewString = split_data[0]+"-"+(Integer.valueOf(split_data[1])+1)+"-"+split_data[2];
-        dateview.setText(viewString);
+        dateview.setText(todo_items.get(position).getDeadlineDate());
         titleview.setText(todo_items.get(position).getTitle());
 
         return convertView;

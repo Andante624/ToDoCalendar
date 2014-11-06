@@ -109,10 +109,10 @@ public class DBManager {
                 sql += "ToDo_Deadline_date = '"+condition+"';";
                 break;
             case WHERE_COMPARISON_DEADLINE_DATE:
-                sql += "date(ToDo_Deadline_date) between date('now','-1 month') and date(date('now','-1 month'),'+7 day');";
+                sql += "date(ToDo_Deadline_date) >= date('now') and ToDo_Completed_date='' order by date(ToDo_Deadline_date);";
                 break;
             case WHERE_COMPARISON_COMPLETE_DATE:
-                sql += "date(ToDo_Completed_date) between date('now','-1 month') and date(date('now','-1 month'),'+7 day');";
+                sql += "date(ToDo_Completed_date) <= date('now') order by date(ToDo_Completed_date) DESC;";
                 break;
         }
 
