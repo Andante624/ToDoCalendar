@@ -88,7 +88,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
     {
         Calendar calendar = Calendar.getInstance();
         selected_year = calendar.get(Calendar.YEAR);
-        selected_month = calendar.get(Calendar.MONTH);
+        selected_month = calendar.get(Calendar.MONTH)+1;
         selected_day= calendar.get(Calendar.DAY_OF_MONTH);
 
         drawCalendar(selected_year, selected_month, selected_day);
@@ -100,14 +100,14 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
     {
         calendar_gridViewAdapter.removeAllItems();
 
-        for(int i = 1; i < Utils.getFirstWeek(year, month); i++)
+        for(int i = 1; i < Utils.getFirstWeek(year, month-1); i++)
             calendar_gridViewAdapter.add(new Calendar_Item(true));
-        for(int i = 1; i<= Utils.getLastWeek(year, month, day) ; i++)
+        for(int i = 1; i<= Utils.getLastWeek(year, month-1, day) ; i++)
         {
             String date = Utils.getStringDate(selected_year,selected_month,i);
             calendar_gridViewAdapter.add(new Calendar_Item(i, date));
         }
-        calendar_month.setText(selected_year + "년" + (selected_month + 1) + "월");
+        calendar_month.setText(selected_year + "년" + selected_month  + "월");
         calendar_gridView.invalidateViews();
     }
 
@@ -162,11 +162,13 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
 
     public void updateMonthCalender(boolean nextMonth) {
         if (nextMonth) {
-            selected_month = (selected_month == 11) ? 0 : selected_month + 1;
-            if (selected_month == 0) selected_year++;
+            selected_month = (selected_month == 12) ? 1 : selected_month + 1;
+            if (selected_month == 1) selected_year++;
+            drawToDoList(Utils.getStringDate(selected_year,selected_month,selected_day));
         } else {
-            selected_month = (selected_month == 0) ? 11 : selected_month - 1;
-            if (selected_month == 11) selected_year--;
+            selected_month = (selected_month == 1) ? 12 : selected_month - 1;
+            if (selected_month == 12) selected_year--;
+            drawToDoList(Utils.getStringDate(selected_year,selected_month,selected_day));
         }
 
         drawCalendar(selected_year, selected_month, selected_day);

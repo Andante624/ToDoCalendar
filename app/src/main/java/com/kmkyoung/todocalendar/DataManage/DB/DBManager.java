@@ -108,6 +108,12 @@ public class DBManager {
             case WHERE_MATCH_DEADLINE_DATE:
                 sql += "ToDo_Deadline_date = '"+condition+"';";
                 break;
+            case WHERE_COMPARISON_DEADLINE_DATE:
+                sql += "date(ToDo_Deadline_date) between date('now','-1 month') and date(date('now','-1 month'),'+7 day');";
+                break;
+            case WHERE_COMPARISON_COMPLETE_DATE:
+                sql += "date(ToDo_Completed_date) between date('now','-1 month') and date(date('now','-1 month'),'+7 day');";
+                break;
         }
 
         db = todo_db_helper.getReadableDatabase();

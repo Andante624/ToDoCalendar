@@ -103,9 +103,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         {
             Calendar calendar = Calendar.getInstance();
             get_deadline_year = calendar.get(Calendar.YEAR);
-            get_deadline_month = calendar.get(Calendar.MONTH);
+            get_deadline_month = calendar.get(Calendar.MONTH)+1;
             get_deadline_day = calendar.get(Calendar.DAY_OF_MONTH);
-            date_textview.setText(get_deadline_year + "-" + (get_deadline_month + 1) + "-" + get_deadline_day);
+            date_textview.setText(get_deadline_year + "-" + get_deadline_month + "-" + get_deadline_day);
         }
 
         return view;
@@ -161,9 +161,9 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         get_deadline_year = year;
-                        get_deadline_month = monthOfYear;
+                        get_deadline_month = monthOfYear+1;
                         get_deadline_day = dayOfMonth;
-                        date_textview.setText(get_deadline_year+"-"+(get_deadline_month+1)+"-"+get_deadline_day);
+                        date_textview.setText(get_deadline_year+"-"+get_deadline_month+"-"+get_deadline_day);
                     }
                 },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
 

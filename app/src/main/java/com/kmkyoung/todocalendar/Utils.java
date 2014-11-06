@@ -36,7 +36,7 @@ public class Utils {
         Calendar calendar = Calendar.getInstance();
 
         String date = ""+calendar.get(Calendar.YEAR)+ "-";
-        date += (calendar.get(Calendar.MONTH)>=10)? calendar.get(Calendar.MONTH)+"-" :"0"+calendar.get(Calendar.MONTH)+"-";
+        date += (calendar.get(Calendar.MONTH)+1>=10)? (calendar.get(Calendar.MONTH)+1)+"-" :"0"+(calendar.get(Calendar.MONTH)+1)+"-";
         date += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
         return date;
     }

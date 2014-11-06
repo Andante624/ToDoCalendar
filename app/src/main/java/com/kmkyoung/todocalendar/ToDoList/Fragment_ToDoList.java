@@ -109,8 +109,8 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-//                        requestToDoItems(2,0);
-                        spinner_child.setVisibility(View.INVISIBLE);
+//                        동적으로 list 생성 필요
+                        spinner_child.setVisibility(View.VISIBLE);
                         todo_listview.invalidateViews();
                         break;
                     case 3:
@@ -118,12 +118,14 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setVisibility(View.VISIBLE);
                         break;
                     case 4:
-//                        requestToDoItems(4,0);
                         spinner_child.setVisibility(View.INVISIBLE);
+                        requestToDoItems(DBManager.WHERE_COMPARISON_DEADLINE_DATE,null);
+
                         break;
                     case 5:
-//                        requestToDoItems(5,0);
                         spinner_child.setVisibility(View.INVISIBLE);
+                        requestToDoItems(DBManager.WHERE_COMPARISON_COMPLETE_DATE,null);
+
                         break;
                 }
                 break;
