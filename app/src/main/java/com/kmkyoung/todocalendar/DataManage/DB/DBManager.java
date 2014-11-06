@@ -20,9 +20,10 @@ public class DBManager {
     public final static int WHERE_MATCH_CATEGORY = 2;
     public final static int WHERE_MATCH_IMPORTANCE = 3;
 
-    public final static int WHERE_COMPARISON_CREATE_DATE = 1;
-    public final static int WHERE_COMPARISON_DEADLINE_DATE = 2;
-    public final static int WHERE_COMPARISON_COMPLETE_DATE = 3;
+    public final static int WHERE_COMPARISON_7CREATE_DATE = 4;
+    public final static int WHERE_COMPARISON_DEADLINE_DATE = 5;
+    public final static int WHERE_COMPARISON_7DEADLINE_DATE = 6;
+    public final static int WHERE_COMPARISON_COMPLETE_DATE = 7;
 
 
     private static List<Category_Item> category_items = new ArrayList<Category_Item>();
@@ -109,11 +110,16 @@ public class DBManager {
                 sql += "ToDo_Deadline_date = '"+condition+"';";
                 break;
             case WHERE_COMPARISON_DEADLINE_DATE:
-                sql += "date(ToDo_Deadline_date) >= date('now') and ToDo_Completed_date='' order by date(ToDo_Deadline_date);";
+                sql += "date(ToDo_Deadline_date) >= date('now') and ToDo_Completed_date='' order by date(ToDo_Deadline_date) ;";
                 break;
             case WHERE_COMPARISON_COMPLETE_DATE:
                 sql += "date(ToDo_Completed_date) <= date('now') order by date(ToDo_Completed_date) DESC;";
                 break;
+            case WHERE_COMPARISON_7DEADLINE_DATE:
+                sql += "date(ToDo_Deadline_date) between date('now') and date('now','+6 day') order by date(ToDo_Deadline_date);";
+                break;
+            case WHERE_COMPARISON_7CREATE_DATE:
+                sql += "date(ToDo_Created_date) between date('now','-6 day') and date('now') order by date(ToDo_Created_date) DESC;";
         }
 
         db = todo_db_helper.getReadableDatabase();
