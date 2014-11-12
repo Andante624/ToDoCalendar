@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.kmkyoung.todocalendar.Utils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -25,6 +24,9 @@ public class DBManager {
     public final static int WHERE_COMPARISON_7DEADLINE_DATE = 6;
     public final static int WHERE_COMPARISON_COMPLETE_DATE = 7;
 
+    public final static int WHERE_ALL_COUNT = 8;
+    public final static int WHERE_COMPARISION_CATEGORY_COUNT = 9;
+    public final static int WHERE_COMPARISION_IMPORTANCE_COUNT = 10;
 
     private static List<Category_Item> category_items = new ArrayList<Category_Item>();
     private DBHelper todo_db_helper;
@@ -65,7 +67,7 @@ public class DBManager {
     }
 
     /* ToDo_Table 관련 class */
-    public void insert_ToDoItem(String title, String deadlinedate, String category, float inportance)
+    public void insert_ToDoItem(String title, String deadlinedate, String category, float importance)
     {
         db = todo_db_helper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -74,7 +76,7 @@ public class DBManager {
         values.put("ToDo_Deadline_date",deadlinedate);
         values.put("ToDo_Completed_date", "");
         values.put("Category_ID",get_CategoryID(category));
-        values.put("ToDo_Inportance",inportance);
+        values.put("ToDo_Importance",importance);
         db.insert("ToDo_Table",null,values);
     }
 
@@ -86,7 +88,7 @@ public class DBManager {
         values.put("ToDo_Deadline_date",editItem.getDeadlineDate());
         values.put("ToDo_Completed_date",editItem.getCompletedDate());
         values.put("Category_ID",editItem.getCategory());
-        values.put("ToDo_Inportance",editItem.getInportance());
+        values.put("ToDo_Importance",editItem.getImportance());
         db.update("ToDo_Table",values,"ToDO_ID = ?",new String[]{String.valueOf(editItem.getID())});
     }
 
@@ -122,7 +124,7 @@ public class DBManager {
             case WHERE_MATCH_IMPORTANCE:
                 int minvalue = Integer.valueOf(condition);
                 int maxvalue = minvalue+1;
-                sql +="ToDo_Inportance >= "+minvalue+" and ToDo_Inportance < "+maxvalue+" and  ToDo_Completed_date='' and date(ToDo_Deadline_date) >= date('now') order by date(ToDo_Deadline_date);";
+                sql +="ToDo_Importance >= "+minvalue+" and ToDo_Importance < "+maxvalue+" and  ToDo_Completed_date='' and date(ToDo_Deadline_date) >= date('now') order by date(ToDo_Deadline_date);";
                 break;
             case WHERE_COMPARISON_7DEADLINE_DATE:
                 sql += "date(ToDo_Deadline_date) between date('now') and date('now','+6 day') order by date(ToDo_Deadline_date);";
@@ -153,7 +155,7 @@ public class DBManager {
         String deadlinedate = cursor.getString(cursor.getColumnIndex("ToDo_Deadline_date"));
         String completeddate = cursor.getString(cursor.getColumnIndex("ToDo_Completed_date"));
         int category = cursor.getInt(cursor.getColumnIndex("Category_ID"));
-        float importance = cursor.getFloat(cursor.getColumnIndex("ToDo_Inportance"));
+        float importance = cursor.getFloat(cursor.getColumnIndex("ToDo_Importance"));
         return new ToDo_Item(id,title,createddate,deadlinedate,completeddate,category,importance);
     }
 
@@ -162,6 +164,35 @@ public class DBManager {
         String sql = "delete from ToDo_Table where ToDo_ID ="+deleteitem_id+";";
         db = todo_db_helper.getWritableDatabase();
         db.execSQL(sql);
+    }
+
+    public int count_ToDoItems(int where, String condition, boolean completed)
+    {
+        int count = 0;
+        String sql = "select count(*) AS Count from 'ToDo_Table' where ";
+        if(completed)
+            sql += "not ToDo_Completed_date = '' ";
+        else
+            sql += "ToDo_Completed_date = '' ";
+        switch (where)
+        {
+            case WHERE_COMPARISION_CATEGORY_COUNT:
+                int category_id = get_CategoryID(condition);
+                sql += "and Category_ID = "+category_id+";";
+                break;
+            case WHERE_COMPARISION_IMPORTANCE_COUNT:
+                int minvalue = Integer.valueOf(condition);
+                int maxvalue = minvalue+1;
+                sql += "and ToDo_Importance >= "+minvalue+" and ToDo_Importance < "+maxvalue;
+                break;
+        }
+
+        db = todo_db_helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        count = cursor.getInt(cursor.getColumnIndex("Count"));
+
+        return count;
     }
 
     /* Category_Table 관련 class */

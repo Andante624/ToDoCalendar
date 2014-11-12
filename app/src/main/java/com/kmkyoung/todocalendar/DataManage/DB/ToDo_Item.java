@@ -11,11 +11,11 @@ public class ToDo_Item {
     private String DeadlineDate;
     private String CompletedDate;
     private int Category;
-    private float Inportance;
+    private float Importance;
     //not insert DB
     private int Day;
 
-    ToDo_Item(int id, String title, String createddate, String deadlinedate, String completeddate, int category, float inportance)
+    ToDo_Item(int id, String title, String createddate, String deadlinedate, String completeddate, int category, float importance)
     {
         ID = id;
         Title = title;
@@ -23,7 +23,7 @@ public class ToDo_Item {
         DeadlineDate = deadlinedate;
         CompletedDate = completeddate;
         Category = category;
-        Inportance = inportance;
+        Importance = importance;
         Day = Integer.valueOf(DeadlineDate.split("-")[2]);
         setDay();
 
@@ -35,7 +35,7 @@ public class ToDo_Item {
     public void setDeadlineDate(String deadlinedate) { DeadlineDate = deadlinedate; }
     public void setCompletedDate(String completeddate) { CompletedDate = completeddate; }
     public void setCategory(int category) { Category = category; }
-    public void setInportance(float inportance) { Inportance = inportance; }
+    public void setImportance(float importance) { Importance = importance; }
 
     public void setDay() { Day = Integer.valueOf(DeadlineDate.split("-")[2]); }
 
@@ -45,6 +45,6 @@ public class ToDo_Item {
     public String getDeadlineDate() { return DeadlineDate; }
     public String getCompletedDate() { return CompletedDate; }
     public int getCategory() { return Category; }
-    public float getInportance() { return Inportance; }
+    public float getImportance() { return Importance; }
     public int getDay() { return Day; }
 }

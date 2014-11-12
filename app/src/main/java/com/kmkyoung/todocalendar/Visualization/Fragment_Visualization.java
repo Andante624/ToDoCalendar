@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
 
 
@@ -93,6 +94,7 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
                 {
                     case 0:
                         spinner_child.setVisibility(View.INVISIBLE);
+                        requestToDoCount(DBManager.WHERE_ALL_COUNT,null);
                         break;
                     case 1:
                         spinnerAdapter_visual_child.setSelect(1);
@@ -109,18 +111,29 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
                 }
                 break;
             case R.id.visualization_child_spinner:
-                if(spinnerAdapter_visual_child.getSelect()==1)
+                if(spinnerAdapter_visual_child.getSelect()==1) //category
                 {
-                    Log.d("kmky",spinnerAdapter_visual_child.getItem(position));
+                    String category_title = spinnerAdapter_visual_child.getItem(position);
+                    requestToDoCount(DBManager.WHERE_COMPARISION_CATEGORY_COUNT,category_title);
                 }
                 else
                 {
-                    Log.d("kmky",spinnerAdapter_visual_child.getItem(position));
+                    requestToDoCount(DBManager.WHERE_COMPARISION_IMPORTANCE_COUNT,position+"");
                 }
                 break;
 
         }
 
+    }
+
+    public void requestToDoCount(int where, String condition)
+    {
+        DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
+        int completedCount = dbManager.count_ToDoItems(where,condition,true);
+        int uncompletedCount = dbManager.count_ToDoItems(where,condition,false);
+        Log.d("kmky","completed :"+completedCount);
+        Log.d("kmky","uncompleted :"+uncompletedCount);
+        dbManager.close();
     }
 
     @Override

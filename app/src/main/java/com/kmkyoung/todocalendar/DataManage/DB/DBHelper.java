@@ -31,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper{
                 " ToDo_Deadline_date text NOT NULL, " +
                 " ToDo_Completed_date text NOT NULL, " +
                 " Category_ID integer NOT NULL default(0), " +
-                " ToDo_Inportance float NOT NULL," +
+                " ToDo_Importance float NOT NULL," +
                 " FOREIGN KEY(Category_ID) REFERENCES Category_Table(Category_ID));";
         db.execSQL(todo_table);
         Log.d("kmky","todo_table");

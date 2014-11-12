@@ -98,7 +98,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
                 if(strings.get(i).equals(title))
                     category_spinner.setSelection(i);
             }
-            importance_ratingbar.setRating(editItem.getInportance());
+            importance_ratingbar.setRating(editItem.getImportance());
         }
         else
         {
@@ -223,7 +223,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         {
             editItem.setTitle(get_title);
             editItem.setDeadlineDate(get_deadline_date);
-            editItem.setInportance(get_importance);
+            editItem.setImportance(get_importance);
             DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
             editItem.setCategory(dbManager.get_CategoryID(get_category));
             dbManager.update_ToDoItem(editItem);
