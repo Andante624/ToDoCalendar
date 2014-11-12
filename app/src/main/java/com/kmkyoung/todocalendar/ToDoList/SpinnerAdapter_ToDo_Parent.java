@@ -11,7 +11,7 @@ import com.kmkyoung.todocalendar.R;
 /**
  * Created by MinchaeiMac on 14. 11. 5..
  */
-public class SpinnerAdapter_ToDo_parents extends BaseAdapter{
+public class SpinnerAdapter_ToDo_Parent extends BaseAdapter{
     Context context;
     String[] items;
 

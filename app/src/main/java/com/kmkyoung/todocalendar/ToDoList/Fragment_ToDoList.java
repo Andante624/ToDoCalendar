@@ -16,11 +16,11 @@ import com.kmkyoung.todocalendar.R;
 
 
 public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSelectedListener {
-    private Spinner spinner_parents, spinner_child;
+    private Spinner spinner_parent, spinner_child;
     private ListView todo_listview;
     private ToDo_ListViewAdapter toDo_listViewAdapter;
-    private SpinnerAdapter_ToDo_parents spinnerAdapter_todo_parents;
-    private SpinnerAdapter_ToDo_child spinnerAdapter_todo_child;
+    private SpinnerAdapter_ToDo_Parent spinnerAdapter_todo_parent;
+    private SpinnerAdapter_ToDo_Child spinnerAdapter_todo_child;
     private OnFragmentInteractionListener mListener;
 
     public static Fragment_ToDoList newInstance(String param1, String param2) {
@@ -44,11 +44,11 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
         toDo_listViewAdapter.setFragment(this);
         toDo_listViewAdapter.setContext(getActivity());
 
-        spinnerAdapter_todo_parents = new SpinnerAdapter_ToDo_parents();
-        spinnerAdapter_todo_parents.setContext(getActivity().getApplicationContext());
-        spinnerAdapter_todo_parents.setItems();
+        spinnerAdapter_todo_parent = new SpinnerAdapter_ToDo_Parent();
+        spinnerAdapter_todo_parent.setContext(getActivity().getApplicationContext());
+        spinnerAdapter_todo_parent.setItems();
 
-        spinnerAdapter_todo_child = new SpinnerAdapter_ToDo_child();
+        spinnerAdapter_todo_child = new SpinnerAdapter_ToDo_Child();
         spinnerAdapter_todo_child.setContext(getActivity().getApplicationContext());
         spinnerAdapter_todo_child.setItems();
 
@@ -71,9 +71,9 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
 
         toDo_listViewAdapter.setListview(todo_listview);
 
-        spinner_parents = (Spinner)view.findViewById(R.id.todolist_parents_spinner);
-        spinner_parents.setAdapter(spinnerAdapter_todo_parents);
-        spinner_parents.setOnItemSelectedListener(this);
+        spinner_parent = (Spinner)view.findViewById(R.id.todolist_parents_spinner);
+        spinner_parent.setAdapter(spinnerAdapter_todo_parent);
+        spinner_parent.setOnItemSelectedListener(this);
 
         spinner_child = (Spinner)view.findViewById(R.id.todolist_child_spinner);
         spinner_child.setAdapter(spinnerAdapter_todo_child);
@@ -144,6 +144,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                 {
                     requestToDoItems(DBManager.WHERE_MATCH_IMPORTANCE,position+"");
                 }
+                break;
         }
     }
 

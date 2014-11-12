@@ -27,13 +27,19 @@
     </string-array>
 
 
-    <string-array name="todolist_child_strings">
-        <item name="todolist_child_string1">0 ~ 0.5</item>
-        <item name="todolist_child_string2">1 ~ 1.5</item>
-        <item name="todolist_child_string3">2 ~ 2.5</item>
-        <item name="todolist_child_string4">3 ~ 3.5</item>
-        <item name="todolist_child_string5">4 ~ 4.5</item>
-        <item name="todolist_child_string6">5</item>
+    <string-array name="importance_strings">
+        <item name="importance_strings1">0 ~ 0.5</item>
+        <item name="importance_strings2">1 ~ 1.5</item>
+        <item name="importance_strings3">2 ~ 2.5</item>
+        <item name="importance_strings4">3 ~ 3.5</item>
+        <item name="importance_strings5">4 ~ 4.5</item>
+        <item name="importance_strings6">5</item>
+    </string-array>
+
+    <string-array name="visualization_parents_strings">
+        <item name="visualization_parents_strings1">전체 완료율</item>
+        <item name="visualization_parents_strings2">카테고리 별 완료율</item>
+        <item name="visualization_parents_strings3">중요도 별 완료율</item>
     </string-array>
 
 </resources>

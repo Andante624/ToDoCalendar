@@ -1,4 +1,4 @@
-package com.kmkyoung.todocalendar.ToDoList;
+package com.kmkyoung.todocalendar.Visualization;
 
 import android.content.Context;
 import android.view.View;
@@ -12,9 +12,9 @@ import com.kmkyoung.todocalendar.R;
 import java.util.List;
 
 /**
- * Created by MinchaeiMac on 14. 11. 5..
+ * Created by MinchaeAir on 14. 11. 13..
  */
-public class SpinnerAdapter_ToDo_Child extends BaseAdapter {
+public class SpinnerAdapter_Visual_Child extends BaseAdapter {
     private Context context;
     private int select = 0;
     private String[] importance_items;    //value of importance
@@ -65,6 +65,7 @@ public class SpinnerAdapter_ToDo_Child extends BaseAdapter {
     {
         DBManager dbManager = DBManager.open(context.getApplicationContext());
         List<String> strings = dbManager.select_AllCategoryItem_Strings();
+        strings.remove("없음");
         category_items = strings.toArray(new String[strings.size()]);
         dbManager.close();
     }

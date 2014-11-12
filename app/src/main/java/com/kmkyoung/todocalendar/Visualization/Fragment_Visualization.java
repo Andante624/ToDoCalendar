@@ -4,49 +4,24 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.kmkyoung.todocalendar.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_Visualization.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_Visualization#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
-public class Fragment_Visualization extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+public class Fragment_Visualization extends Fragment implements AdapterView.OnItemSelectedListener {
+    private Spinner spinner_parent, spinner_child;
+    private SpinnerAdapter_Visual_Parent spinnerAdapter_visual_parent;
+    private SpinnerAdapter_Visual_Child spinnerAdapter_visual_child;
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Visualization.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_Visualization newInstance(String param1, String param2) {
+    public static Fragment_Visualization newInstance() {
         Fragment_Visualization fragment = new Fragment_Visualization();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
     public Fragment_Visualization() {
@@ -56,24 +31,40 @@ public class Fragment_Visualization extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        init();
+    }
+
+    public void init()
+    {
+        spinnerAdapter_visual_parent = new SpinnerAdapter_Visual_Parent();
+        spinnerAdapter_visual_parent.setContext(getActivity().getApplicationContext());
+        spinnerAdapter_visual_parent.setItems();
+
+        spinnerAdapter_visual_child = new SpinnerAdapter_Visual_Child();
+        spinnerAdapter_visual_child.setContext(getActivity().getApplicationContext());
+        spinnerAdapter_visual_child.setItems();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_visualization, container, false);
+        View view = inflater.inflate(R.layout.fragment_visualization, container, false);
+        setLayout(view);
+        spinnerAdapter_visual_child.updateCategory();
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void setLayout(View view)
+    {
+        spinner_parent = (Spinner)view.findViewById(R.id.visualization_parent_spinner);
+        spinner_parent.setAdapter(spinnerAdapter_visual_parent);
+        spinner_parent.setOnItemSelectedListener(this);
+
+        spinner_child = (Spinner)view.findViewById(R.id.visualization_child_spinner);
+        spinner_child.setAdapter(spinnerAdapter_visual_child);
+        spinner_child.setOnItemSelectedListener(this);
+
     }
 
     @Override
@@ -93,16 +84,51 @@ public class Fragment_Visualization extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch(parent.getId())
+        {
+            case R.id.visualization_parent_spinner:
+                switch (position)
+                {
+                    case 0:
+                        spinner_child.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        spinnerAdapter_visual_child.setSelect(1);
+                        spinner_child.setVisibility(View.VISIBLE);
+                        spinner_child.setSelection(0);
+                        spinnerAdapter_visual_child.notifyDataSetChanged();
+                        break;
+                    case 2:
+                        spinnerAdapter_visual_child.setSelect(0);
+                        spinner_child.setVisibility(View.VISIBLE);
+                        spinner_child.setSelection(0);
+                        spinnerAdapter_visual_child.notifyDataSetChanged();
+                        break;
+                }
+                break;
+            case R.id.visualization_child_spinner:
+                if(spinnerAdapter_visual_child.getSelect()==1)
+                {
+                    Log.d("kmky",spinnerAdapter_visual_child.getItem(position));
+                }
+                else
+                {
+                    Log.d("kmky",spinnerAdapter_visual_child.getItem(position));
+                }
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
