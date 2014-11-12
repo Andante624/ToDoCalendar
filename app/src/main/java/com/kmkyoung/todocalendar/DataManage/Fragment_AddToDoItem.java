@@ -106,7 +106,8 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             get_deadline_year = calendar.get(Calendar.YEAR);
             get_deadline_month = calendar.get(Calendar.MONTH)+1;
             get_deadline_day = calendar.get(Calendar.DAY_OF_MONTH);
-            date_textview.setText(get_deadline_year + "-" + get_deadline_month + "-" + get_deadline_day);
+            get_deadline_date = Utils.getStringDate(get_deadline_year,get_deadline_month,get_deadline_day);
+            date_textview.setText(get_deadline_date);
         }
 
         return view;
