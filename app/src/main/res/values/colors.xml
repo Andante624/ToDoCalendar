@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_blue">#0396df</color>
-    <color name="default_green">#00c5a0</color>
-    <color name="default_yellow">#F7C800</color>
-    <color name="default_orange">#F67800</color>
-    <color name="default_red">#fc2d12</color>
-    <color name="default_white">#91a7a7</color>
-    <color name="default_gray">#ecf1f2</color>
-    <color name="default_black">#30485f</color>
+    <color name="default_blue">#27a1e2</color>
+    <color name="default_green">#00df81</color>
+    <color name="default_yellow">#f6ce00</color>
+    <color name="default_orange">#f7861a</color>
+    <color name="default_red">#fe4243</color>
+    <color name="default_white">#fbfcfc</color>
+    <color name="default_gray">#a0b2b3</color>
+    <color name="default_black">#38556f</color>
 
-    <color name="dark_blue">#0072bd</color>
-    <color name="dark_green">#00a788</color>
-    <color name="dark_yellow">#fe9a00</color>
-    <color name="dark_orange">#e64400</color>
-    <color name="dark_red">#d21908</color>
-    <color name="dark_white">#bcc4c8</color>
-    <color name="dark_gray">#7c8d8e</color>
-    <color name="dark_black">#283d51</color>
+    <color name="dark_blue">#008bd1</color>
+    <color name="dark_green">#00cd62</color>
+    <color name="dark_yellow">#ffa500</color>
+    <color name="dark_orange">#ff4c00</color>
+    <color name="dark_red">#e42415</color>
+    <color name="dark_white">#cad0d3</color>
+    <color name="dark_gray">#89999a</color>
+    <color name="dark_black">#314a61</color>
 </resources>

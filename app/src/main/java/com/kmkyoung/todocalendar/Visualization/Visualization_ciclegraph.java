@@ -20,8 +20,8 @@ public class Visualization_CicleGraph extends View {
     private final float radius = (float)3/10;
     private int completed_count, uncompleted_count;
 
-    private int completedColor = R.color.default_blue;
-    private int uncompletedColor = R.color.dark_blue;
+    private int completedColor = R.color.default_green;
+    private int uncompletedColor = R.color.default_orange;
 
     public Visualization_CicleGraph(Context context) {
         super(context);
