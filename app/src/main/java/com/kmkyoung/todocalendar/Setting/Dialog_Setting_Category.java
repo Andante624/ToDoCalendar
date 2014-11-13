@@ -23,10 +23,10 @@ public class Dialog_Setting_Category extends Dialog {
         super(context);
         this.context = context;
         setTitle("카테고리 목록");
-        setContentView(R.layout.dialog_setting_category);
+        setContentView(R.layout.dialog_setting_listview);
         loadCategory();
 
-        category_listview = (ListView)findViewById(R.id.setting_category_dialoglist);
+        category_listview = (ListView)findViewById(R.id.setting_dialoglist);
         category_listview.setAdapter(adapter_setting_category);
         adapter_setting_category.setListView(category_listview);
         adapter_setting_category.setContext(context);

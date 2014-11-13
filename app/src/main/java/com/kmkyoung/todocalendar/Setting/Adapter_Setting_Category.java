@@ -58,9 +58,9 @@ public class Adapter_Setting_Category extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null)
-            convertView = View.inflate(context, R.layout.setting_listview_item_category, null);
+            convertView = View.inflate(context, R.layout.setting_listview_item, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.setting_listview_item_title);
+        TextView textView = (TextView) convertView.findViewById(R.id.setting_listview_textview);
         textView.setText(category_items.get(position).getCategory_Name());
 
         convertView.setOnClickListener(new View.OnClickListener() {

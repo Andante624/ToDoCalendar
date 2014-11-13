@@ -1,9 +1,12 @@
 package com.kmkyoung.todocalendar.Setting;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
+import com.kmkyoung.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +36,9 @@ import java.util.List;
  *
  */
 public class Fragment_Setting extends Fragment {
-
+    private final String[] color_strings = new String[]{"Blue","Green","Yellow","Orange","Red","Black"};
     private OnFragmentInteractionListener mListener;
     private ListView setting_listview;
-    private Fragment_Setting_ColorPicker fragment_setting_colorPicker;
     private Fragment_Setting_Information fragment_setting_information;
 
     public static Fragment_Setting newInstance(String param1, String param2) {
@@ -48,7 +52,6 @@ public class Fragment_Setting extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragment_setting_colorPicker = new Fragment_Setting_ColorPicker();
         fragment_setting_information = new Fragment_Setting_Information();
     }
 
@@ -123,7 +126,7 @@ public class Fragment_Setting extends Fragment {
             if(convertView == null)
                 convertView = View.inflate(getActivity().getApplicationContext(),R.layout.setting_listview_item,null);
 
-            TextView textview = (TextView)convertView.findViewById(R.id.setting_listview_menu);
+            TextView textview = (TextView)convertView.findViewById(R.id.setting_listview_textview);
             textview.setText(setting_strings.get(position));
 
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +141,7 @@ public class Fragment_Setting extends Fragment {
                             showDialog_DeleteDB();
                             break;
                         case 2:
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.container, fragment_setting_colorPicker)
-                                    .addToBackStack(null)
-                                    .commit();
+                            showDialog_Colorpicker();
                             break;
                         case 3:
                             fragmentManager.beginTransaction()
@@ -155,6 +155,42 @@ public class Fragment_Setting extends Fragment {
 
             return convertView;
         }
+    }
+
+    public void showDialog_Colorpicker()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("테마 색상 선택");
+        builder.setSingleChoiceItems(color_strings, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                ActionBar actionBar = getActivity().getActionBar();
+//                actionBar.setBackgroundDrawable(new ColorDrawable(Utils.getColorId(which)));
+//                actionBar.setDisplayShowTitleEnabled(false);
+            }
+        })
+        .setPositiveButton("확인",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("BackGroundColor",position);
+//                editor.commit();
+                dialog.dismiss();
+            }
+        })
+        .setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
+
+//        Dialog_Setting_ColorPicker dialog_setting_colorPicker = new Dialog_Setting_ColorPicker(getActivity());
+//        WindowManager.LayoutParams params = dialog_setting_colorPicker.getWindow().getAttributes();
+//        params.height = 600;
+//        dialog_setting_colorPicker.getWindow().setAttributes(params);
+//        dialog_setting_colorPicker.show();
     }
 
     public void showDialog_Category()

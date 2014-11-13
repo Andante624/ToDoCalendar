@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import com.kmkyoung.todocalendar.Calendar.Fragment_Calendar;
 import com.kmkyoung.todocalendar.DataManage.Fragment_AddToDoItem;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting;
-import com.kmkyoung.todocalendar.Setting.Fragment_Setting_ColorPicker;
 import com.kmkyoung.todocalendar.Setting.Fragment_Setting_Information;
 import com.kmkyoung.todocalendar.ToDoList.Fragment_ToDoList;
 import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
@@ -21,7 +20,7 @@ import com.kmkyoung.todocalendar.Visualization.Fragment_Visualization;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, Fragment_Calendar.OnFragmentInteractionListener, Fragment_ToDoList.OnFragmentInteractionListener,
         Fragment_Visualization.OnFragmentInteractionListener, Fragment_AddToDoItem.OnFragmentInteractionListener,Fragment_Setting.OnFragmentInteractionListener,
-        Fragment_Setting_ColorPicker.OnFragmentInteractionListener, Fragment_Setting_Information.OnFragmentInteractionListener
+        Fragment_Setting_Information.OnFragmentInteractionListener
 {
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager fragmentManager;

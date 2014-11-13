@@ -4,10 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/setting_listview_item_title"
+    <ListView android:id="@+id/setting_dialoglist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content">
+    </ListView>
 </LinearLayout>

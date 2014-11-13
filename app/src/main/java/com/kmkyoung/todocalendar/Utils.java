@@ -1,5 +1,7 @@
 package com.kmkyoung.todocalendar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -9,6 +11,8 @@ import java.util.Date;
  * Created by kmkyoung on 2014. 9. 27..
  */
 public class Utils {
+    public static int[] array_color = new int[]{
+            R.color.default_blue,R.color.default_green, R.color.default_yellow,R.color.default_orange,R.color.default_red,R.color.default_black};
     /* return value 1 = Sunday, 2 = Monday, 3 = Tuseday, 4 = Wednesday, 5 = Thursday, 6 = Friday, 7 = Saturday */
     public static int getFirstWeek(int year, int month)
     {
@@ -39,5 +43,15 @@ public class Utils {
         date += (calendar.get(Calendar.MONTH)+1>=10)? (calendar.get(Calendar.MONTH)+1)+"-" :"0"+(calendar.get(Calendar.MONTH)+1)+"-";
         date += (calendar.get(Calendar.DAY_OF_MONTH)>=10)? calendar.get(Calendar.DAY_OF_MONTH)+"" :"0"+calendar.get(Calendar.DAY_OF_MONTH);
         return date;
+    }
+    public static int getColorId(int position)
+    {
+        return array_color[position];
+    }
+
+    public static int getBackgroundColor(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
+        return sharedPreferences.getInt("BackGroundColor",0);
     }
 }
