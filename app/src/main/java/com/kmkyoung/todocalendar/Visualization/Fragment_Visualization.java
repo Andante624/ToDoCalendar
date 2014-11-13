@@ -19,6 +19,7 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
     private Spinner spinner_parent, spinner_child;
     private SpinnerAdapter_Visual_Parent spinnerAdapter_visual_parent;
     private SpinnerAdapter_Visual_Child spinnerAdapter_visual_child;
+    private Visualization_CicleGraph visualization_cicleGraph;
     private OnFragmentInteractionListener mListener;
 
     public static Fragment_Visualization newInstance() {
@@ -58,6 +59,8 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
 
     public void setLayout(View view)
     {
+        visualization_cicleGraph = (Visualization_CicleGraph)view.findViewById(R.id.visualization_ciclegraph);
+
         spinner_parent = (Spinner)view.findViewById(R.id.visualization_parent_spinner);
         spinner_parent.setAdapter(spinnerAdapter_visual_parent);
         spinner_parent.setOnItemSelectedListener(this);
@@ -120,6 +123,7 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
                 {
                     requestToDoCount(DBManager.WHERE_COMPARISION_IMPORTANCE_COUNT,position+"");
                 }
+
                 break;
 
         }
@@ -129,10 +133,9 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
     public void requestToDoCount(int where, String condition)
     {
         DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
-        int completedCount = dbManager.count_ToDoItems(where,condition,true);
-        int uncompletedCount = dbManager.count_ToDoItems(where,condition,false);
-        Log.d("kmky","completed :"+completedCount);
-        Log.d("kmky","uncompleted :"+uncompletedCount);
+        visualization_cicleGraph.setCompleted_count(dbManager.count_ToDoItems(where,condition,true));
+        visualization_cicleGraph.setUncompleted_count(dbManager.count_ToDoItems(where,condition,false));
+        visualization_cicleGraph.invalidate();
         dbManager.close();
     }
 

@@ -29,8 +29,22 @@
     </LinearLayout>
 
     <com.kmkyoung.todocalendar.Visualization.Visualization_CicleGraph
+        android:id="@+id/visualization_ciclegraph"
         android:layout_width="match_parent"
         android:layout_weight="12"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_gravity="center"/>
+    
+    <TextView
+        android:text="test"
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:text="test"
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"/>
 
 </LinearLayout>

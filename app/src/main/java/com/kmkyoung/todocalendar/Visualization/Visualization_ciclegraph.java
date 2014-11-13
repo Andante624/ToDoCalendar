@@ -16,9 +16,12 @@ import java.util.List;
  * Created by MinchaeiMac on 14. 11. 6..
  */
 public class Visualization_CicleGraph extends View {
-    List<CicleGraphItem> items = new ArrayList<CicleGraphItem>();
     private int width, height;
-    private final float radius = (float)1/5;
+    private final float radius = (float)3/10;
+    private int completed_count, uncompleted_count;
+
+    private int completedColor = R.color.default_blue;
+    private int uncompletedColor = R.color.dark_blue;
 
     public Visualization_CicleGraph(Context context) {
         super(context);
@@ -32,50 +35,34 @@ public class Visualization_CicleGraph extends View {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setCompleted_count(int completed_count)
+    {
+        this.completed_count = completed_count;
+    }
+
+    public void setUncompleted_count(int uncompleted_count)
+    {
+        this.uncompleted_count = uncompleted_count;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.default_blue));
-        RectF rf = new RectF();
+        paint.setColor(getResources().getColor(uncompletedColor));
+        canvas.drawCircle(width/2, height/2, width*radius, paint);
 
+        RectF rf = new RectF(width/2-width*radius,height/2-width*radius,width/2+width*radius,height/2+width*radius);
+        paint.setColor(getResources().getColor(completedColor));
+        canvas.drawArc(rf,-90,360*((float)completed_count/(completed_count+uncompleted_count)),true,paint);
     }
 
     @Override
     protected void onMeasure(int widthSpec,int heightSpec)
     {
-        width = widthSpec;
-        height = heightSpec;
+        width = MeasureSpec.getSize(widthSpec);
+        height = MeasureSpec.getSize(heightSpec);
 
         setMeasuredDimension(width,height);
-    }
-
-    class CicleGraphItem
-    {
-        private String name;
-        private int number;
-
-        CicleGraphItem(String name, int number)
-        {
-            this.name = name;
-            this.number = number;
-        }
-
-        public void setName(String name)
-        {
-            this.name = name;
-        }
-        public void setNumber(int number)
-        {
-            this.number = number;
-        }
-        public String getName()
-        {
-            return name;
-        }
-        public int getNumber()
-        {
-            return number;
-        }
     }
 }
