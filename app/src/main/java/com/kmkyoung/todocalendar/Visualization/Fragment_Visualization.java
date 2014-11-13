@@ -98,32 +98,34 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
                     case 0:
                         spinner_child.setVisibility(View.INVISIBLE);
                         requestToDoCount(DBManager.WHERE_ALL_COUNT,null);
+                        spinnerAdapter_visual_child.notifyDataSetChanged();
                         break;
                     case 1:
                         spinnerAdapter_visual_child.setSelect(1);
                         spinner_child.setVisibility(View.VISIBLE);
                         spinner_child.setSelection(0);
+                        spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child,spinner_child.getSelectedView(),0,0);
                         spinnerAdapter_visual_child.notifyDataSetChanged();
                         break;
                     case 2:
                         spinnerAdapter_visual_child.setSelect(0);
                         spinner_child.setVisibility(View.VISIBLE);
                         spinner_child.setSelection(0);
+                        spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child,spinner_child.getSelectedView(),0,0);
                         spinnerAdapter_visual_child.notifyDataSetChanged();
                         break;
                 }
                 break;
             case R.id.visualization_child_spinner:
-                if(spinnerAdapter_visual_child.getSelect()==1) //category
-                {
-                    String category_title = spinnerAdapter_visual_child.getItem(position);
-                    requestToDoCount(DBManager.WHERE_COMPARISION_CATEGORY_COUNT,category_title);
+                if(spinner_child.getVisibility() == View.VISIBLE) {
+                    if (spinnerAdapter_visual_child.getSelect() == 1) //category
+                    {
+                        String category_title = spinnerAdapter_visual_child.getItem(position);
+                        requestToDoCount(DBManager.WHERE_COMPARISION_CATEGORY_COUNT, category_title);
+                    } else {
+                        requestToDoCount(DBManager.WHERE_COMPARISION_IMPORTANCE_COUNT, position + "");
+                    }
                 }
-                else
-                {
-                    requestToDoCount(DBManager.WHERE_COMPARISION_IMPORTANCE_COUNT,position+"");
-                }
-
                 break;
 
         }
@@ -134,7 +136,7 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
     {
         DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
         visualization_cicleGraph.setCompleted_count(dbManager.count_ToDoItems(where,condition,true));
-        visualization_cicleGraph.setUncompleted_count(dbManager.count_ToDoItems(where,condition,false));
+        visualization_cicleGraph.setUncompleted_count(dbManager.count_ToDoItems(where, condition, false));
         visualization_cicleGraph.invalidate();
         dbManager.close();
     }
