@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
@@ -20,6 +21,9 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
     private SpinnerAdapter_Visual_Parent spinnerAdapter_visual_parent;
     private SpinnerAdapter_Visual_Child spinnerAdapter_visual_child;
     private Visualization_CicleGraph visualization_cicleGraph;
+    private View view_completed_color, view_uncompleted_color;
+    private TextView textview_completed_count, textview_uncompleted_count;
+
     private OnFragmentInteractionListener mListener;
 
     public static Fragment_Visualization newInstance() {
@@ -69,6 +73,13 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
         spinner_child.setAdapter(spinnerAdapter_visual_child);
         spinner_child.setOnItemSelectedListener(this);
 
+        view_completed_color = view.findViewById(R.id.visualization_completedcolor);
+        textview_completed_count = (TextView)view.findViewById(R.id.visualization_completedcount);
+
+        view_uncompleted_color = view.findViewById(R.id.visualization_uncompletedcolor);
+        textview_uncompleted_count = (TextView)view.findViewById(R.id.visualization_uncompletedcount);
+
+
     }
 
     @Override
@@ -104,7 +115,7 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
                         spinnerAdapter_visual_child.setSelect(1);
                         spinner_child.setVisibility(View.VISIBLE);
                         spinner_child.setSelection(0);
-                        spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child,spinner_child.getSelectedView(),0,0);
+                        spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child, spinner_child.getSelectedView(), 0, 0);
                         spinnerAdapter_visual_child.notifyDataSetChanged();
                         break;
                     case 2:
@@ -135,9 +146,13 @@ public class Fragment_Visualization extends Fragment implements AdapterView.OnIt
     public void requestToDoCount(int where, String condition)
     {
         DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
-        visualization_cicleGraph.setCompleted_count(dbManager.count_ToDoItems(where,condition,true));
-        visualization_cicleGraph.setUncompleted_count(dbManager.count_ToDoItems(where, condition, false));
+        int completed_count = dbManager.count_ToDoItems(where,condition,true);
+        int uncompleted_count = dbManager.count_ToDoItems(where, condition, false);
+        visualization_cicleGraph.setCompleted_count(completed_count);
+        visualization_cicleGraph.setUncompleted_count(uncompleted_count);
         visualization_cicleGraph.invalidate();
+        textview_completed_count.setText(completed_count+"");
+        textview_uncompleted_count.setText(uncompleted_count+"");
         dbManager.close();
     }
 

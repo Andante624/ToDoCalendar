@@ -49,6 +49,7 @@ public class Visualization_CicleGraph extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint paint = new Paint();
+        paint.setAntiAlias(true);
         paint.setColor(getResources().getColor(uncompletedColor));
         canvas.drawCircle(width/2, height/2, width*radius, paint);
 
