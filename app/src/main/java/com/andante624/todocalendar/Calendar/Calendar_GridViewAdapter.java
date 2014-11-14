@@ -8,6 +8,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.andante624.todocalendar.R;
+import com.andante624.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +51,13 @@ public class Calendar_GridViewAdapter extends BaseAdapter {
             convertView = View.inflate(context,R.layout.gridview_item,null);
 
         TextView textView = (TextView) convertView.findViewById(R.id.calender_item_date);
+
         if(!canlendar_items.get(position).isBlank())
             textView.setText(canlendar_items.get(position).getDay() + "");
         else
             textView.setText(" ");
 
-        convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 75));
+        convertView.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 60));
         return convertView;
     }
 

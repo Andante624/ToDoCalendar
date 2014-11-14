@@ -81,6 +81,7 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
         spinner_parent.setAdapter(spinnerAdapter_todo_parent);
         spinner_parent.setOnItemSelectedListener(this);
 
+
         spinner_child = (Spinner)view.findViewById(R.id.todolist_child_spinner);
         spinner_child.setAdapter(spinnerAdapter_todo_child);
         spinner_child.setOnItemSelectedListener(this);

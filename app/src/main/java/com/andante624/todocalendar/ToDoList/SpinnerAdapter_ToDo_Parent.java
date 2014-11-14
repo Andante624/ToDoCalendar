@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.andante624.todocalendar.R;
+import com.andante624.todocalendar.Utils;
 
 /**
  * Created by MinchaeiMac on 14. 11. 5..
@@ -17,7 +18,6 @@ public class SpinnerAdapter_ToDo_Parent extends BaseAdapter{
 
     public void setContext(Context context) { this.context = context;}
     public void setItems() { items = context.getResources().getStringArray(R.array.todolist_parents_strings);}
-
 
     @Override
     public int getCount() {
@@ -36,9 +36,10 @@ public class SpinnerAdapter_ToDo_Parent extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(context, android.R.layout.simple_spinner_item, null);
+        View view = View.inflate(context, R.layout.spinner_item, null);
         TextView textView = (TextView)view.findViewById(android.R.id.text1);
-        textView.setTextColor(context.getResources().getColor(R.color.default_blue));
+        textView.setTextColor(context.getResources().getColor(Utils.getBackgroundDarkColorID(context)));
+        textView.setTextSize(14);
         textView.setText(items[position]);
         return view;
     }

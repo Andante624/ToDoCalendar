@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.andante624.todocalendar.DataManage.DB.DBManager;
 import com.andante624.todocalendar.R;
+import com.andante624.todocalendar.Utils;
 
 import java.util.List;
 
@@ -51,9 +52,10 @@ public class SpinnerAdapter_Visual_Child extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(context, android.R.layout.simple_spinner_item, null);
+        View view = View.inflate(context, R.layout.spinner_item, null);
         TextView textView = (TextView)view.findViewById(android.R.id.text1);
-        textView.setTextColor(context.getResources().getColor(R.color.default_blue));
+        textView.setTextSize(14);
+        textView.setTextColor(context.getResources().getColor(Utils.getBackgroundDarkColorID(context)));
         if(select ==0)
             textView.setText(importance_items[position]);
         else
@@ -65,7 +67,6 @@ public class SpinnerAdapter_Visual_Child extends BaseAdapter {
     {
         DBManager dbManager = DBManager.open(context.getApplicationContext());
         List<String> strings = dbManager.select_AllCategoryItem_Strings();
-        strings.remove("없음");
         category_items = strings.toArray(new String[strings.size()]);
         dbManager.close();
     }

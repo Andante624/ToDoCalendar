@@ -10,8 +10,12 @@ import java.util.Calendar;
  * Created by kmkyoung on 2014. 9. 27..
  */
 public class Utils {
-    public static int[] array_color = new int[]{
+    public static int[] array_default_color = new int[]{
             R.color.default_blue,R.color.default_green, R.color.default_yellow,R.color.default_orange,R.color.default_red,R.color.default_black};
+
+    public static int[] array_dark_color = new int[]{
+            R.color.dark_blue,R.color.dark_green, R.color.dark_yellow,R.color.dark_orange,R.color.dark_red,R.color.dark_black};
+
     /* return value 1 = Sunday, 2 = Monday, 3 = Tuseday, 4 = Wednesday, 5 = Thursday, 6 = Friday, 7 = Saturday */
     public static int getFirstWeek(int year, int month)
     {
@@ -45,7 +49,7 @@ public class Utils {
     }
     public static int getColorId(int position)
     {
-        return array_color[position];
+        return array_default_color[position];
     }
 
     public static int getBackgroundPosition(Context context)
@@ -57,12 +61,12 @@ public class Utils {
     public static int getBackgroundId(Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
-        return array_color[sharedPreferences.getInt("BackGroundColor",0)];
+        return array_default_color[sharedPreferences.getInt("BackGroundColor",0)];
     }
 
-    public static void setBackground(Fragment fragment)
+    public static int getBackgroundDarkColorID(Context context)
     {
-        SharedPreferences sharedPreferences = fragment.getActivity().getSharedPreferences("Setting",fragment.getActivity().MODE_PRIVATE);
-        fragment.getView().setBackgroundColor(array_color[sharedPreferences.getInt("BackGroundColor", 0)]);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
+        return array_dark_color[sharedPreferences.getInt("BackGroundColor",0)];
     }
 }

@@ -121,6 +121,7 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
         TextView dateview = (TextView)convertView.findViewById(R.id.todoitem_date);
         TextView titleview = (TextView)convertView.findViewById(R.id.todoitem_title);
 
+
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +138,9 @@ public class ToDo_ListViewAdapter extends BaseAdapter {
         });
 
         dateview.setText(todo_items.get(position).getDeadlineDate());
+        dateview.setTextColor(activity.getResources().getColor(Utils.getBackgroundId(activity)));
         titleview.setText(todo_items.get(position).getTitle());
+        titleview.setTextColor(activity.getResources().getColor(Utils.getBackgroundId(activity)));
 
         return convertView;
     }

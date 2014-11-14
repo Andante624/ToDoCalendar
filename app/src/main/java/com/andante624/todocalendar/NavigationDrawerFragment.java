@@ -85,7 +85,6 @@ public class NavigationDrawerFragment extends Fragment {
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         mFragmentContainerView.setBackgroundColor(Utils.getBackgroundPosition(getActivity().getApplicationContext()));
         setHasOptionsMenu(true);
-//        mDrawerListView.setBackgroundResource(Utils.getBackgroundId(getActivity()));
     }
 
     @Override
