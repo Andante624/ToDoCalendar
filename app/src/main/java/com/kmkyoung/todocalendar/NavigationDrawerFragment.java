@@ -83,7 +83,9 @@ public class NavigationDrawerFragment extends Fragment {
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
+        mFragmentContainerView.setBackgroundColor(Utils.getBackgroundPosition(getActivity().getApplicationContext()));
         setHasOptionsMenu(true);
+//        mDrawerListView.setBackgroundResource(Utils.getBackgroundId(getActivity()));
     }
 
     @Override
@@ -154,7 +156,10 @@ public class NavigationDrawerFragment extends Fragment {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                mDrawerListView.setBackgroundResource(Utils.getBackgroundId(getActivity()));
+
                 super.onDrawerOpened(drawerView);
+
                 if (!isAdded()) {
                     return;
                 }

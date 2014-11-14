@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.kmkyoung.todocalendar.DataManage.DB.DBManager;
 import com.kmkyoung.todocalendar.R;
+import com.kmkyoung.todocalendar.Utils;
 
 
 public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -37,6 +38,11 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+    }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public void init()

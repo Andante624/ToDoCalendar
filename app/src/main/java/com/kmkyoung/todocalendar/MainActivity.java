@@ -3,6 +3,7 @@ package com.kmkyoung.todocalendar;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -52,6 +53,11 @@ public class MainActivity extends Activity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment_calendar)
                 .commit();
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(Utils.getColorId(Utils.getBackgroundPosition(this)))));
+        actionBar.setDisplayShowTitleEnabled(false);
+        invalidateOptionsMenu();
     }
 
     @Override

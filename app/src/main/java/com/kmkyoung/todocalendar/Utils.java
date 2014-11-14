@@ -1,11 +1,16 @@
 package com.kmkyoung.todocalendar;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kmkyoung on 2014. 9. 27..
@@ -49,9 +54,21 @@ public class Utils {
         return array_color[position];
     }
 
-    public static int getBackgroundColor(Context context)
+    public static int getBackgroundPosition(Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
         return sharedPreferences.getInt("BackGroundColor",0);
+    }
+
+    public static int getBackgroundId(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
+        return array_color[sharedPreferences.getInt("BackGroundColor",0)];
+    }
+
+    public static void setBackground(Fragment fragment)
+    {
+        SharedPreferences sharedPreferences = fragment.getActivity().getSharedPreferences("Setting",fragment.getActivity().MODE_PRIVATE);
+        fragment.getView().setBackgroundColor(array_color[sharedPreferences.getInt("BackGroundColor", 0)]);
     }
 }

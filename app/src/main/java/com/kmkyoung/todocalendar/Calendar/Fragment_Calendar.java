@@ -84,6 +84,11 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
         return view;
     }
 
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     public void getToday()
     {
         Calendar calendar = Calendar.getInstance();
