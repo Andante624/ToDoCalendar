@@ -37,9 +37,11 @@ import java.util.List;
  */
 public class Fragment_Setting extends Fragment {
     private final String[] color_strings = new String[]{"Blue","Green","Yellow","Orange","Red","Black"};
+    private List<ColorDrawable> color_drawable = new ArrayList<ColorDrawable>();
     private OnFragmentInteractionListener mListener;
     private ListView setting_listview;
     private Fragment_Setting_Information fragment_setting_information;
+    private int selectBackground = 0;
 
     public static Fragment_Setting newInstance(String param1, String param2) {
         Fragment_Setting fragment = new Fragment_Setting();
@@ -49,9 +51,19 @@ public class Fragment_Setting extends Fragment {
 
     }
 
+
+    public void makeDrawable()
+    {
+        for(int i=0; i< color_strings.length ; i++)
+        {
+            color_drawable.add(new ColorDrawable(getResources().getColor(Utils.getColorId(i))));
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        makeDrawable();
         fragment_setting_information = new Fragment_Setting_Information();
     }
 
@@ -159,29 +171,38 @@ public class Fragment_Setting extends Fragment {
 
     public void showDialog_Colorpicker()
     {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Setting",getActivity().MODE_PRIVATE);
+        final int currentBackground = sharedPreferences.getInt("BackGroundColor",0);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("테마 색상 선택");
         builder.setSingleChoiceItems(color_strings, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                ActionBar actionBar = getActivity().getActionBar();
-//                actionBar.setBackgroundDrawable(new ColorDrawable(Utils.getColorId(which)));
-//                actionBar.setDisplayShowTitleEnabled(false);
+                ActionBar actionBar = getActivity().getActionBar();
+                actionBar.setBackgroundDrawable(color_drawable.get(which));
+                actionBar.setDisplayShowTitleEnabled(false);
+                getActivity().invalidateOptionsMenu();
+                selectBackground = which;
             }
         })
         .setPositiveButton("확인",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                SharedPreferences sharedPreferences = context.getSharedPreferences("Setting",context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putInt("BackGroundColor",position);
-//                editor.commit();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Setting",getActivity().MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("BackGroundColor",selectBackground);
+                editor.commit();
                 dialog.dismiss();
             }
         })
         .setNegativeButton("취소",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                ActionBar actionBar = getActivity().getActionBar();
+                actionBar.setBackgroundDrawable(color_drawable.get(currentBackground));
+                actionBar.setDisplayShowTitleEnabled(false);
+                getActivity().invalidateOptionsMenu();
                 dialog.dismiss();
             }
         }).create().show();
