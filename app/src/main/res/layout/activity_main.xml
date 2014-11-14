@@ -15,7 +15,7 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="com.kmkyoung.todocalendar.NavigationDrawerFragment"
+        android:name="com.andante624.todocalendar.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

@@ -28,7 +28,7 @@
             />
     </LinearLayout>
 
-    <com.kmkyoung.todocalendar.Visualization.Visualization_CicleGraph
+    <com.andante624.todocalendar.Visualization.Visualization_CicleGraph
         android:id="@+id/visualization_ciclegraph"
         android:layout_width="match_parent"
         android:layout_weight="10"
