@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,17 +25,11 @@ import java.util.Calendar;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_Calendar.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_Calendar#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class Fragment_Calendar extends Fragment implements View.OnClickListener, GridView.OnItemClickListener{
-
+    public static int[] array_rectangle = new int[]{
+            R.drawable.round_rectangle_blue, R.drawable.round_rectangle_green, R.drawable.round_rectangle_yellow,
+            R.drawable.round_rectangle_orange, R.drawable.round_rectangle_red, R.drawable.round_rectangle_black
+    };
     //calendar
     private GridView calendar_gridView;
     private Calendar_GridViewAdapter calendar_gridViewAdapter;
@@ -90,6 +83,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
     @Override
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        calendar_layout.setBackgroundResource(array_rectangle[Utils.getBackgroundPosition(getActivity())]);
 
     }
 
