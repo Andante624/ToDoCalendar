@@ -3,11 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.andante624.todocalendar.Setting.Fragment_Setting_ColorPicker"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/setting_information_versiontext"
+            android:gravity="center"
+            android:text="Version : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/setting_information_versionvalue"
+            android:gravity="center"
+            android:text="v1.1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/setting_information_updatetext"
+            android:gravity="center"
+            android:text="Last Update : "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/setting_information_updatevalue"
+            android:gravity="center"
+            android:text="2014-11-16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
+    </LinearLayout>
 
     <TextView
-        android:text="@string/hello_world"
+        android:id="@+id/setting_information_madeby"
+        android:gravity="center"
+        android:text="Made by Andante624"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="20dp"/>
+
 
 </LinearLayout>
