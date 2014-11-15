@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -75,6 +77,13 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
         strings = dbManager.select_AllCategoryItem_Strings();
         dbManager.close();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater);
+        menu.clear();
     }
 
     public int getToDoID()

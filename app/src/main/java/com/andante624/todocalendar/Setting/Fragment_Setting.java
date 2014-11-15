@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,6 +65,7 @@ public class Fragment_Setting extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         makeDrawable();
+        setHasOptionsMenu(true);
         fragment_setting_information = new Fragment_Setting_Information();
     }
 
@@ -74,6 +77,12 @@ public class Fragment_Setting extends Fragment {
         Setting_Listview_Adapter setting_listview_adapter = new Setting_Listview_Adapter();
         setting_listview.setAdapter(setting_listview_adapter);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater);
+        menu.clear();
     }
 
     @Override

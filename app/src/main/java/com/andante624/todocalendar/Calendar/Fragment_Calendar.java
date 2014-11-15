@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -54,6 +56,7 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         Context context = getActivity().getApplicationContext();
         calendar_gridViewAdapter = new Calendar_GridViewAdapter();
         calendar_gridViewAdapter.setContext(context);
@@ -64,6 +67,12 @@ public class Fragment_Calendar extends Fragment implements View.OnClickListener,
         for(int i=0 ; i<10 ; i++)
             todo_listViewAdapter.add();
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.menu_default,menu);
     }
 
     @Override
