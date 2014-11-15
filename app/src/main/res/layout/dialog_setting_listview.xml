@@ -6,6 +6,18 @@
 
     <ListView android:id="@+id/setting_dialoglist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="4">
     </ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/divider"/>
+    <Button
+        android:id="@+id/setting_dialogbutton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:text="확인"/>
 </LinearLayout>

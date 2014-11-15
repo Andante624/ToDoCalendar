@@ -161,7 +161,8 @@ public class Fragment_Setting extends Fragment {
                     }
                 }
             });
-
+            convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 60));
+            textview.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundId(getActivity())));
             return convertView;
         }
     }
@@ -173,7 +174,7 @@ public class Fragment_Setting extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("테마 색상 선택");
-        builder.setSingleChoiceItems(color_strings, 0, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(color_strings, currentBackground, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ActionBar actionBar = getActivity().getActionBar();
@@ -203,12 +204,6 @@ public class Fragment_Setting extends Fragment {
                 dialog.dismiss();
             }
         }).create().show();
-
-//        Dialog_Setting_ColorPicker dialog_setting_colorPicker = new Dialog_Setting_ColorPicker(getActivity());
-//        WindowManager.LayoutParams params = dialog_setting_colorPicker.getWindow().getAttributes();
-//        params.height = 600;
-//        dialog_setting_colorPicker.getWindow().setAttributes(params);
-//        dialog_setting_colorPicker.show();
     }
 
     public void showDialog_Category()

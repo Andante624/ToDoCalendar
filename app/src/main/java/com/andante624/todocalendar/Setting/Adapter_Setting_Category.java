@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.andante624.todocalendar.DataManage.DB.Category_Item;
 import com.andante624.todocalendar.DataManage.DB.DBManager;
 import com.andante624.todocalendar.R;
+import com.andante624.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +120,8 @@ public class Adapter_Setting_Category extends BaseAdapter {
 
         if (category_items.get(position).getCategory_Name().equals("추가하기"))
             convertView.setLongClickable(false);
+
+        convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
 
             return convertView;
     }
