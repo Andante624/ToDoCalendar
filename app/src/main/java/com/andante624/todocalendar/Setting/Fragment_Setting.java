@@ -41,6 +41,7 @@ public class Fragment_Setting extends Fragment {
     private List<ColorDrawable> color_drawable = new ArrayList<ColorDrawable>();
     private OnFragmentInteractionListener mListener;
     private ListView setting_listview;
+    Setting_Listview_Adapter setting_listview_adapter;
     private Fragment_Setting_Information fragment_setting_information;
     private int selectBackground = 0;
 
@@ -74,7 +75,7 @@ public class Fragment_Setting extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         setting_listview = (ListView)view.findViewById(R.id.setting_listview);
-        Setting_Listview_Adapter setting_listview_adapter = new Setting_Listview_Adapter();
+        setting_listview_adapter = new Setting_Listview_Adapter();
         setting_listview.setAdapter(setting_listview_adapter);
         return view;
     }
@@ -200,6 +201,7 @@ public class Fragment_Setting extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("BackGroundColor",selectBackground);
                 editor.commit();
+                setting_listview.invalidateViews();
                 dialog.dismiss();
             }
         })
