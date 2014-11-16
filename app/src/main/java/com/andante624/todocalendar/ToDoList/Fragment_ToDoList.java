@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -122,12 +121,10 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                     case 0:
                         spinner_child.setVisibility(View.INVISIBLE);
                         requestToDoItems(DBManager.WHERE_COMPARISON_7DEADLINE_DATE,null);
-                        Log.d("kmky","parent : "+position+" "+id+" "+parent.getId());
                         break;
                     case 1:
                         spinner_child.setVisibility(View.INVISIBLE);
                         requestToDoItems(DBManager.WHERE_COMPARISON_7CREATE_DATE,null);
-                        Log.d("kmky","parent : "+position+" "+id+" "+parent.getId());
                         break;
                     case 2:
                         spinnerAdapter_todo_child.setSelect(1);
@@ -135,7 +132,6 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setSelection(0);
                         spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child,spinner_child.getSelectedView(),0,0);
                         spinnerAdapter_todo_child.notifyDataSetChanged();
-                        Log.d("kmky", "parent : " + position + " " + id + " " + parent.getId());
                         break;
                     case 3:
                         spinnerAdapter_todo_child.setSelect(0);
@@ -143,17 +139,14 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                         spinner_child.setSelection(0);
                         spinner_child.getOnItemSelectedListener().onItemSelected(spinner_child, spinner_child.getSelectedView(), 0, 0);
                         spinnerAdapter_todo_child.notifyDataSetChanged();
-                        Log.d("kmky","parent : "+position+" "+id+" "+parent.getId());
                         break;
                     case 4:
                         spinner_child.setVisibility(View.INVISIBLE);
                         requestToDoItems(DBManager.WHERE_COMPARISON_DEADLINE_DATE,null);
-                        Log.d("kmky","parent : "+position+" "+id+" "+parent.getId());
                         break;
                     case 5:
                         spinner_child.setVisibility(View.INVISIBLE);
                         requestToDoItems(DBManager.WHERE_COMPARISON_COMPLETE_DATE, null);
-                        Log.d("kmky", "parent : " + position + " " + id + " " + parent.getId());
                         break;
                 }
                 break;
@@ -166,7 +159,6 @@ public class Fragment_ToDoList extends Fragment implements AdapterView.OnItemSel
                     } else {
                         requestToDoItems(DBManager.WHERE_MATCH_IMPORTANCE, position + "");
                     }
-                    Log.d("kmky", "child : " + position + " " + id + " " + parent.getId());
                 }
                 break;
         }

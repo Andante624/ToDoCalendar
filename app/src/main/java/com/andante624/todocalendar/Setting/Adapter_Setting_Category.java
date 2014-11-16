@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.andante624.todocalendar.DataManage.DB.Category_Item;
 import com.andante624.todocalendar.DataManage.DB.DBManager;
 import com.andante624.todocalendar.R;
-import com.andante624.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

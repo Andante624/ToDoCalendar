@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -26,9 +25,7 @@ import com.andante624.todocalendar.DataManage.DB.ToDo_Item;
 import com.andante624.todocalendar.R;
 import com.andante624.todocalendar.Utils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class Fragment_AddToDoItem extends Fragment implements View.OnClickListener{
     public static int[] array_rectangle = new int[]{

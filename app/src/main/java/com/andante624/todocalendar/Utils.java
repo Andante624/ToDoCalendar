@@ -1,9 +1,7 @@
 package com.andante624.todocalendar;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.util.Calendar;
 
 /**

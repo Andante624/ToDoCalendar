@@ -8,7 +8,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.andante624.todocalendar.R;
-import com.andante624.todocalendar.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

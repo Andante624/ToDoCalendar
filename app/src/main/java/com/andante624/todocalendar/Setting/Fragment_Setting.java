@@ -27,15 +27,6 @@ import com.andante624.todocalendar.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_Setting.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_Setting#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class Fragment_Setting extends Fragment {
     private final String[] color_strings = new String[]{"Blue","Green","Yellow","Orange","Red","Black"};
     private List<ColorDrawable> color_drawable = new ArrayList<ColorDrawable>();
