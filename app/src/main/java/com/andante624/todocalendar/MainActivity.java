@@ -97,7 +97,6 @@ public class MainActivity extends Activity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(Utils.getColorId(Utils.getBackgroundPosition(this)))));
     }
 
 
