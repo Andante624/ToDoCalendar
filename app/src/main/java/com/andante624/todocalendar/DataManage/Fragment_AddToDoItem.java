@@ -2,6 +2,8 @@ package com.andante624.todocalendar.DataManage;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -29,9 +31,14 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Fragment_AddToDoItem extends Fragment implements View.OnClickListener{
+    public static int[] array_rectangle = new int[]{
+            R.drawable.round_rectangle_blue, R.drawable.round_rectangle_green, R.drawable.round_rectangle_yellow,
+            R.drawable.round_rectangle_orange, R.drawable.round_rectangle_red, R.drawable.round_rectangle_black
+    };
+    SpinnerAdapter_AddToDo spinnerAdapter_addToDo;
     private OnFragmentInteractionListener mListener;
     private EditText title_editview;
-    private TextView date_textview;
+    private TextView date_textview, title_text, importance_text, date_text, category_text;
     private Spinner category_spinner;
     private RatingBar importance_ratingbar;
     private Button ok_button, cancel_button;
@@ -43,8 +50,6 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
     private int get_deadline_year=0, get_deadline_month=0, get_deadline_day=0;
     private String get_title, get_category, get_deadline_date;
     private float get_importance;
-
-    private List<String> strings = new ArrayList<String>();
 
     public static Fragment_AddToDoItem newInstance(int todo_id) {
         Fragment_AddToDoItem fragment_addToDoItem = new Fragment_AddToDoItem();
@@ -74,9 +79,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             dbManager.close();
         }
 
-        DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
-        strings = dbManager.select_AllCategoryItem_Strings();
-        dbManager.close();
+        spinnerAdapter_addToDo = new SpinnerAdapter_AddToDo();
         setHasOptionsMenu(true);
     }
 
@@ -107,11 +110,7 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
             DBManager dbManager = DBManager.open(getActivity().getApplicationContext());
             String title = dbManager.get_CategoryTitle(editItem.getCategory());
             dbManager.close();
-            for(int i= 0 ; i<strings.size() ; i++)
-            {
-                if(strings.get(i).equals(title))
-                    category_spinner.setSelection(i);
-            }
+            category_spinner.setSelection(spinnerAdapter_addToDo.getSelectPosition(title));
             importance_ratingbar.setRating(editItem.getImportance());
         }
         else
@@ -136,9 +135,30 @@ public class Fragment_AddToDoItem extends Fragment implements View.OnClickListen
         ok_button = (Button)view.findViewById(R.id.add_todo_ok);
         cancel_button = (Button)view.findViewById(R.id.add_todo_cancel);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,strings);
+        title_text = (TextView)view.findViewById(R.id.add_todo_titletext);
+        importance_text = (TextView)view.findViewById(R.id.add_todo_importancetext);
+        date_text = (TextView)view.findViewById(R.id.add_todo_datetext);
+        category_text = (TextView)view.findViewById(R.id.add_todo_categorytext);
 
-        category_spinner.setAdapter(adapter);
+        spinnerAdapter_addToDo.setContext(getActivity().getApplicationContext());
+        spinnerAdapter_addToDo.setCategory();
+        category_spinner.setAdapter(spinnerAdapter_addToDo);
+        setDesing();
+
+    }
+
+    public void setDesing()
+    {
+        LayerDrawable layerDrawable = (LayerDrawable)importance_ratingbar.getProgressDrawable();
+        layerDrawable.getDrawable(2).setColorFilter(getActivity().getResources().getColor(Utils.getBackgroundId(getActivity())), PorterDuff.Mode.SRC_ATOP);
+
+        title_text.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundDarkColorID(getActivity())));
+        title_editview.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundId(getActivity())));
+        importance_text.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundDarkColorID(getActivity())));
+        date_text.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundDarkColorID(getActivity())));
+        date_textview.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundId(getActivity())));
+        category_text.setTextColor(getActivity().getResources().getColor(Utils.getBackgroundDarkColorID(getActivity())));
+        ok_button.setBackgroundResource(array_rectangle[Utils.getBackgroundPosition(getActivity())]);
 
     }
 
