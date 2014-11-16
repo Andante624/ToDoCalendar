@@ -70,6 +70,7 @@ public class Adapter_Setting_Category extends BaseAdapter {
                     ab.setTitle("카테고리 추가");
                     ab.setMessage("추가할 카테고리를 입력해주세요.");
                     final EditText input_category = new EditText(context);
+                    input_category.setSingleLine(true);
                     ab.setView(input_category);
                     ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
@@ -93,7 +94,7 @@ public class Adapter_Setting_Category extends BaseAdapter {
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
                     alertdialog.setTitle("Category 삭제");
-                    alertdialog.setMessage("Category 를 삭제하시겠습니까?");
+                    alertdialog.setMessage(category_items.get(position).getCategory_Name()+"를 삭제하시겠습니까?");
                     alertdialog.setPositiveButton("승인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
