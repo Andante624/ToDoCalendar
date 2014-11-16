@@ -57,16 +57,15 @@ public class Adapter_Setting_Category extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-            convertView = View.inflate(context, R.layout.setting_listview_item, null);
+        View view = View.inflate(context, R.layout.setting_listview_item, null);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.setting_listview_textview);
+        TextView textView = (TextView) view.findViewById(R.id.setting_listview_textview);
         textView.setText(category_items.get(position).getCategory_Name());
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (category_items.size() - 1 == position) {
+                if (category_items.size() - 1 == position ) {
                     AlertDialog.Builder ab = new AlertDialog.Builder(context);
                     ab.setTitle("카테고리 추가");
                     ab.setMessage("추가할 카테고리를 입력해주세요.");
@@ -89,7 +88,7 @@ public class Adapter_Setting_Category extends BaseAdapter {
             }
         });
 
-            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
@@ -118,11 +117,11 @@ public class Adapter_Setting_Category extends BaseAdapter {
             });
 
         if (category_items.get(position).getCategory_Name().equals("추가하기"))
-            convertView.setLongClickable(false);
+            view.setLongClickable(false);
 
-        convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
+        view.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
 
-            return convertView;
+            return view;
     }
 
     public void setCategorys(List<Category_Item> items)
