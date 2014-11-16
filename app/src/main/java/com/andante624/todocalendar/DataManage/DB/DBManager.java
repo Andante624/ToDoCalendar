@@ -112,10 +112,10 @@ public class DBManager {
                 sql += "ToDo_Deadline_date = '"+condition+"';";
                 break;
             case WHERE_COMPARISON_DEADLINE_DATE:
-                sql += "date(ToDo_Deadline_date) >= date('now') and ToDo_Completed_date='' order by date(ToDo_Deadline_date) ;";
+                sql += "ToDo_Completed_date='' order by date(ToDo_Deadline_date) ;";
                 break;
             case WHERE_COMPARISON_COMPLETE_DATE:
-                sql += "date(ToDo_Completed_date) <= date('now') order by date(ToDo_Completed_date) DESC;";
+                sql += "not ToDo_Completed_date='' order by date(ToDo_Completed_date) DESC;";
                 break;
             case WHERE_MATCH_CATEGORY:
                 int category_id = get_CategoryID(condition);
