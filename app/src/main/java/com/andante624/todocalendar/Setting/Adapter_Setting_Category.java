@@ -3,10 +3,12 @@ package com.andante624.todocalendar.Setting;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,10 +59,11 @@ public class Adapter_Setting_Category extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(context, R.layout.setting_listview_item, null);
+        View view = View.inflate(context, R.layout.setting_listview_delete_item, null);
 
         TextView textView = (TextView) view.findViewById(R.id.setting_listview_textview);
         textView.setText(category_items.get(position).getCategory_Name());
+        ImageView imageView = (ImageView) view.findViewById(R.id.setting_listview_delete);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +92,9 @@ public class Adapter_Setting_Category extends BaseAdapter {
             }
         });
 
-        view.setOnLongClickListener(new View.OnLongClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
                     alertdialog.setTitle("Category 삭제");
                     alertdialog.setMessage(category_items.get(position).getCategory_Name()+"를 삭제하시겠습니까?");
@@ -113,12 +116,13 @@ public class Adapter_Setting_Category extends BaseAdapter {
                         }
                     });
                     alertdialog.show();
-                    return true;
                 }
             });
 
-        if (category_items.get(position).getCategory_Name().equals("추가하기"))
+        if (category_items.get(position).getCategory_Name().equals("추가하기")) {
             view.setLongClickable(false);
+            imageView.setVisibility(View.INVISIBLE);
+        }
 
         view.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
 
